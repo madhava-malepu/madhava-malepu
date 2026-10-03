@@ -1335,5 +1335,315 @@ window.addEventListener('load',()=>{
 </script>
 <script src="home-business.js" defer></script>
 <script src="home.js" defer></script>
-</body>
+
+<!-- ═══════════════════════════════════════════════
+     ANIMATION ENHANCEMENTS — additive only
+     ═══════════════════════════════════════════════ -->
+<style>
+/* ── Hero entrance (load-time, bypasses IntersectionObserver) ── */
+@keyframes hFadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+@keyframes hFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes hSlideR{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+
+.hero__kicker{animation:hFadeUp .7s cubic-bezier(.16,1,.3,1) .1s both}
+.hero__title{animation:hFadeUp .8s cubic-bezier(.16,1,.3,1) .22s both}
+.hero__sub{animation:hFadeUp .8s cubic-bezier(.16,1,.3,1) .38s both}
+.hero__actions{animation:hFadeUp .7s cubic-bezier(.16,1,.3,1) .52s both}
+.hero__stats{animation:hFadeUp .7s cubic-bezier(.16,1,.3,1) .66s both}
+.hero__right{animation:hSlideR .9s cubic-bezier(.16,1,.3,1) .3s both}
+
+/* override data-reveal on hero items so they don't start hidden */
+.hero [data-reveal]{opacity:1;transform:none;transition:none}
+
+/* ── Stagger for grid cards ── */
+.feat-card:nth-child(1){transition-delay:.05s}
+.feat-card:nth-child(2){transition-delay:.1s}
+.feat-card:nth-child(3){transition-delay:.15s}
+.feat-card:nth-child(4){transition-delay:.2s}
+.feat-card:nth-child(5){transition-delay:.25s}
+.feat-card:nth-child(6){transition-delay:.3s}
+.feat-card:nth-child(7){transition-delay:.35s}
+.feat-card:nth-child(8){transition-delay:.4s}
+
+.bag-type-card:nth-child(1){transition-delay:.05s}
+.bag-type-card:nth-child(2){transition-delay:.15s}
+.bag-type-card:nth-child(3){transition-delay:.25s}
+
+.snack-card:nth-child(1){transition-delay:.05s}
+.snack-card:nth-child(2){transition-delay:.15s}
+.snack-card:nth-child(3){transition-delay:.25s}
+
+.step:nth-child(1){transition-delay:.05s}
+.step:nth-child(2){transition-delay:.15s}
+.step:nth-child(3){transition-delay:.25s}
+.step:nth-child(4){transition-delay:.35s}
+
+/* ── Richer bag float (add subtle rotation) ── */
+#stage .float-bag,
+.float-bag{animation:floatAdv 5s ease-in-out infinite}
+@keyframes floatAdv{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  25%{transform:translateY(-12px) rotate(1.5deg)}
+  50%{transform:translateY(-20px) rotate(0deg)}
+  75%{transform:translateY(-8px) rotate(-1.5deg)}
+}
+
+/* ── Pickup code glow pulse ── */
+.hero__badge__code{
+  animation:codePulse 3s ease-in-out infinite;
+  position:relative;
+}
+@keyframes codePulse{
+  0%,100%{text-shadow:0 0 0 rgba(245,166,35,0)}
+  50%{text-shadow:0 0 20px rgba(245,166,35,.5),0 0 40px rgba(245,166,35,.2)}
+}
+
+/* ── Improved 3D hover on bag-type-cards ── */
+.bag-types{perspective:1000px}
+.bag-type-card{
+  transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s;
+  transform-style:preserve-3d;
+}
+.bag-type-card:hover{
+  transform:translateY(-12px) rotateX(4deg) rotateY(-2deg) scale(1.02);
+  box-shadow:0 32px 80px rgba(0,0,0,.35);
+}
+
+/* ── Feature card 3D tilt enhancement ── */
+.feat-card{
+  transform-style:preserve-3d;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;
+}
+
+/* ── Step number glow ── */
+.step__num{
+  transition:box-shadow .4s,transform .4s cubic-bezier(.16,1,.3,1);
+}
+.step:hover .step__num{
+  box-shadow:0 8px 32px rgba(245,166,35,.55),0 0 0 4px rgba(245,166,35,.15);
+  transform:scale(1.12);
+}
+
+/* ── Countdown digit flip animation ── */
+.countdown__num{
+  display:inline-block;
+  transition:transform .2s cubic-bezier(.4,0,.2,1),opacity .2s;
+}
+.countdown__num.flip{
+  animation:digitFlip .25s cubic-bezier(.4,0,.2,1);
+}
+@keyframes digitFlip{
+  0%{transform:translateY(0);opacity:1}
+  45%{transform:translateY(-8px);opacity:0}
+  55%{transform:translateY(8px);opacity:0}
+  100%{transform:translateY(0);opacity:1}
+}
+
+/* ── Happy hour card urgency pulse ── */
+.hh-urgency{animation:urgencyPulse 2s ease-in-out infinite}
+@keyframes urgencyPulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* ── Leaderboard row slide-in ── */
+.lb-row{
+  transition:background .25s,padding-left .25s cubic-bezier(.16,1,.3,1);
+}
+.lb-row:hover{
+  background:rgba(255,255,255,.05);
+  padding-left:6px;
+}
+
+/* ── City chip hover ── */
+.city-chip{
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.city-chip.live:hover{
+  transform:translateY(-3px) scale(1.04);
+  box-shadow:0 8px 24px rgba(13,42,27,.35);
+}
+
+/* ── Nav logo hover spin ── */
+.nav__logo svg{
+  transition:transform .45s cubic-bezier(.16,1,.3,1);
+}
+.nav__logo:hover svg{transform:rotate(-10deg) scale(1.1)}
+
+/* ── Scroll progress bar gradient ── */
+.progress__bar{
+  background:linear-gradient(90deg,#1A4731,#F5A623,#C4622D);
+  background-size:200% 100%;
+  animation:progGrad 3s linear infinite;
+}
+@keyframes progGrad{0%{background-position:100%}100%{background-position:-100%}}
+
+/* ── Section divider shimmer ── */
+.section.cream + .section.cream::before,
+.section.dark + .section.forest::before{
+  content:'';display:block;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(245,166,35,.3),transparent);
+  margin-bottom:0;
+}
+
+/* ── Button ripple ── */
+.btn{overflow:hidden;position:relative}
+.btn .ripple{
+  position:absolute;border-radius:50%;background:rgba(255,255,255,.25);
+  transform:scale(0);animation:rippleA .55s linear;pointer-events:none;
+}
+@keyframes rippleA{to{transform:scale(4);opacity:0}}
+
+/* ── Counter values ── */
+.hero__stat__val{
+  display:inline-block;
+  transition:transform .15s;
+}
+
+/* ── Vendor form field focus ring ── */
+.field input:focus,.field select:focus,.field textarea:focus{
+  box-shadow:0 0 0 3px rgba(245,166,35,.2);
+}
+.modal-field input:focus{
+  box-shadow:0 0 0 3px rgba(26,71,49,.12);
+}
+</style>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ── 1. Hero stat counter animation ── */
+  var statsAnimated = false;
+  function animateStat(el, target, prefix, suffix, duration) {
+    var start = performance.now();
+    var isFloat = target % 1 !== 0;
+    (function step(now) {
+      var p = Math.min((now - start) / duration, 1);
+      var ease = 1 - Math.pow(1 - p, 3);
+      var v = Math.round(ease * target);
+      el.textContent = prefix + v.toLocaleString('en-IN') + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  }
+  var statIO = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !statsAnimated) {
+      statsAnimated = true;
+      var stats = document.querySelectorAll('.hero__stat__val');
+      if (stats[0]) animateStat(stats[0], 3000, '', '+', 2000);
+      if (stats[1]) animateStat(stats[1], 70, '', '%', 1600);
+      if (stats[2]) { setTimeout(function(){ stats[2].textContent = '₹5'; }, 800); }
+      statIO.disconnect();
+    }
+  }, {threshold: 0.3});
+  var heroStats = document.querySelector('.hero__stats');
+  if (heroStats) statIO.observe(heroStats);
+
+  /* ── 2. Pickup code scramble on hover ── */
+  var codeEl = document.querySelector('.hero__badge__code');
+  var CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var origCode = codeEl ? codeEl.textContent : 'BX7K2M';
+  var scrambleTimer = null;
+  if (codeEl) {
+    codeEl.style.cursor = 'default';
+    codeEl.addEventListener('mouseenter', function() {
+      var steps = 0;
+      clearInterval(scrambleTimer);
+      scrambleTimer = setInterval(function() {
+        var r = '';
+        for (var i = 0; i < 6; i++) r += CHARS[Math.floor(Math.random() * CHARS.length)];
+        codeEl.textContent = r;
+        if (++steps > 10) { clearInterval(scrambleTimer); codeEl.textContent = origCode; }
+      }, 60);
+    });
+  }
+
+  /* ── 3. Button ripple effect ── */
+  document.querySelectorAll('.btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var r = document.createElement('span');
+      var d = Math.max(btn.offsetWidth, btn.offsetHeight) * 2;
+      var rect = btn.getBoundingClientRect();
+      r.className = 'ripple';
+      r.style.cssText = 'width:'+d+'px;height:'+d+'px;left:'+(e.clientX-rect.left-d/2)+'px;top:'+(e.clientY-rect.top-d/2)+'px';
+      btn.appendChild(r);
+      setTimeout(function(){ r.remove(); }, 600);
+    });
+  });
+
+  /* ── 4. Countdown digit flip class ── */
+  var lastVals = {hH:'',hM:'',hS:''};
+  var origTick = null;
+  // patch the existing countdown by watching DOM mutations
+  ['hhH','hhM','hhS'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    new MutationObserver(function() {
+      if (el.textContent !== lastVals[id]) {
+        lastVals[id] = el.textContent;
+        el.classList.remove('flip');
+        void el.offsetWidth; // reflow
+        el.classList.add('flip');
+        setTimeout(function(){ el.classList.remove('flip'); }, 260);
+      }
+    }).observe(el, {childList: true, characterData: true, subtree: true});
+  });
+
+  /* ── 5. Parallax on hero background orb ── */
+  var hero = document.querySelector('.hero');
+  if (hero && window.matchMedia('(pointer:fine)').matches) {
+    window.addEventListener('scroll', function() {
+      var y = window.scrollY;
+      if (y < window.innerHeight * 1.2) {
+        hero.style.backgroundPositionY = (y * 0.25) + 'px';
+      }
+    }, {passive: true});
+  }
+
+  /* ── 6. Stagger reveal for dynamically-loaded bag cards ── */
+  var bagsGrid = document.getElementById('bagsGrid');
+  if (bagsGrid) {
+    new MutationObserver(function() {
+      bagsGrid.querySelectorAll('.bag-card:not([data-stagger])').forEach(function(card, i) {
+        card.setAttribute('data-stagger', '1');
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(28px)';
+        card.style.transition = 'opacity .55s cubic-bezier(.16,1,.3,1) '+(i*0.08)+'s, transform .55s cubic-bezier(.16,1,.3,1) '+(i*0.08)+'s, box-shadow .3s';
+        // use rAF so transition fires
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+          });
+        });
+      });
+    }).observe(bagsGrid, {childList: true});
+  }
+
+  /* ── 7. Tilt effect refinement (smoother lerp) ── */
+  document.querySelectorAll('[data-tilt]').forEach(function(el) {
+    var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function loop() {
+      cx = lerp(cx, tx, 0.12);
+      cy = lerp(cy, ty, 0.12);
+      el.style.transform = 'perspective(800px) rotateY('+cx+'deg) rotateX('+-cy+'deg) translateY(-6px)';
+      if (Math.abs(cx - tx) > 0.01 || Math.abs(cy - ty) > 0.01) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        raf = null;
+      }
+    }
+    el.addEventListener('mousemove', function(e) {
+      var r = el.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 14;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * 14;
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+    el.addEventListener('mouseleave', function() {
+      tx = 0; ty = 0;
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+  });
+
+})();
+</script>
+
 </html>
