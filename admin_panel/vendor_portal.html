@@ -334,7 +334,7 @@ async function loadOrders() {
   try {
     const snap = await getDocs(query(
       collection(db,'orders'),
-      where('vendorId','==',_currentUid),
+      where('merchantId','==',_currentUid),
       orderBy('timestamp','desc'),
       limit(50)
     ));
@@ -370,8 +370,8 @@ async function loadBags() {
   const pastEl = document.getElementById('pastBagsList');
   try {
     const snap = await getDocs(query(
-      collection(db,'foodBags'),
-      where('vendorId','==',_currentUid),
+      collection(db,'bags'),
+      where('merchantId','==',_currentUid),
       orderBy('createdAt','desc'),
       limit(60)
     ));
@@ -389,7 +389,7 @@ async function loadBags() {
       const ms = bag.createdAt?.toMillis ? bag.createdAt.toMillis()
         : bag.createdAt?.seconds ? bag.createdAt.seconds*1000
         : typeof bag.createdAt==='number' ? (bag.createdAt<1e12?bag.createdAt*1000:bag.createdAt) : 0;
-      const expired = bag.status==='expired' || bag.status==='sold_out' || (bag.expiresAt && ms && ms < now - 86400000);
+      const expired = bag.isActive === false || bag.availableQuantity === 0 || (bag.pickupEndMillis && bag.pickupEndMillis < now - 86400000);
       if (expired) { if (ms >= thirtyDaysAgo) past.push(bag); }
       else active.push(bag);
     });
@@ -397,10 +397,10 @@ async function loadBags() {
     const renderBag = b => `<div class="order-row">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
         <div>
-          <div style="font-weight:700;font-size:14px">${esc(b.name||b.bagName||'Bag')}</div>
-          <div class="sub">${rupee(b.price||b.sellingPrice)} · ${b.quantity||0} left · ${fmtDate(b.createdAt)}</div>
+          <div style="font-weight:700;font-size:14px">${esc(b.title||b.name||'Bag')}</div>
+          <div class="sub">${rupee(b.price)} · ${b.availableQuantity||0} left · ${fmtDate(b.createdAt)}</div>
         </div>
-        <span class="badge ${b.status==='active'?'badge-ok':b.status==='sold_out'?'badge-blue':'badge-warn'}">${esc(b.status||'—')}</span>
+        <span class="badge ${b.isActive?'badge-ok':b.availableQuantity===0?'badge-blue':'badge-warn'}">${b.isActive?'Active':b.availableQuantity===0?'Sold out':'Inactive'}</span>
       </div>
     </div>`;
 
@@ -451,15 +451,15 @@ async function loadPayouts() {
   try {
     const snap = await getDocs(query(
       collection(db,'orders'),
-      where('vendorId','==',_currentUid),
-      where('payoutStatus','in',['pending','unpaid']),
+      where('merchantId','==',_currentUid),
       limit(200)
     ));
     let total = 0;
     snap.docs.forEach(d => {
       const o = d.data();
       if (typeof o.vendorPayout === 'number' && o.vendorPayout > 0 &&
-          ['confirmed','preparing','ready','completed'].includes(o.status)) {
+          ['confirmed','preparing','ready','completed'].includes(o.status) &&
+          !o.vendorPaidAt && o.paymentStatus !== 'refunded') {
         total += o.vendorPayout;
       }
     });

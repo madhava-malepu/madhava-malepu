@@ -1,0 +1,432 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null &&
+        (request.auth.uid == 'on3Z1hcfF6VqT2SczjAVWq2KXhr1' ||
+         request.auth.uid == 'UcY1huWuLFVHSmNLTE4rAwz4CP02');
+    }
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+    function isVendor() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid))
+          .data.get('isVendor', false) == true &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid))
+          .data.get('vendorStatus', '') == 'approved';
+    }
+    function isFieldExec() {
+      return isSignedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid))
+          .data.get('isFieldExec', false) == true;
+    }
+    function isFinanciallyConsistentOrder(o) {
+      let payout = o.get('vendorPayout', -1);
+      let revenue = o.get('surplRevenue', -999999);
+      let bagPrice = o.get('bagPrice', 0);
+      let qty = o.get('quantity', 1);
+      let platformFee = o.get('platformFee', 0);
+      let gstAmount = o.get('gstAmount', 0);
+      let referralDiscount = o.get('referralDiscount', 0);
+      let maxVendorShare = bagPrice * qty;
+      let expectedTotal = maxVendorShare + platformFee - referralDiscount - gstAmount;
+      return payout >= 0
+        && payout <= maxVendorShare + 2
+        && revenue >= -maxVendorShare - 50
+        && (payout + revenue) >= expectedTotal - 3
+        && (payout + revenue) <= expectedTotal + 3;
+    }
+    match /users/{uid} {
+      allow read, write: if isAdmin();
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid)
+        && request.resource.data.get('isVendor', false) == false
+        && request.resource.data.get('vendorStatus', '') == ''
+        && request.resource.data.get('walletBalance', 0) == 0
+        && !request.resource.data.keys().hasAny(['avgRating', 'totalRatings', 'feeStatus']);
+      allow update: if (isOwner(uid)
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(
+             ['isVendor', 'avgRating', 'totalRatings', 'feeStatus',
+              'upiId', 'bankAccountNumber', 'bankIfsc', 'bankAccountName', 'bankName'])
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['vendorStatus'])
+            || request.resource.data.vendorStatus != 'approved')
+        && request.resource.data.get('walletBalance', 0) <= resource.data.get('walletBalance', 0)
+      ) || (
+        isSignedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['walletBalance'])
+        && request.resource.data.walletBalance > resource.data.get('walletBalance', 0)
+        && (request.resource.data.walletBalance - resource.data.get('walletBalance', 0)) <= 25
+      ) || (
+        isSignedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['referralCount'])
+        && request.resource.data.referralCount > resource.data.get('referralCount', 0)
+      ) || (
+        // Vendors can update their own payout details (UPI / bank) from the
+        // vendor portal or payout form. Explicitly allowed because the main
+        // owner update branch above blocks these fields to prevent self-approval.
+        isOwner(uid)
+        && resource.data.get('isVendor', false) == true
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+             'upiId', 'upi', 'upiAccountName',
+             'accountHolderName', 'accountNumber',
+             'bankAccountNumber', 'ifsc', 'bankIfsc',
+             'bankAccountName', 'bankName',
+             'payoutDetailsUpdatedAt'
+           ])
+      );
+    }
+    match /referralCodes/{code} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+    match /vendorApplications/{uid} {
+      allow read, write: if isAdmin();
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid) && request.resource.data.status == 'pending';
+      allow update: if false;
+      allow delete: if false;
+    }
+    match /vendorLeads/{leadId} {
+      allow read, write: if isAdmin();
+      allow create: if true;
+      allow update, delete: if false;
+    }
+    match /dealAlertSignups/{signupId} {
+      allow read, write: if isAdmin();
+      allow create: if true;
+      allow update, delete: if false;
+    }
+    match /bags/{bagId} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn();
+      allow read: if resource.data.isActive == true;
+      allow create: if isVendor()
+        && request.resource.data.merchantId == request.auth.uid
+        && request.resource.data.price >= 29
+        && (request.resource.data.get('originalPrice', 0) == 0
+            || request.resource.data.originalPrice > request.resource.data.price)
+        && request.resource.data.get('availableQuantity', 0) >= 0
+        && request.resource.data.get('availableQuantity', 0) <= 500;
+      allow update: if (
+          isVendor()
+          && resource.data.merchantId == request.auth.uid
+          && request.resource.data.price >= 29
+        ) || (
+          isSignedIn()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['availableQuantity'])
+          && request.resource.data.availableQuantity >= 0
+          && (request.resource.data.availableQuantity - resource.data.availableQuantity) >= -20
+          && (request.resource.data.availableQuantity - resource.data.availableQuantity) <= 20
+        );
+      allow delete: if isVendor()
+        && resource.data.merchantId == request.auth.uid;
+    }
+    match /orders/{orderId} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn() && (
+        resource.data.customerId == request.auth.uid ||
+        resource.data.merchantId == request.auth.uid
+      );
+      allow create: if isSignedIn()
+        && request.resource.data.customerId == request.auth.uid
+        && isFinanciallyConsistentOrder(request.resource.data);
+      allow update: if isSignedIn() && (
+        (
+          // Pre-packed bag (Surprise Bag / Happy Hour): vendor can
+          // acknowledge (status stays 'confirmed') or complete directly.
+          resource.data.merchantId == request.auth.uid
+          && resource.data.status == 'confirmed'
+          && request.resource.data.diff(resource.data).affectedKeys()
+               .hasOnly(['vendorAcknowledged', 'vendorAcknowledgedAt', 'status', 'completedAt'])
+          && request.resource.data.status in ['confirmed', 'completed']
+        )
+        ||
+        (
+          // BUG FIX: Skip the Queue's real 3-stage prep flow
+          // (confirmed -> preparing -> ready -> completed, confirmed
+          // directly against vendor_dashboard_widget.dart's own status
+          // transitions) had NO matching rule at all before this - every
+          // "Start Preparing" / "Mark Ready" tap was silently rejected
+          // with permission-denied, meaning no Skip the Queue order
+          // could ever leave 'confirmed' through its intended flow.
+          // This branch: confirmed -> preparing.
+          resource.data.merchantId == request.auth.uid
+          && resource.data.get('listingType', '') == 'freshFood'
+          && resource.data.status == 'confirmed'
+          && request.resource.data.status == 'preparing'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'preparingAt'])
+        )
+        ||
+        (
+          // preparing -> ready.
+          resource.data.merchantId == request.auth.uid
+          && resource.data.get('listingType', '') == 'freshFood'
+          && resource.data.status == 'preparing'
+          && request.resource.data.status == 'ready'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'readyAt'])
+        )
+        ||
+        (
+          // ready -> completed - the pickup step for an order that went
+          // through the full prep flow (separate from the pre-packed
+          // confirmed -> completed branch above, which has no prep stage).
+          resource.data.merchantId == request.auth.uid
+          && resource.data.get('listingType', '') == 'freshFood'
+          && resource.data.status == 'ready'
+          && request.resource.data.status == 'completed'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'completedAt'])
+        )
+        ||
+        (
+          resource.data.customerId == request.auth.uid
+          && resource.data.status.lower() == 'completed'
+          && resource.data.get('ratedAt', null) == null
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['ratedAt'])
+        )
+      );
+      allow delete: if false;
+    }
+    match /vendorPayouts/{payoutId} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+      allow create, update, delete: if false;
+    }
+    match /ledgerEntries/{entryId} {
+      allow read: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+      allow read: if isAdmin();
+    }
+    match /fridaySettlementTasks/{taskId} {
+      allow write: if isAdmin();
+      allow read: if isAdmin();
+      allow read: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+    }
+    match /expenses/{expenseId} {
+      allow read, write: if isAdmin();
+    }
+    match /vendorOutreachTracker/{entryId} {
+      allow read, write: if isAdmin();
+      allow read: if isFieldExec();
+      allow update: if isFieldExec()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['notes', 'manualStatusOverride']);
+    }
+    match /dailyTasks/{taskId} {
+      allow read, write: if isAdmin();
+    }
+    match /devNotes/{noteId} {
+      allow read, write: if isAdmin();
+    }
+    match /wallet_transactions/{txId} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn()
+        && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.type in ['debit', 'credit']
+        && request.resource.data.amount > 0;
+      allow update: if false;
+      allow delete: if false;
+    }
+    match /pendingReferrals/{refId} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn();
+      allow create: if isSignedIn()
+        && request.resource.data.newUserUid == request.auth.uid;
+      allow update, delete: if false;
+    }
+    match /refundRequests/{refId} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn()
+        && resource.data.customerId == request.auth.uid;
+      allow create: if isSignedIn()
+        && request.resource.data.customerId == request.auth.uid
+        && request.resource.data.amountPaid <= get(/databases/$(database)/documents/orders/$(request.resource.data.orderId)).data.get('amountPaid', 0) + 1;
+      allow update, delete: if false;
+    }
+    match /vendorNotifications/{nid} {
+      allow read, write: if isAdmin();
+      allow read, create, update: if isSignedIn();
+      allow delete: if false;
+    }
+    match /vendorSupportChats/{vendorId} {
+      allow read, write: if isAdmin();
+      allow read: if isOwner(vendorId);
+      match /messages/{messageId} {
+        allow read, write: if isAdmin();
+        allow read: if isOwner(vendorId);
+        allow create: if isOwner(vendorId)
+          && request.resource.data.senderType == 'vendor'
+          && request.resource.data.senderUid == request.auth.uid;
+        allow update: if isOwner(vendorId)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+        allow delete: if false;
+      }
+    }
+    match /customerSupportChats/{customerId} {
+      allow read, write: if isAdmin();
+      allow read: if isOwner(customerId);
+      match /messages/{messageId} {
+        allow read, write: if isAdmin();
+        allow read: if isOwner(customerId);
+        allow create: if isOwner(customerId)
+          && request.resource.data.senderType == 'customer'
+          && request.resource.data.senderUid == request.auth.uid;
+        allow update: if isOwner(customerId)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+        allow delete: if false;
+      }
+    }
+    match /city_stats/{cityId} {
+      allow read, write: if isAdmin();
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['mealsRescued', 'haulPosts'])
+        && request.resource.data.get('mealsRescued', 0) >= resource.data.get('mealsRescued', 0)
+        && request.resource.data.get('mealsRescued', 0) - resource.data.get('mealsRescued', 0) <= 5
+        && request.resource.data.get('haulPosts', 0) >= resource.data.get('haulPosts', 0)
+        && request.resource.data.get('haulPosts', 0) - resource.data.get('haulPosts', 0) <= 5;
+      allow delete: if false;
+    }
+    match /rescue_feed/{postId} {
+      allow read, write: if isAdmin();
+      allow read: if true;
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes'])
+        && request.resource.data.likes > resource.data.get('likes', 0)
+        && (request.resource.data.likes - resource.data.get('likes', 0)) <= 3;
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+    match /vendorRatings/{ratingId} {
+      allow read, write: if isAdmin();
+      allow create: if isSignedIn()
+        && request.resource.data.customerId == request.auth.uid
+        && request.resource.data.stars is int
+        && request.resource.data.stars >= 1
+        && request.resource.data.stars <= 5;
+      allow read: if isSignedIn() && (
+        resource.data.customerId == request.auth.uid ||
+        resource.data.merchantId == request.auth.uid
+      );
+      allow update, delete: if false;
+    }
+    match /inventoryLots/{bagId} {
+      allow read, write: if isAdmin();
+      allow create: if isSignedIn() && request.resource.data.vendorId == request.auth.uid;
+      allow read: if isSignedIn() && resource.data.vendorId == request.auth.uid;
+      allow update: if isSignedIn()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['remainingQuantity', 'status', 'updatedAt'])
+        && request.resource.data.remainingQuantity <= resource.data.remainingQuantity
+        && request.resource.data.remainingQuantity >= 0;
+      allow delete: if false;
+    }
+    match /recoveryEvents/{orderId} {
+      allow read, write: if isAdmin();
+      allow create: if isSignedIn()
+        && request.resource.data.customerId == request.auth.uid
+        && exists(/databases/$(database)/documents/orders/$(orderId))
+        && get(/databases/$(database)/documents/orders/$(orderId)).data.customerId == request.auth.uid
+        && get(/databases/$(database)/documents/orders/$(orderId)).data.status in ['confirmed', 'completed'];
+      allow read: if isSignedIn() && (
+        resource.data.customerId == request.auth.uid ||
+        resource.data.vendorId == request.auth.uid
+      );
+      allow update, delete: if false;
+    }
+    match /occasionRequests/{requestId} {
+      allow read, write: if isAdmin();
+      allow read: if isSignedIn() && (
+        resource.data.customerId == request.auth.uid ||
+        resource.data.get('acceptedVendorId', '') == request.auth.uid
+      );
+      allow create: if isSignedIn()
+        && request.resource.data.customerId == request.auth.uid
+        && request.resource.data.requestedVendorId is string
+        && request.resource.data.requestedVendorId.size() > 0
+        && request.resource.data.people is int
+        && request.resource.data.people >= 1
+        && request.resource.data.budget is number
+        && request.resource.data.budget > 0
+        && request.resource.data.status == 'open';
+      allow update: if isSignedIn() && (
+        (
+          isVendor()
+          && resource.data.status == 'open'
+          && resource.data.requestedVendorId == request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'acceptedVendorId', 'acceptedAt'])
+          && request.resource.data.status == 'accepted'
+          && request.resource.data.acceptedVendorId == request.auth.uid
+        )
+        ||
+        (
+          resource.data.customerId == request.auth.uid
+          && resource.data.status == 'open'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+          && request.resource.data.status == 'cancelled'
+        )
+      );
+      allow delete: if false;
+    }
+    match /vendorSurprises/{surpriseId} {
+      allow read, write: if isAdmin();
+      allow create: if isVendor() && request.resource.data.vendorId == request.auth.uid;
+      allow read: if isSignedIn() && (
+        resource.data.vendorId == request.auth.uid ||
+        resource.data.customerId == request.auth.uid
+      );
+      allow update: if isSignedIn()
+        && resource.data.customerId == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['redeemed', 'redeemedAt'])
+        && request.resource.data.redeemed == true;
+      allow delete: if false;
+    }
+    match /restaurantRequests/{requestId} {
+      allow read, write: if isAdmin();
+      allow read: if true;
+      allow create: if isSignedIn()
+        && request.resource.data.requesterUid == request.auth.uid
+        && request.resource.data.get('supporterUids', []) == [];
+      allow update: if isSignedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['supporterUids'])
+        && request.resource.data.supporterUids.size() == resource.data.get('supporterUids', []).size() + 1
+        && request.resource.data.supporterUids.hasAll(resource.data.get('supporterUids', []))
+        && request.resource.data.supporterUids.hasAny([request.auth.uid])
+        && !resource.data.get('supporterUids', []).hasAny([request.auth.uid]);
+      allow delete: if false;
+    }
+    match /menuPolls/{pollId} {
+      allow read, write: if isAdmin();
+      allow read: if true;
+      allow create: if isVendor()
+        && request.resource.data.merchantId == request.auth.uid
+        && request.resource.data.options is list
+        && request.resource.data.options.size() >= 2
+        && request.resource.data.options.size() <= 3
+        && request.resource.data.get('votes', {}) == {};
+      allow update: if isSignedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votes'])
+        && request.resource.data.votes.diff(resource.data.get('votes', {})).affectedKeys().hasOnly([request.auth.uid])
+        && request.resource.data.votes[request.auth.uid] is int
+        && request.resource.data.votes[request.auth.uid] >= 0
+        && request.resource.data.votes[request.auth.uid] < resource.data.options.size()
+        && resource.data.get('isActive', true) == true;
+      allow delete: if isVendor() && resource.data.merchantId == request.auth.uid;
+    }
+    match /vendorVisitLogs/{logId} {
+      allow read, write: if isAdmin();
+      allow create: if isFieldExec() && request.resource.data.execId == request.auth.uid;
+      allow read: if isFieldExec() && resource.data.execId == request.auth.uid;
+      allow update, delete: if false;
+    }
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

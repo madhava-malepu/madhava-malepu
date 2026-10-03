@@ -241,11 +241,11 @@ async function loadVendorData(uid) {
   // Step 3: check which vendors listed a bag today
   const todayStart = todayStartMillis();
   const bagsSnap = await getDocs(query(
-    collection(db, 'foodBags'),
+    collection(db, 'bags'),
     where('createdAt', '>=', todayStart)
   )).catch(() => ({ docs: [] })); // graceful if collection name differs
 
-  const listedTodaySet = new Set(bagsSnap.docs.map(d => d.data().vendorId || d.data().uid).filter(Boolean));
+  const listedTodaySet = new Set(bagsSnap.docs.map(d => d.data().merchantId).filter(Boolean));
 
   // Step 4: load this exec's visit logs
   const visitSnap = await getDocs(query(
