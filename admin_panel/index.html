@@ -3,572 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surpl — Rescue Tonight's Best Food at Half Price</title>
-<meta name="description" content="Order restaurant-quality food bags at 50–70% off before they go to waste. Available in Jagtial, Telangana. Download the Surpl app now.">
+<title>Surpl — Jagtial's Finest Food, Every Evening</title>
+<meta name="description" content="Get exclusive daily deals from Jagtial's best restaurants. Premium food, unbeatable prices, instant pickup. Download Surpl now.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,800;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --forest: #1A4731;
-  --forest-l: #2A5D42;
-  --forest-d: #0D2A1B;
-  --cream: #FBF3E4;
-  --cream-d: #F0E6D0;
-  --amber: #F5A623;
-  --amber-d: #D4890F;
-  --clay: #C4622D;
-  --white: #FFFFFF;
-  --ink: #0D1F12;
-  --muted: #4D6B57;
-  --border: rgba(26,71,49,.12);
-  --r-sm: 12px; --r-md: 20px; --r-lg: 28px; --r-xl: 40px;
+:root{
+  --g:#1A4731;--g2:#0D2A1B;--g3:#2A5D42;--g4:#060F08;
+  --cr:#FBF3E4;--cr2:#F0E6D0;
+  --am:#F5A623;--am2:#D4890F;--am3:#FFC566;
+  --cl:#C4622D;
+  --ink:#060F08;--muted:#4D6B57;--border:rgba(26,71,49,.1);
+  --white:#fff;
+  --ease:cubic-bezier(.16,1,.3,1);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',-apple-system,sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
-img{display:block;max-width:100%}
+html{scroll-behavior:smooth;cursor:none}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cr);color:var(--ink);overflow-x:hidden}
 a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:none}
 
-/* ── Typography ── */
-.wordmark{font-family:'Fraunces',serif;font-optical-sizing:auto}
-.display{font-family:'Fraunces',serif;font-optical-sizing:auto;line-height:1.08;letter-spacing:-.02em}
-em.amber{font-style:italic;color:var(--amber)}
-em.cream{font-style:italic;color:var(--cream)}
+/* CURSOR */
+#cur{width:12px;height:12px;background:var(--am);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease);mix-blend-mode:difference}
+#cur2{width:40px;height:40px;border:1.5px solid rgba(245,166,35,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease}
 
-/* ── Nav ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:900;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;transition:all .3s ease}
-nav.scrolled{background:rgba(13,42,27,.92);backdrop-filter:blur(20px);padding:12px 24px;box-shadow:0 2px 40px rgba(0,0,0,.3)}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo-mark{width:36px;height:36px;background:var(--amber);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--forest);flex-shrink:0}
-.nav-logo span{font-size:20px;font-weight:800;color:white;font-family:'Fraunces',serif}
-.nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{color:rgba(255,255,255,.8);font-size:14px;font-weight:600;transition:color .2s}
-.nav-links a:hover{color:white}
-.nav-cta{background:var(--amber);color:var(--forest)!important;padding:10px 22px;border-radius:100px;font-weight:800!important;font-size:13px!important;transition:all .2s!important}
-.nav-cta:hover{background:white!important;transform:translateY(-1px)}
-.nav-mobile-btn{display:none;background:none;border:none;cursor:pointer;color:white;font-size:24px}
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:800;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;transition:all .4s var(--ease)}
+#nav.stuck{background:rgba(6,15,8,.93);backdrop-filter:blur(24px);padding:14px 32px;border-bottom:1px solid rgba(255,255,255,.06)}
+.nl{display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;background:var(--am);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(245,166,35,.4)}
+.logo-icon svg{width:22px;height:22px}
+.logo-text{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:white;letter-spacing:-.5px}
+.logo-dot{color:var(--am)}
+.nm{display:flex;align-items:center;gap:24px}
+.nm a{font-size:13px;font-weight:700;color:rgba(255,255,255,.7);transition:color .2s}
+.nm a:hover{color:white}
+.nav-dl{background:var(--am)!important;color:var(--g)!important;padding:10px 22px;border-radius:100px;font-weight:800!important;font-size:13px!important;box-shadow:0 4px 20px rgba(245,166,35,.35);transition:all .25s!important}
+.nav-dl:hover{transform:translateY(-2px)!important;box-shadow:0 8px 28px rgba(245,166,35,.5)!important;color:var(--g)!important}
 
-/* ── Hero ── */
-.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;background:radial-gradient(ellipse 140% 100% at 60% -10%, #2A5D42 0%, #0D2A1B 50%, #06140C 100%)}
-#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.7}
-.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(245,166,35,.18) 0%,transparent 70%);top:10%;right:5%;pointer-events:none;animation:glowPulse 4s ease-in-out infinite}
-@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.1);opacity:1}}
-.hero-inner{position:relative;max-width:1200px;margin:0 auto;padding:120px 24px 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,.15);border:1px solid rgba(245,166,35,.3);color:var(--amber);padding:8px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:24px}
-.hero-badge-dot{width:6px;height:6px;background:var(--amber);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero h1{font-size:clamp(44px,5.5vw,72px);color:white;margin-bottom:20px}
-.hero p{font-size:18px;color:rgba(255,255,255,.7);line-height:1.65;margin-bottom:36px;max-width:480px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.btn-hero-primary{background:var(--amber);color:var(--forest);padding:16px 32px;border-radius:100px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:10px;transition:all .25s;box-shadow:0 8px 30px rgba(245,166,35,.4)}
-.btn-hero-primary:hover{background:white;transform:translateY(-2px);box-shadow:0 12px 40px rgba(245,166,35,.5)}
-.btn-hero-outline{border:1.5px solid rgba(255,255,255,.3);color:white;padding:15px 28px;border-radius:100px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;transition:all .25s;backdrop-filter:blur(8px)}
-.btn-hero-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.6)}
-.hero-stat-row{display:flex;gap:32px;margin-top:48px;flex-wrap:wrap}
-.hero-stat{color:white}
-.hero-stat-num{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:var(--amber);display:block}
-.hero-stat-label{font-size:12px;color:rgba(255,255,255,.55);letter-spacing:.05em;text-transform:uppercase}
+/* HERO */
+#hero{min-height:100vh;background:radial-gradient(ellipse 160% 90% at 70% -20%,#2A5D42 0%,#0D2A1B 45%,#060F08 100%);display:flex;align-items:center;position:relative;overflow:hidden}
+#c3d{position:absolute;inset:0;width:100%;height:100%;opacity:.85}
+.h-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.13),transparent 65%);top:-10%;right:-5%;pointer-events:none;animation:gPulse 5s ease-in-out infinite}
+@keyframes gPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.h-inner{position:relative;max-width:1240px;margin:0 auto;padding:140px 40px 100px;display:grid;grid-template-columns:1fr 520px;gap:80px;align-items:center;width:100%}
+.h-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);color:var(--am3);padding:8px 16px;border-radius:100px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:28px}
+.h-badge-live{width:7px;height:7px;background:#4ADE80;border-radius:50%;animation:lv 1.4s ease-in-out infinite;box-shadow:0 0 0 0 rgba(74,222,128,.4)}
+@keyframes lv{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.h-title{font-family:'Fraunces',serif;font-size:clamp(48px,5.5vw,76px);line-height:1.04;letter-spacing:-.03em;color:white;margin-bottom:8px}
+.h-title em{font-style:italic;color:var(--am)}
+.h-line2{display:block;color:rgba(255,255,255,.5);font-size:clamp(36px,4vw,56px)}
+.h-sub{font-size:17px;color:rgba(255,255,255,.6);line-height:1.7;margin:24px 0 40px;max-width:440px}
+.h-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:52px}
+.btn-primary{background:var(--am);color:var(--g);padding:16px 34px;border-radius:100px;font-size:15px;font-weight:900;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(245,166,35,.4);transition:all .25s var(--ease);border:none}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(245,166,35,.55)}
+.btn-ghost{border:1.5px solid rgba(255,255,255,.2);color:white;padding:15px 28px;border-radius:100px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:all .25s;background:rgba(255,255,255,.04);backdrop-filter:blur(8px)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+.h-stats{display:flex;gap:40px}
+.h-stat-v{font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:var(--am);display:block;line-height:1}
+.h-stat-l{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.07em;margin-top:4px;display:block}
 
-/* Hero phone mockup */
-.hero-visual{position:relative;display:flex;justify-content:center;align-items:center}
-.phone-outer{width:260px;height:520px;background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.05));border:1.5px solid rgba(255,255,255,.15);border-radius:44px;padding:12px;position:relative;backdrop-filter:blur(20px);box-shadow:0 40px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2)}
-.phone-screen{width:100%;height:100%;background:var(--cream);border-radius:34px;overflow:hidden;position:relative}
-.phone-notch{width:80px;height:24px;background:var(--forest-d);border-radius:0 0 16px 16px;margin:0 auto;position:relative;z-index:2}
-.phone-content{padding:12px}
-.phone-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.phone-logo{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--forest)}
-.phone-cart{width:28px;height:28px;background:var(--forest);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px}
-.phone-hero-img{width:100%;height:110px;background:linear-gradient(135deg,var(--forest-l),var(--forest-d));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:10px;position:relative;overflow:hidden}
-.phone-hero-img::after{content:'🍱';font-size:48px;animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.phone-card{background:white;border-radius:14px;padding:10px;margin-bottom:8px;box-shadow:0 2px 12px rgba(26,71,49,.1)}
-.phone-card-title{font-size:11px;font-weight:700;color:var(--ink);margin-bottom:2px}
-.phone-card-sub{font-size:9px;color:var(--muted);margin-bottom:6px}
-.phone-card-row{display:flex;justify-content:space-between;align-items:center}
-.phone-price{font-size:13px;font-weight:800;color:var(--forest)}
-.phone-old-price{font-size:9px;color:var(--muted);text-decoration:line-through;margin-left:4px}
-.phone-btn{background:var(--amber);color:var(--forest);padding:4px 10px;border-radius:100px;font-size:9px;font-weight:800}
-.phone-tag{background:#E6F4ED;color:var(--forest);padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700}
-.phone-floating-badge{position:absolute;top:-20px;right:-30px;background:var(--amber);color:var(--forest);padding:8px 14px;border-radius:14px;font-size:11px;font-weight:800;box-shadow:0 8px 24px rgba(245,166,35,.4);animation:badgeBounce 2s ease-in-out infinite}
-@keyframes badgeBounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(-3deg)}}
-.phone-floating-badge2{position:absolute;bottom:-10px;left:-40px;background:white;padding:8px 12px;border-radius:12px;font-size:10px;font-weight:700;color:var(--forest);box-shadow:0 8px 24px rgba(0,0,0,.15);display:flex;align-items:center;gap:6px;animation:badgeBounce2 2.5s ease-in-out infinite}
-@keyframes badgeBounce2{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.badge2-dot{width:8px;height:8px;background:#22C55E;border-radius:50%}
+/* Hero phone */
+.h-phone-wrap{position:relative;display:flex;justify-content:center}
+.h-phone{width:272px;height:560px;background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.04));border:1.5px solid rgba(255,255,255,.14);border-radius:48px;padding:13px;box-shadow:0 60px 120px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.15);backdrop-filter:blur(20px);animation:phoneFlt 4s ease-in-out infinite}
+@keyframes phoneFlt{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.h-pscreen{width:100%;height:100%;background:var(--cr);border-radius:36px;overflow:hidden;display:flex;flex-direction:column}
+.h-pbar{height:28px;background:var(--g);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.h-pill{width:72px;height:6px;background:rgba(0,0,0,.4);border-radius:3px}
+.h-pscroll{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.pp-header{padding:12px 14px 8px;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid var(--border)}
+.pp-logo{font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:var(--g)}
+.pp-logo span{color:var(--am)}
+.pp-loc{font-size:9px;color:var(--muted);font-weight:600}
+.pp-cart{width:28px;height:28px;background:var(--am);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;position:relative}
+.pp-cart-dot{position:absolute;top:-3px;right:-3px;width:8px;height:8px;background:#EF4444;border-radius:50%;border:1.5px solid white}
+.pp-feed{padding:10px 12px;display:flex;flex-direction:column;gap:8px;flex:1;overflow:hidden}
+.pp-hero-banner{width:100%;height:76px;background:linear-gradient(135deg,var(--g3),var(--g2));border-radius:14px;display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
+.pp-banner-text{color:white}
+.pp-banner-text div:first-child{font-size:10px;opacity:.7;margin-bottom:2px}
+.pp-banner-text div:last-child{font-size:12px;font-weight:800}
+.pp-section{font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.pp-card{background:white;border-radius:12px;padding:9px;box-shadow:0 2px 10px rgba(26,71,49,.07);display:flex;gap:8px;position:relative}
+.pp-card-img{width:48px;height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.pp-card-img.c1{background:linear-gradient(135deg,#FFE5B4,#FFD080)}
+.pp-card-img.c2{background:linear-gradient(135deg,#B9F5D8,#6EE7B7)}
+.pp-card-img.c3{background:linear-gradient(135deg,#FDB5A0,#FB7185)}
+.pp-card-info{flex:1;min-width:0}
+.pp-card-name{font-size:10px;font-weight:800;color:var(--ink);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-card-vendor{font-size:8px;color:var(--muted)}
+.pp-card-bot{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.pp-price{font-size:13px;font-weight:900;color:var(--g)}
+.pp-orig{font-size:8px;color:var(--muted);text-decoration:line-through;margin-left:2px}
+.pp-add{background:var(--g);color:white;border:none;border-radius:6px;padding:4px 9px;font-size:8px;font-weight:800;cursor:none}
+.pp-tag{position:absolute;top:6px;right:6px;background:var(--am);color:var(--g);padding:2px 6px;border-radius:4px;font-size:7px;font-weight:800}
+.h-f1{position:absolute;top:30px;right:-44px;background:white;border-radius:16px;padding:10px 16px;box-shadow:0 12px 40px rgba(0,0,0,.18);font-size:11px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;animation:fb1 3s ease-in-out infinite}
+@keyframes fb1{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
+.h-f1-icon{width:28px;height:28px;background:var(--am);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.h-f2{position:absolute;bottom:40px;left:-50px;background:var(--g);color:white;border-radius:14px;padding:10px 14px;box-shadow:0 12px 32px rgba(0,0,0,.3);display:flex;align-items:center;gap:8px;font-size:10px;animation:fb2 3.5s ease-in-out infinite}
+@keyframes fb2{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.h-f2-av{width:24px;height:24px;border-radius:50%;background:var(--am);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:var(--g)}
 
-/* ── Section commons ── */
-section{padding:100px 24px}
-.section-inner{max-width:1200px;margin:0 auto}
-.section-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forest);margin-bottom:12px}
-.section-title{font-size:clamp(32px,4vw,52px);margin-bottom:16px;color:var(--ink)}
-.section-sub{font-size:17px;color:var(--muted);line-height:1.65;max-width:560px}
+/* SECTION BASE */
+section{position:relative}
+.sw{max-width:1240px;margin:0 auto;padding:0 40px}
+.slbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;display:block}
+.stitle{font-family:'Fraunces',serif;font-size:clamp(36px,4.5vw,58px);line-height:1.06;letter-spacing:-.025em;margin-bottom:16px}
+.ssub{font-size:16px;line-height:1.7;max-width:520px}
 
-/* ── How it works ── */
-.how{background:white}
-.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:60px}
-.step-card{position:relative;text-align:center;padding:40px 28px 36px;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--cream);overflow:hidden;transition:transform .3s,box-shadow .3s}
-.step-card:hover{transform:translateY(-8px);box-shadow:0 32px 64px -20px rgba(26,71,49,.2)}
-.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--forest),var(--amber))}
-.step-num{width:56px;height:56px;background:var(--forest);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:22px;font-weight:700;margin:0 auto 20px;position:relative;z-index:1}
-.step-num::after{content:'';position:absolute;inset:-6px;border:2px dashed rgba(26,71,49,.2);border-radius:50%}
-.step-emoji{font-size:48px;margin-bottom:16px;display:block}
-.step-title{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:10px}
-.step-desc{font-size:14px;color:var(--muted);line-height:1.6}
-.step-connector{position:absolute;top:76px;right:-16px;width:32px;height:2px;background:linear-gradient(90deg,var(--border),var(--amber));z-index:2}
+/* MARQUEE */
+#features{background:white;overflow:hidden}
+.feat-track{display:flex;align-items:center;gap:0;white-space:nowrap;padding:18px 0;border-bottom:1px solid var(--border);animation:scrollL 28s linear infinite}
+@keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.feat-item{display:inline-flex;align-items:center;gap:10px;padding:0 32px;font-size:13px;font-weight:700;color:var(--muted);flex-shrink:0}
+.feat-item span{font-size:18px}
+.feat-sep{width:4px;height:4px;background:var(--am);border-radius:50%;flex-shrink:0}
 
-/* ── Bags showcase ── */
-.bags{background:var(--forest-d);position:relative;overflow:hidden}
-.bags::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(245,166,35,.08),transparent 60%)}
-.bags .section-label{color:var(--amber)}
-.bags .section-title{color:white}
-.bags .section-sub{color:rgba(255,255,255,.6)}
-.bags-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
-.bag-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);overflow:hidden;transition:all .3s;backdrop-filter:blur(10px)}
-.bag-card:hover{transform:translateY(-6px);background:rgba(255,255,255,.1);border-color:rgba(245,166,35,.3);box-shadow:0 24px 48px rgba(0,0,0,.4)}
-.bag-img{height:160px;background:linear-gradient(135deg,rgba(42,93,66,.6),rgba(13,42,27,.8));display:flex;align-items:center;justify-content:center;font-size:64px;position:relative}
-.bag-discount{position:absolute;top:12px;left:12px;background:var(--amber);color:var(--forest);padding:4px 10px;border-radius:100px;font-size:11px;font-weight:800}
-.bag-body{padding:16px}
-.bag-shop{font-size:11px;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
-.bag-name{font-size:15px;font-weight:700;color:white;margin-bottom:8px}
-.bag-info{display:flex;justify-content:space-between;align-items:center}
-.bag-price{font-family:'Fraunces',serif;font-size:20px;color:var(--amber);font-weight:700}
-.bag-orig{font-size:11px;color:rgba(255,255,255,.4);text-decoration:line-through;margin-left:4px}
-.bag-pickup{font-size:11px;color:rgba(255,255,255,.55)}
-.bag-cta-row{margin-top:10px}
-.bag-btn{display:block;text-align:center;background:var(--amber);color:var(--forest);padding:10px;border-radius:10px;font-size:13px;font-weight:800;transition:all .2s}
-.bag-btn:hover{background:white}
+/* HOW IT WORKS */
+#how{padding:120px 0;background:white}
+#how .sw{display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:start}
+.how-left .slbl{color:var(--g)}
+.steps{margin-top:48px;display:flex;flex-direction:column;gap:4px}
+.step{display:flex;gap:20px;padding:20px;border-radius:20px;cursor:none;transition:all .3s var(--ease);border:1.5px solid transparent}
+.step.on{background:var(--cr);border-color:var(--border)}
+.step-num{width:44px;height:44px;border-radius:14px;background:var(--cr);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--muted);flex-shrink:0;transition:all .3s}
+.step.on .step-num{background:var(--g);border-color:var(--g);color:white}
+.step-body h4{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.step.on .step-body h4{color:var(--g)}
+.step-body p{font-size:13px;color:var(--muted);line-height:1.6}
+.how-right{position:sticky;top:120px}
+.how-phone{width:256px;height:514px;background:linear-gradient(160deg,#1A4731,#060F08);border-radius:44px;padding:11px;box-shadow:0 48px 96px rgba(26,71,49,.35);border:1px solid rgba(255,255,255,.08);margin:0 auto}
+.how-screen{width:100%;height:100%;background:var(--cr);border-radius:34px;overflow:hidden;position:relative}
+.how-panel{position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;padding:14px;opacity:0;transform:translateY(12px);transition:all .4s var(--ease);pointer-events:none}
+.how-panel.visible{opacity:1;transform:translateY(0);pointer-events:auto}
 
-/* ── Ordering process ── */
-.order-flow{background:white}
-.flow-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px}
-.flow-steps{display:flex;flex-direction:column;gap:0}
-.flow-step{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .2s;border-radius:12px;padding:20px 16px;margin-bottom:4px}
-.flow-step:hover,.flow-step.active{background:var(--cream);padding-left:20px}
-.flow-step-icon{width:52px;height:52px;border-radius:14px;background:var(--cream);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;transition:all .2s}
-.flow-step.active .flow-step-icon{background:var(--forest);border-color:var(--forest)}
-.flow-step-text h4{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:4px}
-.flow-step-text p{font-size:13px;color:var(--muted);line-height:1.5}
-.flow-visual{position:relative;display:flex;justify-content:center}
-.flow-phone{width:240px;height:480px;background:linear-gradient(160deg,#1A4731,#0D2A1B);border-radius:40px;padding:10px;box-shadow:0 40px 80px rgba(26,71,49,.3);border:1px solid rgba(255,255,255,.1)}
-.flow-screen{width:100%;height:100%;background:var(--cream);border-radius:32px;overflow:hidden}
-.flow-screen-inner{padding:16px;height:100%}
-.flow-panel{display:none;height:100%;flex-direction:column;gap:10px;animation:fadeIn .3s ease}
-.flow-panel.visible{display:flex}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+/* APP FEATURES */
+#appf{padding:120px 0;background:var(--g4);overflow:hidden}
+#appf .slbl{color:var(--am)}
+#appf .stitle{color:white}
+.appf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:64px;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.appf-cell{padding:40px 32px;background:var(--g4);transition:background .3s;position:relative;overflow:hidden}
+.appf-cell::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g3),var(--am));opacity:0;transition:opacity .3s}
+.appf-cell:hover{background:rgba(255,255,255,.04)}
+.appf-cell:hover::before{opacity:1}
+.appf-ico{font-size:40px;margin-bottom:20px;display:block;filter:drop-shadow(0 4px 12px rgba(245,166,35,.3))}
+.appf-title{font-size:17px;font-weight:800;color:white;margin-bottom:8px}
+.appf-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65}
+.appf-tag{display:inline-block;margin-top:14px;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.2);color:var(--am3);padding:4px 12px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.04em}
 
-/* ── Payment section ── */
-.payment{background:linear-gradient(135deg,var(--cream) 0%,white 100%)}
-.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:60px}
-.payment-methods{display:flex;flex-direction:column;gap:16px}
-.pay-method{display:flex;align-items:center;gap:16px;padding:20px 24px;background:white;border-radius:var(--r-md);border:1.5px solid var(--border);transition:all .25s}
-.pay-method:hover{border-color:var(--forest);box-shadow:0 8px 24px rgba(26,71,49,.1);transform:translateX(4px)}
-.pay-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.pay-icon.upi{background:#5A4FCF;color:white}
-.pay-icon.wallet{background:#F0A500;color:white}
-.pay-icon.card{background:#1A4731;color:white}
-.pay-method h4{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:2px}
-.pay-method p{font-size:12px;color:var(--muted)}
-.pay-secure-badge{display:inline-flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--border);padding:10px 18px;border-radius:100px;font-size:12px;font-weight:700;color:var(--forest);margin-top:20px}
-.payment-visual{text-align:center}
-.payment-card{background:white;border-radius:var(--r-xl);padding:36px;box-shadow:0 40px 80px -20px rgba(26,71,49,.15);border:1px solid var(--border)}
-.payment-amount{font-family:'Fraunces',serif;font-size:48px;font-weight:700;color:var(--forest);margin-bottom:4px}
-.payment-desc{font-size:13px;color:var(--muted);margin-bottom:28px}
-.payment-breakdown{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.pay-row{display:flex;justify-content:space-between;font-size:14px;padding:10px 0;border-bottom:1px solid var(--border)}
-.pay-row:last-child{border-bottom:none;font-weight:800;font-size:16px;color:var(--forest)}
-.pay-row.striked{color:var(--muted);text-decoration:line-through}
-.pay-now-btn{width:100%;padding:16px;background:var(--forest);color:white;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;transition:all .2s}
-.pay-now-btn:hover{background:var(--forest-l);transform:translateY(-1px)}
-.upi-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;justify-content:center}
-.upi-chip{background:var(--cream);border:1px solid var(--border);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;color:var(--muted)}
+/* ORDERING FLOW + PAYMENT */
+#order{padding:120px 0;background:var(--cr)}
+#order .sw{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.order-right .slbl{color:var(--g)}
+.order-steps{margin-top:44px;display:flex;flex-direction:column;gap:2px}
+.os{display:flex;gap:16px;padding:18px 20px;border-radius:16px;align-items:flex-start;transition:all .25s var(--ease);border:1.5px solid transparent}
+.os:hover{background:white;border-color:var(--border);box-shadow:0 8px 32px rgba(26,71,49,.08)}
+.os-num{width:32px;height:32px;border-radius:10px;background:var(--g);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0;font-family:'Fraunces',serif}
+.os h4{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.os p{font-size:12px;color:var(--muted);line-height:1.55}
+.os-tag{display:inline-block;background:var(--cr);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-top:6px}
+.checkout-card{background:white;border-radius:28px;padding:32px;box-shadow:0 40px 80px rgba(26,71,49,.12);border:1px solid var(--border)}
+.ck-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.ck-title{font-size:13px;font-weight:800;color:var(--ink)}
+.ck-secure{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.ck-rows{border-top:1px solid var(--border);margin-bottom:20px}
+.ck-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
+.ck-row:last-child{border-bottom:none;font-weight:800;font-size:15px;color:var(--g)}
+.ck-row .label{color:var(--muted)}
+.ck-row.save .val{color:#16A34A;font-weight:800}
+.ck-pay-btn{width:100%;padding:16px;background:var(--g);color:white;border:none;border-radius:14px;font-size:15px;font-weight:800;cursor:none;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;transition:all .25s;box-shadow:0 8px 24px rgba(26,71,49,.3)}
+.ck-pay-btn:hover{background:var(--g3);transform:translateY(-2px)}
+.ck-methods{display:flex;gap:8px;margin-top:14px;justify-content:center;flex-wrap:wrap}
+.ck-method{background:var(--cr);border:1px solid var(--border);padding:6px 12px;border-radius:8px;font-size:10px;font-weight:700;color:var(--muted)}
+.rzp-badge{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:14px;font-size:10px;color:var(--muted)}
+.rzp-logo{background:#3395FF;color:white;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:800}
 
-/* ── Vendors ── */
-.vendors{background:var(--forest);position:relative;overflow:hidden}
-.vendors::after{content:'';position:absolute;bottom:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(245,166,35,.12),transparent 70%)}
-.vendors .section-label{color:rgba(255,255,255,.5)}
-.vendors .section-title{color:white}
-.vendors .section-sub{color:rgba(255,255,255,.65)}
-.vendor-perks{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
-.perk-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:24px;border-radius:var(--r-md);transition:all .25s}
-.perk-card:hover{background:rgba(255,255,255,.1);transform:translateY(-4px)}
-.perk-icon{font-size:32px;margin-bottom:12px;display:block}
-.perk-title{font-size:15px;font-weight:800;color:white;margin-bottom:6px}
-.perk-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.55}
-.vendor-cta{margin-top:40px;display:flex;flex-wrap:wrap;gap:14px}
-.btn-vendor-primary{background:var(--amber);color:var(--forest);padding:15px 32px;border-radius:100px;font-size:15px;font-weight:800;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
-.btn-vendor-primary:hover{background:white;transform:translateY(-2px)}
-.btn-vendor-outline{border:1.5px solid rgba(255,255,255,.3);color:white;padding:14px 28px;border-radius:100px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
-.btn-vendor-outline:hover{border-color:white}
+/* PICKUP CODE */
+#code-section{padding:100px 0;background:white}
+#code-section .sw{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.code-visual{display:flex;justify-content:center}
+.code-card{background:linear-gradient(135deg,var(--g),var(--g2));border-radius:32px;padding:48px 40px;text-align:center;box-shadow:0 48px 96px rgba(26,71,49,.3);position:relative;overflow:hidden;min-width:300px}
+.code-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(245,166,35,.15),transparent 60%)}
+.code-label{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:16px}
+.code-digits{font-family:'Fraunces',serif;font-size:72px;font-weight:800;color:var(--am);letter-spacing:12px;line-height:1;position:relative;transition:all .4s var(--ease)}
+.code-shop{font-size:13px;color:rgba(255,255,255,.7);margin-top:20px}
+.code-shop strong{color:white;display:block;font-size:15px;margin-top:4px}
+.code-timer{margin-top:24px;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.08);border-radius:100px;padding:10px 20px}
+.code-timer-dot{width:8px;height:8px;background:#4ADE80;border-radius:50%;animation:lv 1.4s ease-in-out infinite}
+.code-timer-text{font-size:12px;color:rgba(255,255,255,.8);font-weight:700}
+.code-right .slbl{color:var(--g)}
+.code-facts{margin-top:36px;display:flex;flex-direction:column;gap:14px}
+.code-fact{display:flex;align-items:center;gap:14px;padding:16px 20px;background:var(--cr);border-radius:14px;border:1px solid var(--border)}
+.code-fact-icon{width:40px;height:40px;border-radius:12px;background:white;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.code-fact h5{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.code-fact p{font-size:11px;color:var(--muted)}
 
-/* ── Stats ── */
-.stats{background:var(--cream-d)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:50px}
-.stat-card{background:white;border-radius:var(--r-md);padding:36px 24px;text-align:center;border:1px solid var(--border);box-shadow:0 8px 24px rgba(26,71,49,.06);transition:transform .25s}
-.stat-card:hover{transform:translateY(-4px)}
-.stat-num{font-family:'Fraunces',serif;font-size:48px;font-weight:700;color:var(--forest);line-height:1;margin-bottom:8px}
-.stat-suffix{color:var(--amber)}
-.stat-label{font-size:13px;color:var(--muted);font-weight:600}
+/* ORDER TRACKING */
+#tracking{padding:120px 0;background:var(--g4)}
+#tracking .slbl{color:var(--am)}
+#tracking .stitle{color:white}
+#tracking .ssub{color:rgba(255,255,255,.55)}
+.track-timeline{margin-top:64px;display:flex;gap:0;position:relative}
+.track-timeline::before{content:'';position:absolute;top:28px;left:28px;right:28px;height:2px;background:rgba(255,255,255,.1);z-index:0}
+.track-node{flex:1;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
+.track-circle{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;position:relative}
+.track-node.done .track-circle{background:var(--am);border-color:var(--am);box-shadow:0 0 0 8px rgba(245,166,35,.15)}
+.track-node.active .track-circle{background:var(--g3);border-color:var(--am);animation:trackPulse 2s ease-in-out infinite}
+@keyframes trackPulse{0%,100%{box-shadow:0 0 0 8px rgba(26,71,49,.4),0 0 0 16px rgba(245,166,35,.08)}50%{box-shadow:0 0 0 12px rgba(26,71,49,.3),0 0 0 24px rgba(245,166,35,.04)}}
+.track-line{position:absolute;top:27px;left:50%;width:100%;height:2px;z-index:-1}
+.track-node:last-child .track-line{display:none}
+.track-line-fill{height:100%;background:var(--am);transition:width 1s var(--ease)}
+.track-label{font-size:12px;font-weight:700;color:rgba(255,255,255,.8);text-align:center;margin-bottom:4px}
+.track-time{font-size:10px;color:rgba(255,255,255,.4);text-align:center}
+.order-history{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.oh-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:24px;transition:all .25s}
+.oh-card:hover{background:rgba(255,255,255,.08);transform:translateY(-4px)}
+.oh-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:14px}
+.oh-shop{font-size:14px;font-weight:800;color:white}
+.oh-date{font-size:10px;color:rgba(255,255,255,.4)}
+.oh-status{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:10px;font-weight:700}
+.oh-status.done{background:rgba(74,222,128,.1);color:#4ADE80}
+.oh-status.pending{background:rgba(245,166,35,.1);color:var(--am)}
+.oh-amount{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--am)}
+.oh-saved{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
 
-/* ── Download ── */
-.download{background:linear-gradient(135deg,var(--forest-d) 0%,#1A4731 60%,#2A5D42 100%);position:relative;overflow:hidden}
-.download::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(245,166,35,.15),transparent 65%)}
-.download .section-title{color:white}
-.download .section-sub{color:rgba(255,255,255,.65)}
-.download-inner{text-align:center;position:relative}
-.download-inner .section-title{font-size:clamp(36px,5vw,64px)}
-.store-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:40px}
-.store-btn{display:flex;align-items:center;gap:14px;background:white;padding:14px 24px;border-radius:var(--r-md);min-width:200px;transition:all .25s;box-shadow:0 8px 24px rgba(0,0,0,.2)}
-.store-btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.3)}
-.store-btn-icon{font-size:32px}
-.store-btn-text small{display:block;font-size:10px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
-.store-btn-text strong{display:block;font-size:17px;color:var(--ink);font-weight:800}
-.download-phones{display:flex;justify-content:center;gap:20px;margin-top:60px;position:relative}
-.dl-phone{width:180px;height:360px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:32px;padding:8px;backdrop-filter:blur(10px)}
-.dl-phone-screen{width:100%;height:100%;background:var(--cream);border-radius:26px;overflow:hidden}
-.dl-phone:nth-child(2){transform:translateY(-24px)}
-.dl-phone:nth-child(3){transform:translateY(12px)}
+/* VENDORS */
+#vendors{padding:120px 0;background:var(--cr)}
+#vendors .slbl{color:var(--g)}
+.vendor-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.vendor-dashboard{background:white;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px rgba(26,71,49,.12);border:1px solid var(--border)}
+.vd-topbar{background:var(--g);padding:18px 24px;display:flex;justify-content:space-between;align-items:center}
+.vd-topbar-left{font-size:14px;font-weight:800;color:white}
+.vd-topbar-left span{display:block;font-size:11px;color:rgba(255,255,255,.55);font-weight:600;margin-top:1px}
+.vd-today{background:rgba(255,255,255,.1);color:var(--am);padding:6px 14px;border-radius:100px;font-size:11px;font-weight:800}
+.vd-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--border)}
+.vd-stat{padding:20px;border-right:1px solid var(--border);text-align:center}
+.vd-stat:last-child{border-right:none}
+.vd-stat-v{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--g);display:block}
+.vd-stat-l{font-size:10px;color:var(--muted);margin-top:2px}
+.vd-orders{padding:16px 20px}
+.vd-orders-title{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px}
+.vd-order-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;margin-bottom:6px;border:1px solid var(--border);background:var(--cr)}
+.vd-order-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.vd-order-icon.new{background:#FEF3C7}
+.vd-order-icon.done{background:#DCFCE7}
+.vd-order-name{flex:1;font-size:12px;font-weight:700;color:var(--ink)}
+.vd-order-sub{font-size:9px;color:var(--muted);margin-top:1px}
+.vd-order-amt{font-size:14px;font-weight:900;color:var(--g);font-family:'Fraunces',serif}
+.vd-order-code{font-size:10px;color:var(--muted);text-align:right}
+.vd-order-badge{padding:3px 8px;border-radius:6px;font-size:9px;font-weight:800}
+.vd-order-badge.new{background:#FEF3C7;color:#92400E}
+.vd-order-badge.done{background:#DCFCE7;color:#166534}
+.vendor-right .slbl{color:var(--g)}
+.vendor-perks{display:flex;flex-direction:column;gap:14px;margin-top:36px}
+.vp{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:18px;background:white;border:1.5px solid var(--border);transition:all .25s}
+.vp:hover{border-color:var(--g);box-shadow:0 12px 32px rgba(26,71,49,.1);transform:translateX(4px)}
+.vp-ico{width:48px;height:48px;border-radius:14px;background:var(--cr);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.vp h4{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.vp p{font-size:12px;color:var(--muted);line-height:1.55}
+.vendor-ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.btn-forest{background:var(--g);color:white;padding:15px 30px;border-radius:100px;font-size:14px;font-weight:800;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(26,71,49,.3);transition:all .25s;border:none}
+.btn-forest:hover{background:var(--g3);transform:translateY(-2px)}
+.btn-out-forest{border:1.5px solid var(--g);color:var(--g);padding:14px 24px;border-radius:100px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:all .25s}
+.btn-out-forest:hover{background:var(--g);color:white}
 
-/* ── Testimonials ── */
-.testimonials{background:white}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
-.testi-card{background:var(--cream);border-radius:var(--r-md);padding:28px;border:1px solid var(--border);transition:all .25s}
-.testi-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -12px rgba(26,71,49,.12)}
-.testi-stars{color:var(--amber);font-size:16px;margin-bottom:14px;letter-spacing:2px}
-.testi-text{font-size:14px;color:var(--ink);line-height:1.65;margin-bottom:20px;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:12px}
-.testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:16px;color:white;font-weight:700;flex-shrink:0}
-.testi-name{font-size:13px;font-weight:700;color:var(--ink)}
-.testi-role{font-size:11px;color:var(--muted)}
+/* STATS */
+#stats{padding:120px 0;background:white}
+.stats-head{text-align:center;margin-bottom:72px}
+.stats-head .slbl{color:var(--g);text-align:center}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:28px;overflow:hidden;border:1px solid var(--border)}
+.stat-box{background:white;padding:48px 32px;text-align:center;position:relative;overflow:hidden;transition:background .3s}
+.stat-box:hover{background:var(--cr)}
+.stat-box::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:3px;background:linear-gradient(90deg,var(--g),var(--am));transition:width .4s var(--ease)}
+.stat-box:hover::after{width:80%}
+.stat-v{font-family:'Fraunces',serif;font-size:56px;font-weight:800;line-height:1;color:var(--g);margin-bottom:8px}
+.stat-suf{color:var(--am)}
+.stat-l{font-size:13px;color:var(--muted);font-weight:600}
 
-/* ── Footer ── */
-footer{background:var(--forest-d);padding:60px 24px 32px;color:rgba(255,255,255,.7)}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
-.footer-brand p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.5);margin-top:12px;max-width:280px}
-.footer-col h4{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-.footer-col ul a{font-size:13px;color:rgba(255,255,255,.6);transition:color .2s}
-.footer-col ul a:hover{color:white}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.35)}
+/* DOWNLOAD */
+#dl{padding:0;overflow:hidden}
+.dl-inner{background:linear-gradient(135deg,var(--g2) 0%,var(--g) 50%,var(--g3) 100%);padding:120px 40px;text-align:center;position:relative;overflow:hidden}
+.dl-inner::before{content:'';position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(245,166,35,.12),transparent 65%);pointer-events:none}
+.dl-lbl{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px;display:block}
+.dl-title{font-family:'Fraunces',serif;font-size:clamp(42px,6vw,80px);line-height:1.04;letter-spacing:-.03em;color:white;margin-bottom:16px}
+.dl-title em{color:var(--am);font-style:italic}
+.dl-sub{font-size:16px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto 48px;line-height:1.7}
+.dl-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:72px}
+.dl-btn{display:flex;align-items:center;gap:14px;background:white;padding:16px 28px;border-radius:18px;min-width:210px;box-shadow:0 16px 48px rgba(0,0,0,.25);transition:all .25s}
+.dl-btn:hover{transform:translateY(-4px);box-shadow:0 28px 64px rgba(0,0,0,.35)}
+.dl-btn-ico{font-size:36px}
+.dl-btn-text small{display:block;font-size:10px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
+.dl-btn-text strong{font-size:18px;color:var(--ink);font-weight:900}
+.dl-btn.dark{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15)}
+.dl-btn.dark .dl-btn-text small,.dl-btn.dark .dl-btn-text strong{color:white}
+.dl-phones{display:flex;justify-content:center;gap:16px;align-items:flex-end}
+.dl-ph{width:150px;height:300px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.15);border-radius:28px;padding:8px;overflow:hidden}
+.dl-ph-screen{width:100%;height:100%;background:var(--cr);border-radius:22px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.dl-ph:nth-child(2){transform:translateY(-24px);width:170px;height:340px}
+.dl-ph:nth-child(3){transform:translateY(8px)}
 
-/* ── Reveal animations ── */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
-.reveal.in-view{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:.1s}
-.reveal-delay-2{transition-delay:.2s}
-.reveal-delay-3{transition-delay:.3s}
-.reveal-delay-4{transition-delay:.4s}
+/* TESTIMONIALS */
+#testi{padding:120px 0;background:var(--cr)}
+#testi .slbl{color:var(--g)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.t-card{background:white;border-radius:24px;padding:32px;border:1px solid var(--border);transition:all .3s var(--ease)}
+.t-card:hover{transform:translateY(-8px);box-shadow:0 32px 64px rgba(26,71,49,.1)}
+.t-stars{color:var(--am);font-size:14px;letter-spacing:3px;margin-bottom:16px}
+.t-text{font-size:14px;color:var(--ink);line-height:1.7;margin-bottom:20px;font-style:italic}
+.t-aut{display:flex;align-items:center;gap:12px}
+.t-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex-shrink:0}
+.t-name{font-size:13px;font-weight:800;color:var(--ink)}
+.t-role{font-size:11px;color:var(--muted)}
 
-/* ── Floating food ── */
-.floating-foods{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.food-emoji{position:absolute;font-size:32px;animation:foodFloat linear infinite;opacity:.15}
-@keyframes foodFloat{0%{transform:translateY(100vh) rotate(0deg)}100%{transform:translateY(-100px) rotate(360deg)}}
+/* FOOTER */
+footer{background:var(--g4);padding:72px 40px 32px}
+.ft-inner{max-width:1240px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:56px}
+.ft-brand p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.75;margin-top:14px;max-width:260px}
+.ft-col h5{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:18px}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.ft-col ul a{font-size:13px;color:rgba(255,255,255,.55);transition:color .2s}
+.ft-col ul a:hover{color:white}
+.ft-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(255,255,255,.25)}
 
-/* ── Mobile ── */
-@media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr;padding:100px 20px 60px;text-align:center}
-  .hero-visual{display:none}
-  .hero-stat-row{justify-content:center}
-  .hero-actions{justify-content:center}
-  .hero p{margin:0 auto 36px}
-  .steps-grid,.bags-grid{grid-template-columns:1fr}
-  .flow-grid,.payment-grid{grid-template-columns:1fr}
-  .flow-visual{display:none}
-  .vendor-perks{grid-template-columns:1fr}
+/* REVEAL */
+.rv{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}.rv.d3{transition-delay:.3s}.rv.d4{transition-delay:.4s}
+
+/* MOBILE */
+@media(max-width:960px){
+  html{cursor:auto}
+  #cur,#cur2{display:none}
+  button,a{cursor:pointer}
+  .h-inner{grid-template-columns:1fr;padding:120px 24px 72px;text-align:center}
+  .h-phone-wrap{display:none}
+  .h-stats{justify-content:center}
+  .h-actions{justify-content:center}
+  .h-sub{margin:24px auto 40px}
+  #how .sw{grid-template-columns:1fr}
+  .how-right{display:none}
+  .appf-grid{grid-template-columns:1fr}
+  #order .sw{grid-template-columns:1fr}
+  #code-section .sw{grid-template-columns:1fr}
+  .track-timeline{flex-wrap:wrap;gap:20px}
+  .track-timeline::before{display:none}
+  .order-history{grid-template-columns:1fr}
+  .vendor-grid{grid-template-columns:1fr}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .testi-grid{grid-template-columns:1fr}
-  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
-  .nav-links{display:none}
-  .nav-mobile-btn{display:block}
-  .download-phones{display:none}
+  .ft-top{grid-template-columns:1fr 1fr;gap:32px}
+  #nav .nm a:not(.nav-dl){display:none}
+  .sw{padding:0 24px}
+  .dl-inner{padding:80px 24px}
+  .dl-phones{display:none}
 }
 @media(max-width:600px){
-  section{padding:72px 20px}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .footer-top{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .ft-top{grid-template-columns:1fr}
+  .h-stats{gap:24px}
 }
 </style>
 </head>
 <body>
+<div id="cur"></div>
+<div id="cur2"></div>
 
 <!-- NAV -->
-<nav id="main-nav">
-  <div class="nav-logo">
-    <div class="nav-logo-mark">S</div>
-    <span class="wordmark">Surpl</span>
+<nav id="nav">
+  <div class="nl">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z" fill="#1A4731"/>
+        <path d="M9.5 12.5C9.5 12.5 10.5 14.5 12 14.5C13.5 14.5 14.5 12.5 14.5 12.5" stroke="#1A4731" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="10" cy="11" r="0.7" fill="#1A4731"/>
+        <circle cx="14" cy="11" r="0.7" fill="#1A4731"/>
+      </svg>
+    </div>
+    <span class="logo-text">surpl<span class="logo-dot">.</span></span>
   </div>
-  <div class="nav-links">
-    <a href="#how-it-works">How It Works</a>
-    <a href="#for-vendors">For Vendors</a>
-    <a href="#download">Download</a>
-    <a href="/admin.html" class="nav-cta">Admin →</a>
+  <div class="nm">
+    <a href="#how">How It Works</a>
+    <a href="#appf">Features</a>
+    <a href="#vendors">For Vendors</a>
+    <a href="#dl" class="nav-dl">⬇ Download</a>
   </div>
-  <button class="nav-mobile-btn" onclick="toggleMobileNav()">☰</button>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <canvas id="hero-canvas"></canvas>
-  <div class="hero-glow"></div>
-  <div class="floating-foods" id="floatingFoods"></div>
-  <div class="hero-inner">
+<section id="hero">
+  <canvas id="c3d"></canvas>
+  <div class="h-glow"></div>
+  <div class="h-inner">
     <div>
-      <div class="hero-badge">
-        <span class="hero-badge-dot"></span>
-        Live in Jagtial · Telangana
+      <div class="h-badge rv"><span class="h-badge-live"></span>Live in Jagtial, Telangana</div>
+      <h1 class="h-title rv d1">Jagtial's finest.<br><em>Every evening.</em><span class="h-line2">Unbeatable prices.</span></h1>
+      <p class="h-sub rv d2">The city's best restaurants curate exclusive daily bags — handpicked, freshly prepared, gone by night. Order in 2 minutes, pick up with your code.</p>
+      <div class="h-actions rv d3">
+        <a href="#dl" class="btn-primary">⬇ Get the App</a>
+        <a href="#how" class="btn-ghost">See How It Works</a>
       </div>
-      <h1 class="display">Rescue <em class="amber">tonight's food</em> at half the price</h1>
-      <p>Top restaurants list their surplus food bags at 50–70% off every evening. Order in seconds, pick up fresh, waste nothing.</p>
-      <div class="hero-actions">
-        <a href="#download" class="btn-hero-primary">
-          <span>⬇</span> Download the App
-        </a>
-        <a href="#how-it-works" class="btn-hero-outline">
-          See How It Works
-        </a>
-      </div>
-      <div class="hero-stat-row">
-        <div class="hero-stat"><span class="hero-stat-num" data-count="3000">0</span><span class="hero-stat-label">Active Users</span></div>
-        <div class="hero-stat"><span class="hero-stat-num" data-count="70">0</span><span class="hero-stat-label">% Max Discount</span></div>
-        <div class="hero-stat"><span class="hero-stat-num" data-count="5">0</span><span class="hero-stat-label">Min to Order</span></div>
+      <div class="h-stats rv d4">
+        <div><span class="h-stat-v" data-count="3000">0</span><span class="h-stat-l">Active Users</span></div>
+        <div><span class="h-stat-v" data-count="70">0</span><span class="h-stat-l">% Max Off</span></div>
+        <div><span class="h-stat-v" data-count="2">0</span><span class="h-stat-l">Min to Order</span></div>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="phone-outer">
-        <div class="phone-screen">
-          <div class="phone-notch"></div>
-          <div class="phone-content">
-            <div class="phone-header">
-              <span class="phone-logo wordmark">surpl</span>
-              <div class="phone-cart">🛒</div>
-            </div>
-            <div class="phone-hero-img"></div>
-            <div class="phone-card">
-              <div class="phone-card-title">Hotel Srinivas Special Bag 🍛</div>
-              <div class="phone-card-sub">📍 Bypass Road · Pickup 7–9 PM</div>
-              <div class="phone-card-row">
-                <div style="display:flex;align-items:baseline;gap:4px">
-                  <span class="phone-price">₹79</span>
-                  <span class="phone-old-price">₹250</span>
-                </div>
-                <span class="phone-btn">Add →</span>
+    <div class="h-phone-wrap rv d2">
+      <div class="h-phone">
+        <div class="h-pscreen">
+          <div class="h-pbar"><div class="h-pill"></div></div>
+          <div class="h-pscroll">
+            <div class="pp-header">
+              <div>
+                <div class="pp-logo">surpl<span>.</span></div>
+                <div class="pp-loc">📍 Jagtial, TG</div>
               </div>
+              <div class="pp-cart">🛒<div class="pp-cart-dot"></div></div>
             </div>
-            <div class="phone-card">
-              <div class="phone-card-row" style="margin-bottom:4px">
-                <span class="phone-card-title">Sri Venkateswara Tiffins</span>
-                <span class="phone-tag">⚡ 2 left</span>
-              </div>
-              <div class="phone-card-row">
-                <div style="display:flex;align-items:baseline;gap:4px">
-                  <span class="phone-price">₹59</span>
-                  <span class="phone-old-price">₹180</span>
+            <div class="pp-feed">
+              <div class="pp-hero-banner">
+                <div class="pp-banner-text">
+                  <div>Tonight's picks</div>
+                  <div>4 bags available</div>
                 </div>
-                <span class="phone-btn">Add →</span>
+                <div style="font-size:28px">🌙</div>
+              </div>
+              <div class="pp-section">Best Deals Now</div>
+              <div class="pp-card">
+                <div class="pp-card-img c1">🍛</div>
+                <div class="pp-card-info">
+                  <div class="pp-card-name">South Indian Feast Bag</div>
+                  <div class="pp-card-vendor">Hotel Srinivas · Bypass Rd</div>
+                  <div class="pp-card-bot">
+                    <div style="display:flex;align-items:baseline;gap:3px"><span class="pp-price">₹79</span><span class="pp-orig">₹250</span></div>
+                    <button class="pp-add">+ Add</button>
+                  </div>
+                </div>
+                <div class="pp-tag">68%</div>
+              </div>
+              <div class="pp-card">
+                <div class="pp-card-img c2">🥘</div>
+                <div class="pp-card-info">
+                  <div class="pp-card-name">Tiffin Morning Special</div>
+                  <div class="pp-card-vendor">Sri Venkateswara Tiffins</div>
+                  <div class="pp-card-bot">
+                    <div style="display:flex;align-items:baseline;gap:3px"><span class="pp-price">₹55</span><span class="pp-orig">₹140</span></div>
+                    <button class="pp-add">+ Add</button>
+                  </div>
+                </div>
+                <div class="pp-tag">61%</div>
+              </div>
+              <div class="pp-card">
+                <div class="pp-card-img c3">🍜</div>
+                <div class="pp-card-info">
+                  <div class="pp-card-name">Combo Thali Evening</div>
+                  <div class="pp-card-vendor">Madhu Vilas Restaurant</div>
+                  <div class="pp-card-bot">
+                    <div style="display:flex;align-items:baseline;gap:3px"><span class="pp-price">₹99</span><span class="pp-orig">₹220</span></div>
+                    <button class="pp-add">+ Add</button>
+                  </div>
+                </div>
+                <div class="pp-tag">55%</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="phone-floating-badge">🔥 67% OFF</div>
-      <div class="phone-floating-badge2"><span class="badge2-dot"></span>Just ordered!</div>
+      <div class="h-f1"><div class="h-f1-icon">🔥</div><div><div style="font-weight:900">67% OFF</div><div style="font-size:9px;color:#4D6B57;font-weight:600">Hotel Srinivas</div></div></div>
+      <div class="h-f2"><div class="h-f2-av">R</div><div><div style="font-weight:800;font-size:11px">Rahul just ordered!</div><div style="font-size:9px;opacity:.6;margin-top:1px">2 seconds ago</div></div></div>
     </div>
   </div>
 </section>
+
+<!-- MARQUEE -->
+<div id="features">
+  <div class="feat-track">
+    <span class="feat-item"><span>📱</span>Instant Ordering</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>💳</span>UPI &amp; Razorpay</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>🎟️</span>4-Digit Pickup Code</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>👛</span>Surpl Wallet</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>📦</span>Full Order Tracking</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>🏪</span>Verified Restaurants</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>⚡</span>2-Min Checkout</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>🔒</span>256-bit Secure</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>📍</span>Jagtial, TG</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>💰</span>Up to 70% Off</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>📱</span>Instant Ordering</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>💳</span>UPI &amp; Razorpay</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>🎟️</span>4-Digit Pickup Code</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>👛</span>Surpl Wallet</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>📦</span>Full Order Tracking</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>🏪</span>Verified Restaurants</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>⚡</span>2-Min Checkout</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>🔒</span>256-bit Secure</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>📍</span>Jagtial, TG</span><span class="feat-sep"></span>
+    <span class="feat-item"><span>💰</span>Up to 70% Off</span><span class="feat-sep"></span>
+  </div>
+</div>
 
 <!-- HOW IT WORKS -->
-<section class="how" id="how-it-works">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-label">Simple by design</div>
-      <h2 class="display section-title">Order in <em class="amber">3 steps.</em><br>Pick up. Enjoy. Repeat.</h2>
-      <p class="section-sub">No complicated menus, no waiting, no waste. Just great food at a fraction of the price, every evening.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card reveal reveal-delay-1">
-        <span class="step-emoji">📍</span>
-        <div class="step-num">1</div>
-        <div class="step-title">Browse tonight's bags</div>
-        <p class="step-desc">Open the app and see every restaurant near you listing surplus food bags for today. Each bag is a surprise mix of their best food.</p>
-        <div class="step-connector"></div>
-      </div>
-      <div class="step-card reveal reveal-delay-2">
-        <span class="step-emoji">💳</span>
-        <div class="step-num">2</div>
-        <div class="step-title">Pay instantly</div>
-        <p class="step-desc">Pay with UPI, Razorpay, or your Surpl wallet. One tap, fully secure. You get a unique 4-digit pickup code instantly.</p>
-        <div class="step-connector"></div>
-      </div>
-      <div class="step-card reveal reveal-delay-3">
-        <span class="step-emoji">🥡</span>
-        <div class="step-num">3</div>
-        <div class="step-title">Pick up your food</div>
-        <p class="step-desc">Head to the restaurant during the pickup window, show your code, and walk out with a full bag of quality food. That's it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BAGS -->
-<section class="bags">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-label">On the app tonight</div>
-      <h2 class="display section-title">Real restaurants.<br><em class="amber">Real savings.</em></h2>
-      <p class="section-sub">Every bag is from a verified restaurant in Jagtial. Freshly prepared, never reheated. Listed each evening, gone by night.</p>
-    </div>
-    <div class="bags-grid reveal">
-      <div class="bag-card">
-        <div class="bag-img">🍛<div class="bag-discount">68% OFF</div></div>
-        <div class="bag-body">
-          <div class="bag-shop">Hotel Srinivas</div>
-          <div class="bag-name">South Indian Feast Bag</div>
-          <div class="bag-info">
-            <div><span class="bag-price">₹79</span><span class="bag-orig">₹250</span></div>
-            <span class="bag-pickup">📦 3 left · 7–9 PM</span>
-          </div>
-          <div class="bag-cta-row"><a href="#download" class="bag-btn">Order Now →</a></div>
+<section id="how">
+  <div class="sw">
+    <div class="how-left">
+      <span class="slbl rv">Simple by design</span>
+      <h2 class="stitle rv d1">From browse<br>to <em style="font-style:italic;color:var(--am)">pickup</em><br>in 3 steps.</h2>
+      <p class="ssub rv d2" style="color:var(--muted)">No complicated menus. No waiting. Every step is designed to be faster than the last.</p>
+      <div class="steps rv d3">
+        <div class="step on" onclick="setStep(0,this)">
+          <div class="step-num">1</div>
+          <div class="step-body"><h4>Browse tonight's exclusive bags</h4><p>Open the app, see every partner restaurant near you. Each bag is curated daily — fresh, quality, limited quantities.</p></div>
         </div>
-      </div>
-      <div class="bag-card">
-        <div class="bag-img">🥘<div class="bag-discount">61% OFF</div></div>
-        <div class="bag-body">
-          <div class="bag-shop">Sri Venkateswara Tiffins</div>
-          <div class="bag-name">Morning Tiffin Surplus</div>
-          <div class="bag-info">
-            <div><span class="bag-price">₹55</span><span class="bag-orig">₹140</span></div>
-            <span class="bag-pickup">📦 5 left · 8–10 AM</span>
-          </div>
-          <div class="bag-cta-row"><a href="#download" class="bag-btn">Order Now →</a></div>
+        <div class="step" onclick="setStep(1,this)">
+          <div class="step-num">2</div>
+          <div class="step-body"><h4>Order &amp; pay instantly</h4><p>Tap, choose your bag, pay via UPI or your Surpl wallet. Full checkout in under 2 minutes, no friction at all.</p></div>
         </div>
-      </div>
-      <div class="bag-card">
-        <div class="bag-img">🍜<div class="bag-discount">55% OFF</div></div>
-        <div class="bag-body">
-          <div class="bag-shop">Madhu Vilas Restaurant</div>
-          <div class="bag-name">Combo Thali Bag</div>
-          <div class="bag-info">
-            <div><span class="bag-price">₹99</span><span class="bag-orig">₹220</span></div>
-            <span class="bag-pickup">📦 2 left · 6–8 PM</span>
-          </div>
-          <div class="bag-cta-row"><a href="#download" class="bag-btn">Order Now →</a></div>
+        <div class="step" onclick="setStep(2,this)">
+          <div class="step-num">3</div>
+          <div class="step-body"><h4>Get your unique pickup code instantly</h4><p>A 4-digit code is generated the exact moment payment clears. No delay, no waiting — it's guaranteed every time.</p></div>
+        </div>
+        <div class="step" onclick="setStep(3,this)">
+          <div class="step-num">4</div>
+          <div class="step-body"><h4>Track every order, always</h4><p>Past and current orders fully visible with shop, code, amount, and status. Crystal clear, never missing.</p></div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ORDERING FLOW (interactive) -->
-<section class="order-flow" id="ordering">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-label">The ordering experience</div>
-      <h2 class="display section-title">Every tap is<br><em class="amber">designed to delight</em></h2>
-    </div>
-    <div class="flow-grid">
-      <div class="flow-steps reveal">
-        <div class="flow-step active" onclick="setFlowStep(0,this)" data-panel="0">
-          <div class="flow-step-icon">🏠</div>
-          <div class="flow-step-text">
-            <h4>Browse the home feed</h4>
-            <p>See all available bags near you, sorted by distance and discount. Live quantities update in real time.</p>
-          </div>
-        </div>
-        <div class="flow-step" onclick="setFlowStep(1,this)" data-panel="1">
-          <div class="flow-step-icon">🛒</div>
-          <div class="flow-step-text">
-            <h4>Pick your bag & quantity</h4>
-            <p>Tap a bag to see full details — ingredients, pickup times, the shop's rating. Add to cart in one tap.</p>
-          </div>
-        </div>
-        <div class="flow-step" onclick="setFlowStep(2,this)" data-panel="2">
-          <div class="flow-step-icon">💳</div>
-          <div class="flow-step-text">
-            <h4>Pay with UPI or wallet</h4>
-            <p>Checkout through Razorpay — UPI, net banking, or your pre-loaded Surpl wallet. ₹5 platform fee only.</p>
-          </div>
-        </div>
-        <div class="flow-step" onclick="setFlowStep(3,this)" data-panel="3">
-          <div class="flow-step-icon">🎟️</div>
-          <div class="flow-step-text">
-            <h4>Show your pickup code</h4>
-            <p>A unique 4-digit code is generated the moment payment clears. Show it at the counter, collect your bag.</p>
-          </div>
-        </div>
-      </div>
-      <div class="flow-visual reveal">
-        <div class="flow-phone">
-          <div class="flow-screen">
-            <div class="flow-screen-inner">
-              <!-- Panel 0: Home -->
-              <div class="flow-panel visible" id="flow-panel-0">
-                <div style="background:var(--forest);padding:12px;border-radius:16px;color:white">
-                  <div style="font-family:'Fraunces',serif;font-size:15px;margin-bottom:4px">Good evening! 🌙</div>
-                  <div style="font-size:10px;opacity:.7">4 bags available nearby</div>
-                </div>
-                <div style="background:white;border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
-                  <div style="font-size:10px;font-weight:700;color:#4D6B57;margin-bottom:6px">⚡ BEST DEAL TONIGHT</div>
-                  <div style="font-size:12px;font-weight:800;color:#0D1F12;margin-bottom:3px">Hotel Srinivas Feast Bag</div>
-                  <div style="display:flex;justify-content:space-between;align-items:center">
-                    <div><span style="font-size:16px;font-weight:800;color:#1A4731">₹79</span> <span style="font-size:9px;color:#4D6B57;text-decoration:line-through">₹250</span></div>
-                    <span style="background:#F5A623;color:#1A4731;padding:3px 8px;border-radius:8px;font-size:9px;font-weight:800">68% OFF</span>
-                  </div>
-                </div>
-                <div style="background:white;border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
-                  <div style="font-size:11px;font-weight:700;color:#0D1F12;margin-bottom:3px">Sri Venkateshwara Tiffins</div>
-                  <div style="display:flex;justify-content:space-between;align-items:center">
-                    <div><span style="font-size:14px;font-weight:800;color:#1A4731">₹55</span> <span style="font-size:9px;color:#4D6B57;text-decoration:line-through">₹140</span></div>
-                    <span style="font-size:9px;color:#991B1B;font-weight:700">⚡ 2 left</span>
-                  </div>
-                </div>
+    <div class="how-right">
+      <div class="how-phone">
+        <div class="how-screen">
+          <div class="how-panel visible" id="hp0" style="background:var(--cr)">
+            <div style="background:var(--g);padding:12px;border-radius:14px;color:white">
+              <div style="font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;margin-bottom:2px">surpl<span style="color:var(--am)">.</span></div>
+              <div style="font-size:9px;opacity:.7">📍 Jagtial · 4 bags tonight</div>
+            </div>
+            <div style="background:white;border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+              <div style="font-size:9px;font-weight:800;color:var(--muted);margin-bottom:5px">⚡ BEST DEAL</div>
+              <div style="font-size:11px;font-weight:800;margin-bottom:3px">Hotel Srinivas Feast</div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><span style="font-size:15px;font-weight:900;color:var(--g)">₹79</span> <span style="font-size:9px;color:var(--muted);text-decoration:line-through">₹250</span></div>
+                <span style="background:var(--am);color:var(--g);padding:2px 8px;border-radius:6px;font-size:8px;font-weight:900">68% OFF</span>
               </div>
-              <!-- Panel 1: Bag detail -->
-              <div class="flow-panel" id="flow-panel-1">
-                <div style="height:80px;background:linear-gradient(135deg,#1A4731,#0D2A1B);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:40px">🍛</div>
-                <div style="background:white;border-radius:12px;padding:12px">
-                  <div style="font-size:13px;font-weight:800;color:#0D1F12;margin-bottom:2px">South Indian Feast Bag</div>
-                  <div style="font-size:10px;color:#4D6B57;margin-bottom:8px">Hotel Srinivas · Bypass Road</div>
-                  <div style="font-size:10px;color:#4D6B57;margin-bottom:10px">🕖 Pickup: 7:00 PM – 9:00 PM</div>
-                  <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid #F4F7F4">
-                    <div><span style="font-size:20px;font-weight:800;color:#1A4731">₹79</span></div>
-                    <span style="background:#1A4731;color:white;padding:6px 14px;border-radius:10px;font-size:10px;font-weight:800">Add to Cart</span>
-                  </div>
-                </div>
+            </div>
+            <div style="background:white;border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+              <div style="font-size:10px;font-weight:800;margin-bottom:3px">Sri Venkateswara</div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><span style="font-size:13px;font-weight:900;color:var(--g)">₹55</span> <span style="font-size:8px;color:var(--muted);text-decoration:line-through">₹140</span></div>
+                <span style="font-size:8px;color:#DC2626;font-weight:700">⚡ 2 left</span>
               </div>
-              <!-- Panel 2: Checkout -->
-              <div class="flow-panel" id="flow-panel-2">
-                <div style="background:white;border-radius:12px;padding:12px">
-                  <div style="font-size:12px;font-weight:800;color:#0D1F12;margin-bottom:10px">Payment Summary</div>
-                  <div style="display:flex;justify-content:space-between;font-size:11px;padding:6px 0;border-bottom:1px solid #F4F7F4"><span style="color:#4D6B57">Bag price</span><span style="font-weight:700">₹79</span></div>
-                  <div style="display:flex;justify-content:space-between;font-size:11px;padding:6px 0;border-bottom:1px solid #F4F7F4"><span style="color:#4D6B57">Platform fee</span><span style="font-weight:700">₹5</span></div>
-                  <div style="display:flex;justify-content:space-between;font-size:12px;padding:8px 0;font-weight:800;color:#1A4731"><span>Total</span><span>₹84</span></div>
-                </div>
-                <div style="background:#1A4731;border-radius:12px;padding:12px;text-align:center;color:white">
-                  <div style="font-size:11px;opacity:.7;margin-bottom:4px">Pay via</div>
-                  <div style="display:flex;gap:8px;justify-content:center">
-                    <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700">UPI</span>
-                    <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700">Wallet</span>
-                    <span style="background:rgba(255,255,255,.15);padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700">Card</span>
-                  </div>
-                </div>
-                <div style="background:#F5A623;border-radius:12px;padding:10px;text-align:center;font-size:12px;font-weight:800;color:#1A4731">Pay ₹84 →</div>
+            </div>
+          </div>
+          <div class="how-panel" id="hp1" style="background:var(--cr)">
+            <div style="background:white;border-radius:12px;padding:12px">
+              <div style="font-size:10px;font-weight:800;margin-bottom:8px">Payment Summary</div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border)"><span style="color:var(--muted)">Bag price</span><span style="font-weight:700">₹79</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border)"><span style="color:var(--muted)">Platform fee</span><span style="font-weight:700">₹5</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:11px;padding:8px 0;font-weight:900;color:var(--g)"><span>Total</span><span>₹84</span></div>
+            </div>
+            <div style="background:var(--g);border-radius:12px;padding:12px">
+              <div style="font-size:9px;color:rgba(255,255,255,.6);margin-bottom:6px">Pay with</div>
+              <div style="display:flex;gap:6px"><span style="background:rgba(255,255,255,.15);color:white;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700">UPI</span><span style="background:rgba(255,255,255,.15);color:white;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700">Wallet</span><span style="background:rgba(255,255,255,.15);color:white;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700">Card</span></div>
+            </div>
+            <div style="background:var(--am);border-radius:10px;padding:10px;text-align:center;font-size:11px;font-weight:900;color:var(--g)">Pay ₹84 Securely →</div>
+          </div>
+          <div class="how-panel" id="hp2" style="background:var(--g);align-items:center;justify-content:center;text-align:center">
+            <div style="padding:16px">
+              <div style="font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px">YOUR PICKUP CODE</div>
+              <div style="font-family:'Fraunces',serif;font-size:60px;font-weight:800;color:var(--am);letter-spacing:10px;line-height:1">4829</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:12px">Show at Hotel Srinivas</div>
+              <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.08);border-radius:100px;padding:8px 14px">
+                <div style="width:6px;height:6px;background:#4ADE80;border-radius:50%"></div>
+                <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:700">Payment confirmed ✓</span>
               </div>
-              <!-- Panel 3: Pickup code -->
-              <div class="flow-panel" id="flow-panel-3">
-                <div style="background:linear-gradient(135deg,#1A4731,#0D2A1B);border-radius:14px;padding:20px;text-align:center;color:white">
-                  <div style="font-size:11px;opacity:.7;margin-bottom:8px">YOUR PICKUP CODE</div>
-                  <div style="font-family:'Fraunces',serif;font-size:52px;font-weight:700;color:#F5A623;letter-spacing:8px">4829</div>
-                  <div style="font-size:10px;opacity:.6;margin-top:8px">Show this at Hotel Srinivas</div>
-                </div>
-                <div style="background:white;border-radius:12px;padding:12px">
-                  <div style="font-size:11px;color:#4D6B57;margin-bottom:6px">📍 Hotel Srinivas, Bypass Road</div>
-                  <div style="font-size:11px;color:#4D6B57;margin-bottom:6px">🕖 Pickup window: 7:00 – 9:00 PM</div>
-                  <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
-                    <div style="width:8px;height:8px;background:#22C55E;border-radius:50%"></div>
-                    <span style="font-size:10px;font-weight:700;color:#166534">Payment confirmed ✓</span>
-                  </div>
-                </div>
+            </div>
+          </div>
+          <div class="how-panel" id="hp3" style="background:var(--cr)">
+            <div style="background:white;padding:10px;border-radius:12px">
+              <div style="font-size:9px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">MY ORDERS</div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">
+                <div><div style="font-size:10px;font-weight:800">Hotel Srinivas</div><div style="font-size:8px;color:var(--muted)">Today · Code: 4829</div></div>
+                <div style="text-align:right"><div style="font-size:12px;font-weight:900;color:var(--g)">₹84</div><div style="font-size:8px;color:#16A34A;font-weight:700">✓ Picked up</div></div>
               </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0">
+                <div><div style="font-size:10px;font-weight:800">Sri Venkateswara</div><div style="font-size:8px;color:var(--muted)">Yesterday · Code: 2317</div></div>
+                <div style="text-align:right"><div style="font-size:12px;font-weight:900;color:var(--g)">₹60</div><div style="font-size:8px;color:#16A34A;font-weight:700">✓ Picked up</div></div>
+              </div>
+            </div>
+            <div style="background:var(--g);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:9px;color:rgba(255,255,255,.6)">Saved this month</div><div style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--am)">₹892</div></div>
+              <span style="font-size:22px">🎉</span>
             </div>
           </div>
         </div>
@@ -577,58 +600,231 @@ footer{background:var(--forest-d);padding:60px 24px 32px;color:rgba(255,255,255,
   </div>
 </section>
 
-<!-- PAYMENT -->
-<section class="payment" id="payments">
-  <div class="section-inner">
-    <div class="reveal">
-      <div class="section-label">Payments &amp; Security</div>
-      <h2 class="display section-title">Every rupee is<br><em class="amber">safe &amp; instant</em></h2>
-      <p class="section-sub">Powered by Razorpay — India's most trusted payment gateway. Pay your way, every time.</p>
+<!-- APP FEATURES -->
+<section id="appf">
+  <div class="sw">
+    <div class="rv">
+      <span class="slbl">App Features</span>
+      <h2 class="stitle">Every feature built<br>for <em style="font-style:italic;color:var(--am)">speed &amp; clarity</em></h2>
     </div>
-    <div class="payment-grid">
-      <div class="payment-methods reveal">
-        <div class="pay-method">
-          <div class="pay-icon upi">₹</div>
-          <div>
-            <h4>UPI — fastest checkout</h4>
-            <p>PhonePe, GPay, Paytm, any UPI app. Confirm in under 3 seconds.</p>
-          </div>
-        </div>
-        <div class="pay-method">
-          <div class="pay-icon wallet">👛</div>
-          <div>
-            <h4>Surpl Wallet</h4>
-            <p>Pre-load once, order instantly every time. Referral rewards land here automatically.</p>
-          </div>
-        </div>
-        <div class="pay-method">
-          <div class="pay-icon card">💳</div>
-          <div>
-            <h4>Cards &amp; Net Banking</h4>
-            <p>All major debit and credit cards accepted through Razorpay's secure gateway.</p>
-          </div>
-        </div>
-        <div class="pay-secure-badge">🔒 256-bit SSL · PCI-DSS Compliant · Powered by Razorpay</div>
+    <div class="appf-grid rv d1">
+      <div class="appf-cell">
+        <span class="appf-ico">🏠</span>
+        <div class="appf-title">Smart Home Feed</div>
+        <p class="appf-desc">Every available bag sorted by distance, discount, and time left. Live quantities — never miss a deal before it's gone.</p>
+        <span class="appf-tag">Real-time updates</span>
       </div>
-      <div class="payment-visual reveal reveal-delay-1">
-        <div class="payment-card">
-          <div class="payment-amount">₹84</div>
-          <div class="payment-desc">Hotel Srinivas · South Indian Feast Bag</div>
-          <div class="payment-breakdown">
-            <div class="pay-row"><span>Original price</span><span class="striked">₹250</span></div>
-            <div class="pay-row"><span>Bag price</span><span>₹79</span></div>
-            <div class="pay-row"><span>Platform fee</span><span>₹5</span></div>
-            <div class="pay-row"><span style="color:var(--forest)">You pay</span><span>₹84</span></div>
+      <div class="appf-cell">
+        <span class="appf-ico">💳</span>
+        <div class="appf-title">Lightning Checkout</div>
+        <p class="appf-desc">UPI, Razorpay, or pre-loaded Surpl wallet. One tap, confirmed in under 3 seconds. The fastest checkout in Jagtial.</p>
+        <span class="appf-tag">Under 2 minutes</span>
+      </div>
+      <div class="appf-cell">
+        <span class="appf-ico">🎟️</span>
+        <div class="appf-title">Instant Pickup Code</div>
+        <p class="appf-desc">A unique 4-digit code generated the exact moment payment clears. Never a delay — it is instant and guaranteed every single order.</p>
+        <span class="appf-tag">Auto-generated</span>
+      </div>
+      <div class="appf-cell">
+        <span class="appf-ico">👛</span>
+        <div class="appf-title">Surpl Wallet</div>
+        <p class="appf-desc">Pre-load once, skip entering UPI every time. Referral rewards, cashback, and promo credits all land here automatically.</p>
+        <span class="appf-tag">Instant top-up</span>
+      </div>
+      <div class="appf-cell">
+        <span class="appf-ico">📦</span>
+        <div class="appf-title">Complete Order History</div>
+        <p class="appf-desc">Every order — current and past — always visible with pickup code, shop, amount, and status. Nothing ever missing.</p>
+        <span class="appf-tag">Always accessible</span>
+      </div>
+      <div class="appf-cell">
+        <span class="appf-ico">🔔</span>
+        <div class="appf-title">Smart Notifications</div>
+        <p class="appf-desc">Alerts when your favourite restaurant lists bags, when quantities run low, and the instant your order is confirmed.</p>
+        <span class="appf-tag">Never miss out</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDERING + PAYMENT -->
+<section id="order">
+  <div class="sw">
+    <div>
+      <div class="checkout-card rv">
+        <div class="ck-top">
+          <div class="ck-title">🍛 Hotel Srinivas Feast Bag</div>
+          <div class="ck-secure">🔒 Secure</div>
+        </div>
+        <div class="ck-rows">
+          <div class="ck-row"><span class="label">Original price</span><span style="text-decoration:line-through;color:var(--muted)">₹250</span></div>
+          <div class="ck-row"><span class="label">Bag price</span><span>₹79</span></div>
+          <div class="ck-row save"><span class="label">You save</span><span class="val">₹171 🎉</span></div>
+          <div class="ck-row"><span class="label">Platform fee</span><span>₹5</span></div>
+          <div class="ck-row"><span>Total</span><span>₹84</span></div>
+        </div>
+        <button class="ck-pay-btn">🔒 Pay ₹84 — Get Pickup Code</button>
+        <div class="ck-methods">
+          <span class="ck-method">📱 UPI</span>
+          <span class="ck-method">👛 Wallet</span>
+          <span class="ck-method">💳 Card</span>
+          <span class="ck-method">🏦 Net Banking</span>
+        </div>
+        <div class="rzp-badge"><span class="rzp-logo">Razorpay</span> PCI-DSS Compliant · 256-bit SSL</div>
+      </div>
+    </div>
+    <div class="rv d1">
+      <span class="slbl">Payment &amp; Ordering</span>
+      <h2 class="stitle">Fast. Safe.<br><em style="font-style:italic;color:var(--am)">Guaranteed.</em></h2>
+      <p class="ssub" style="color:var(--muted);margin-bottom:36px">Powered by Razorpay — India's leading payment gateway. Every transaction encrypted, every order guaranteed.</p>
+      <div class="order-steps">
+        <div class="os"><div class="os-num">1</div><div><h4>Browse &amp; add to cart</h4><p>See the price clearly — what you see is what you pay. No hidden charges ever.</p><span class="os-tag">Transparent pricing</span></div></div>
+        <div class="os"><div class="os-num">2</div><div><h4>Pay with UPI, wallet, or card</h4><p>Razorpay processes all payments. UPI confirmation in 3 seconds. Surpl wallet is always instant.</p><span class="os-tag">Under 30 seconds</span></div></div>
+        <div class="os"><div class="os-num">3</div><div><h4>Code generated immediately</h4><p>Your unique 4-digit pickup code appears the instant payment clears. Also permanently in your order history.</p><span class="os-tag">Instant &amp; guaranteed</span></div></div>
+        <div class="os"><div class="os-num">4</div><div><h4>Show code, collect your bag</h4><p>Walk in during pickup window, show the code, walk out with your food. Vendor verifies in one tap.</p><span class="os-tag">30-second pickup</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PICKUP CODE -->
+<section id="code-section">
+  <div class="sw">
+    <div class="code-visual rv">
+      <div class="code-card">
+        <div class="code-label">Your Pickup Code</div>
+        <div class="code-digits" id="codeDigits">4829</div>
+        <div class="code-shop">Pick up your bag from<strong>Hotel Srinivas, Bypass Road</strong></div>
+        <div class="code-timer"><span class="code-timer-dot"></span><span class="code-timer-text">Pickup: 7:00 – 9:00 PM</span></div>
+      </div>
+    </div>
+    <div class="code-right rv d1">
+      <span class="slbl">Pickup Code System</span>
+      <h2 class="stitle">Your code is<br><em style="font-style:italic;color:var(--am)">always there.</em><br>Always instant.</h2>
+      <p class="ssub" style="color:var(--muted);margin-bottom:0">Generated the second payment clears. Always visible in order history — current and past orders, every code, forever.</p>
+      <div class="code-facts">
+        <div class="code-fact"><div class="code-fact-icon">⚡</div><div><h5>Generated instantly on payment</h5><p>The moment Razorpay confirms, your code is generated. Zero wait, zero delay, every time.</p></div></div>
+        <div class="code-fact"><div class="code-fact-icon">🔒</div><div><h5>Unique per order</h5><p>Each code is tied to your account and order. Vendors verify it in one tap on their dashboard.</p></div></div>
+        <div class="code-fact"><div class="code-fact-icon">📋</div><div><h5>Permanent in order history</h5><p>Every code lives in your order history forever. Current orders, past orders — always accessible, never missing.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER TRACKING -->
+<section id="tracking">
+  <div class="sw">
+    <div class="rv">
+      <span class="slbl">Order Tracking</span>
+      <h2 class="stitle">Know exactly where<br><em style="font-style:italic;color:var(--am)">every order stands</em></h2>
+      <p class="ssub">Current and past orders fully visible. Every detail — shop, code, amount, status — clear at a glance.</p>
+    </div>
+    <div class="track-timeline rv d1">
+      <div class="track-node done">
+        <div class="track-circle">🛒</div>
+        <div class="track-line"><div class="track-line-fill" style="width:100%"></div></div>
+        <div class="track-label">Ordered</div>
+        <div class="track-time">7:12 PM</div>
+      </div>
+      <div class="track-node done">
+        <div class="track-circle">✅</div>
+        <div class="track-line"><div class="track-line-fill" style="width:100%"></div></div>
+        <div class="track-label">Payment OK</div>
+        <div class="track-time">7:12 PM</div>
+      </div>
+      <div class="track-node done">
+        <div class="track-circle">🎟️</div>
+        <div class="track-line"><div class="track-line-fill" style="width:100%"></div></div>
+        <div class="track-label">Code Ready</div>
+        <div class="track-time">7:12 PM</div>
+      </div>
+      <div class="track-node active">
+        <div class="track-circle">🏃</div>
+        <div class="track-line"><div class="track-line-fill" style="width:0"></div></div>
+        <div class="track-label">Pickup Window</div>
+        <div class="track-time">7–9 PM</div>
+      </div>
+      <div class="track-node">
+        <div class="track-circle">🥡</div>
+        <div class="track-line"></div>
+        <div class="track-label">Picked Up</div>
+        <div class="track-time">—</div>
+      </div>
+    </div>
+    <div class="order-history rv d2">
+      <div class="oh-card">
+        <div class="oh-header"><div><div class="oh-shop">Hotel Srinivas</div><div class="oh-date">Today · Code: 4829</div></div><div class="oh-status done">✓ Picked up</div></div>
+        <div class="oh-amount">₹84</div>
+        <div class="oh-saved">Saved ₹166 · South Indian Feast</div>
+      </div>
+      <div class="oh-card">
+        <div class="oh-header"><div><div class="oh-shop">Sri Venkateswara</div><div class="oh-date">Yesterday · Code: 2317</div></div><div class="oh-status done">✓ Picked up</div></div>
+        <div class="oh-amount">₹60</div>
+        <div class="oh-saved">Saved ₹80 · Morning Tiffin</div>
+      </div>
+      <div class="oh-card">
+        <div class="oh-header"><div><div class="oh-shop">Madhu Vilas</div><div class="oh-date">2 days ago · Code: 7741</div></div><div class="oh-status pending">⏳ Active</div></div>
+        <div class="oh-amount">₹104</div>
+        <div class="oh-saved">Saved ₹116 · Combo Thali</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENDORS -->
+<section id="vendors">
+  <div class="sw">
+    <div class="vendor-grid">
+      <div class="rv">
+        <div class="vendor-dashboard">
+          <div class="vd-topbar">
+            <div class="vd-topbar-left">Hotel Srinivas <span>Vendor Dashboard</span></div>
+            <span class="vd-today">Today</span>
           </div>
-          <button class="pay-now-btn" onclick="void(0)">
-            <span>🔒</span> Pay ₹84 with UPI
-          </button>
-          <div class="upi-row">
-            <span class="upi-chip">📱 PhonePe</span>
-            <span class="upi-chip">G Pay</span>
-            <span class="upi-chip">Paytm</span>
-            <span class="upi-chip">BHIM</span>
+          <div class="vd-stats-row">
+            <div class="vd-stat"><span class="vd-stat-v">₹1,240</span><span class="vd-stat-l">Revenue</span></div>
+            <div class="vd-stat"><span class="vd-stat-v">12</span><span class="vd-stat-l">Orders</span></div>
+            <div class="vd-stat"><span class="vd-stat-v">2</span><span class="vd-stat-l">Active Bags</span></div>
           </div>
+          <div class="vd-orders">
+            <div class="vd-orders-title">Latest Orders</div>
+            <div class="vd-order-row">
+              <div class="vd-order-icon new">🆕</div>
+              <div style="flex:1"><div class="vd-order-name">Feast Bag × 1</div><div class="vd-order-sub">Rahul K. · Just now</div></div>
+              <div style="text-align:right"><div class="vd-order-amt">₹79</div><div class="vd-order-code">Code: 4829</div></div>
+              <div class="vd-order-badge new">New</div>
+            </div>
+            <div class="vd-order-row">
+              <div class="vd-order-icon done">✅</div>
+              <div style="flex:1"><div class="vd-order-name">Feast Bag × 2</div><div class="vd-order-sub">Priya D. · 14 min ago</div></div>
+              <div style="text-align:right"><div class="vd-order-amt">₹158</div><div class="vd-order-code">Code: 3301</div></div>
+              <div class="vd-order-badge done">Done</div>
+            </div>
+            <div class="vd-order-row">
+              <div class="vd-order-icon done">✅</div>
+              <div style="flex:1"><div class="vd-order-name">Feast Bag × 1</div><div class="vd-order-sub">Suresh M. · 38 min ago</div></div>
+              <div style="text-align:right"><div class="vd-order-amt">₹79</div><div class="vd-order-code">Code: 9182</div></div>
+              <div class="vd-order-badge done">Done</div>
+            </div>
+          </div>
+          <div style="padding:0 20px 16px">
+            <a href="/vendor_portal.html" style="display:block;text-align:center;background:var(--g);color:white;padding:11px;border-radius:12px;font-size:12px;font-weight:800">Open Full Dashboard →</a>
+          </div>
+        </div>
+      </div>
+      <div class="rv d1">
+        <span class="slbl">For Restaurant Partners</span>
+        <h2 class="stitle">Turn daily<br>exclusive offers<br>into <em style="font-style:italic;color:var(--am)">real revenue</em></h2>
+        <p class="ssub" style="color:var(--muted)">Partner with Surpl and list exclusive daily bags. Your vendor dashboard tracks every order, every payout, every bag — 10x clearer than any app.</p>
+        <div class="vendor-perks">
+          <div class="vp"><div class="vp-ico">💰</div><div><h4>Weekly payouts to UPI</h4><p>Your share lands in your UPI or bank account every week. Track every rupee in your dashboard.</p></div></div>
+          <div class="vp"><div class="vp-ico">📊</div><div><h4>Real-time order visibility</h4><p>Every incoming order appears instantly with the customer's pickup code for seamless verification.</p></div></div>
+          <div class="vp"><div class="vp-ico">🏪</div><div><h4>Your own vendor portal</h4><p>Manage bags, view all orders, track payouts — a full dashboard 10x better than any app.</p></div></div>
+        </div>
+        <div class="vendor-ctas">
+          <a href="mailto:surpl@surpl.in" class="btn-forest">🏪 Become a Partner</a>
+          <a href="/vendor_portal.html" class="btn-out-forest">Vendor Portal →</a>
         </div>
       </div>
     </div>
@@ -636,160 +832,94 @@ footer{background:var(--forest-d);padding:60px 24px 32px;color:rgba(255,255,255,
 </section>
 
 <!-- STATS -->
-<section class="stats">
-  <div class="section-inner">
-    <div style="text-align:center;margin-bottom:0" class="reveal">
-      <div class="section-label" style="text-align:center">Surpl by the numbers</div>
-      <h2 class="display section-title" style="text-align:center">Making a real<br><em class="amber">difference in Jagtial</em></h2>
+<section id="stats">
+  <div class="sw">
+    <div class="stats-head rv">
+      <span class="slbl">Our Impact</span>
+      <h2 class="stitle">Surpl by the <em style="font-style:italic;color:var(--am)">numbers</em></h2>
     </div>
     <div class="stats-grid">
-      <div class="stat-card reveal reveal-delay-1">
-        <div class="stat-num"><span data-count="3000" class="counter">0</span><span class="stat-suffix">+</span></div>
-        <div class="stat-label">Active Users</div>
-      </div>
-      <div class="stat-card reveal reveal-delay-2">
-        <div class="stat-num"><span data-count="10000" class="counter">0</span><span class="stat-suffix">+</span></div>
-        <div class="stat-label">Meals Rescued</div>
-      </div>
-      <div class="stat-card reveal reveal-delay-3">
-        <div class="stat-num"><span data-count="60" class="counter">0</span><span class="stat-suffix">%</span></div>
-        <div class="stat-label">Avg Savings Per Order</div>
-      </div>
-      <div class="stat-card reveal reveal-delay-4">
-        <div class="stat-num">₹<span data-count="79" class="counter">0</span></div>
-        <div class="stat-label">Avg Bag Price</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOR VENDORS -->
-<section class="vendors" id="for-vendors">
-  <div class="section-inner">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
-      <div class="reveal">
-        <div class="section-label">For Restaurant Owners</div>
-        <h2 class="display section-title" style="color:white">Turn unsold food<br>into <em class="amber">real revenue</em></h2>
-        <p class="section-sub">Stop throwing away perfectly good food at the end of each day. List your surplus on Surpl and earn money from bags that would otherwise be wasted. Free to join.</p>
-        <div class="vendor-cta">
-          <a href="mailto:surpl@surpl.in" class="btn-vendor-primary">🏪 Join as a Vendor</a>
-          <a href="/vendor_portal.html" class="btn-vendor-outline">Vendor Portal →</a>
-        </div>
-      </div>
-      <div class="vendor-perks reveal reveal-delay-1">
-        <div class="perk-card">
-          <span class="perk-icon">💰</span>
-          <div class="perk-title">Earn from surplus</div>
-          <p class="perk-desc">Set your own price. We handle payments and pass your share directly to your UPI or bank account every week.</p>
-        </div>
-        <div class="perk-card">
-          <span class="perk-icon">📱</span>
-          <div class="perk-title">Manage from your phone</div>
-          <p class="perk-desc">List a bag in under 60 seconds. See incoming orders in real time. Complete pickups with a single tap.</p>
-        </div>
-        <div class="perk-card">
-          <span class="perk-icon">📊</span>
-          <div class="perk-title">Your own dashboard</div>
-          <p class="perk-desc">Track your sales, see customer ratings, and manage your payouts — all in one place at surpl.in/vendor_portal.html.</p>
-        </div>
-        <div class="perk-card">
-          <span class="perk-icon">🌍</span>
-          <div class="perk-title">Fight food waste</div>
-          <p class="perk-desc">Every bag sold is a meal rescued. Join Jagtial's growing community of restaurants making a real environmental impact.</p>
-        </div>
-      </div>
+      <div class="stat-box rv d1"><div class="stat-v"><span class="ctr" data-n="3000">0</span><span class="stat-suf">+</span></div><div class="stat-l">Active Users</div></div>
+      <div class="stat-box rv d2"><div class="stat-v"><span class="ctr" data-n="10000">0</span><span class="stat-suf">+</span></div><div class="stat-l">Orders Fulfilled</div></div>
+      <div class="stat-box rv d3"><div class="stat-v"><span class="ctr" data-n="60">0</span><span class="stat-suf">%</span></div><div class="stat-l">Average Savings</div></div>
+      <div class="stat-box rv d4"><div class="stat-v">₹<span class="ctr" data-n="79">0</span></div><div class="stat-l">Avg Bag Price</div></div>
     </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="section-inner">
-    <div class="reveal" style="text-align:center">
-      <div class="section-label" style="text-align:center">What people say</div>
-      <h2 class="display section-title" style="text-align:center">Loved across <em class="amber">Jagtial</em></h2>
+<section id="testi">
+  <div class="sw">
+    <div class="rv">
+      <span class="slbl">Reviews</span>
+      <h2 class="stitle">Loved across<br><em style="font-style:italic;color:var(--am)">Jagtial</em></h2>
     </div>
     <div class="testi-grid">
-      <div class="testi-card reveal reveal-delay-1">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"I order from Surpl 3–4 times a week. The food is always fresh and the savings are unreal. ₹99 for a full thali that normally costs ₹280!"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">R</div>
-          <div><div class="testi-name">Rajesh K.</div><div class="testi-role">Customer · Jagtial</div></div>
-        </div>
+      <div class="t-card rv d1">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-text">"I order 3–4 times a week. The food is always fresh and the prices are unreal. ₹99 for a full thali. The app is ridiculously fast — browse, pay, get code in under 2 minutes."</p>
+        <div class="t-aut"><div class="t-av" style="background:var(--g);color:white">R</div><div><div class="t-name">Rahul K.</div><div class="t-role">Customer · Jagtial</div></div></div>
       </div>
-      <div class="testi-card reveal reveal-delay-2">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"As a restaurant owner, Surpl has been a game changer. We used to throw away ₹2,000–3,000 worth of food daily. Now we earn from it instead."</p>
-        <div class="testi-author">
-          <div class="testi-avatar">S</div>
-          <div><div class="testi-name">Srinivas M.</div><div class="testi-role">Restaurant Owner · Bypass Road</div></div>
-        </div>
+      <div class="t-card rv d2">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-text">"The vendor dashboard shows every order the moment it's placed, with the code. Payouts land every week. This has added serious revenue to our business."</p>
+        <div class="t-aut"><div class="t-av" style="background:var(--am);color:var(--g)">S</div><div><div class="t-name">Srinivas M.</div><div class="t-role">Restaurant Owner · Bypass Road</div></div></div>
       </div>
-      <div class="testi-card reveal reveal-delay-3">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"The app is so easy to use. Browse, add to cart, pay with GPay, and just show up with the code. Takes literally 2 minutes. Highly recommend!"</p>
-        <div class="testi-author">
-          <div class="testi-avatar">P</div>
-          <div><div class="testi-name">Priya D.</div><div class="testi-role">Customer · Jagtial</div></div>
-        </div>
+      <div class="t-card rv d3">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-text">"Browse, tap, pay with GPay, show the code and collect in 30 seconds. The pickup code always works — never had a single issue across 50+ orders."</p>
+        <div class="t-aut"><div class="t-av" style="background:var(--cl);color:white">P</div><div><div class="t-name">Priya D.</div><div class="t-role">Customer · Jagtial</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- DOWNLOAD -->
-<section class="download" id="download">
-  <div class="section-inner">
-    <div class="download-inner">
-      <div class="reveal">
-        <div class="section-label" style="text-align:center;color:rgba(255,255,255,.5)">Get the app</div>
-        <h2 class="display section-title">Start rescuing food<br><em class="amber">tonight</em></h2>
-        <p class="section-sub" style="margin:16px auto 0;text-align:center">Download free on Android. Browse bags, pay instantly, pick up fresh. Zero waste, massive savings.</p>
-      </div>
-      <div class="store-btns reveal reveal-delay-1">
-        <a href="https://play.google.com/store/apps/details?id=com.surpl.app" target="_blank" class="store-btn">
-          <span class="store-btn-icon">▶</span>
-          <div class="store-btn-text">
-            <small>Get it on</small>
-            <strong>Google Play</strong>
-          </div>
-        </a>
-        <a href="https://surpl.in" class="store-btn" style="background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2)">
-          <span class="store-btn-icon" style="filter:invert(1)">🌐</span>
-          <div class="store-btn-text">
-            <small style="color:rgba(255,255,255,.5)">Use on</small>
-            <strong style="color:white">Web Browser</strong>
-          </div>
-        </a>
-      </div>
-      <div class="download-phones reveal reveal-delay-2">
-        <div class="dl-phone">
-          <div class="dl-phone-screen" style="background:var(--cream);display:flex;flex-direction:column;padding:12px;gap:8px">
-            <div style="height:60px;background:linear-gradient(135deg,#1A4731,#0D2A1B);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px">🏠</div>
-            <div style="background:white;border-radius:8px;padding:8px;font-size:9px;font-weight:700">Browse Bags</div>
-            <div style="background:white;border-radius:8px;padding:8px;font-size:9px;font-weight:700;display:flex;justify-content:space-between"><span>Hotel Srinivas</span><span style="color:#1A4731">₹79</span></div>
-          </div>
+<section id="dl">
+  <div class="dl-inner">
+    <div class="rv">
+      <span class="dl-lbl">Get the app</span>
+      <h2 class="dl-title">Your city's best food.<br><em>Tonight.</em></h2>
+      <p class="dl-sub">Download free. Browse exclusive daily bags. Order in 2 minutes. Pick up with your code. It's that simple.</p>
+    </div>
+    <div class="dl-btns rv d1">
+      <a href="https://play.google.com/store/apps/details?id=com.surpl.app" target="_blank" class="dl-btn">
+        <span class="dl-btn-ico">▶</span>
+        <div class="dl-btn-text"><small>Get it on</small><strong>Google Play</strong></div>
+      </a>
+      <a href="#" class="dl-btn dark">
+        <span class="dl-btn-ico">🌐</span>
+        <div class="dl-btn-text"><small>Use on</small><strong>Web Browser</strong></div>
+      </a>
+    </div>
+    <div class="dl-phones rv d2">
+      <div class="dl-ph">
+        <div class="dl-ph-screen">
+          <div style="background:var(--g);border-radius:10px;padding:10px;margin-bottom:6px"><div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;color:white">surpl<span style="color:var(--am)">.</span></div><div style="font-size:8px;color:rgba(255,255,255,.6);margin-top:2px">Browse deals</div></div>
+          <div style="background:white;border-radius:8px;padding:8px;font-size:9px;font-weight:700;margin-bottom:4px">🍛 Hotel Srinivas · ₹79</div>
+          <div style="background:white;border-radius:8px;padding:8px;font-size:9px;font-weight:700">🥘 Sri Venkateswara · ₹55</div>
         </div>
-        <div class="dl-phone">
-          <div class="dl-phone-screen" style="background:var(--cream);display:flex;flex-direction:column;padding:12px;gap:8px">
-            <div style="background:#1A4731;border-radius:12px;padding:14px;text-align:center;color:white">
-              <div style="font-size:8px;opacity:.7;margin-bottom:4px">PICKUP CODE</div>
-              <div style="font-family:'Fraunces',serif;font-size:28px;color:#F5A623;letter-spacing:4px">4829</div>
-            </div>
-            <div style="background:white;border-radius:8px;padding:8px;font-size:9px;color:#166534;font-weight:700">✓ Payment confirmed</div>
+      </div>
+      <div class="dl-ph">
+        <div class="dl-ph-screen">
+          <div style="background:var(--g);border-radius:10px;padding:16px;text-align:center;margin-bottom:6px">
+            <div style="font-size:8px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px">PICKUP CODE</div>
+            <div style="font-family:'Fraunces',serif;font-size:40px;font-weight:800;color:var(--am);letter-spacing:6px">4829</div>
           </div>
+          <div style="background:#DCFCE7;border-radius:8px;padding:8px;font-size:9px;font-weight:700;color:#166534;margin-bottom:4px">✓ Payment confirmed</div>
+          <div style="background:white;border-radius:8px;padding:8px;font-size:9px;color:var(--muted)">Hotel Srinivas · 7–9 PM</div>
         </div>
-        <div class="dl-phone">
-          <div class="dl-phone-screen" style="background:var(--cream);display:flex;flex-direction:column;padding:12px;gap:8px">
-            <div style="background:white;border-radius:8px;padding:8px">
-              <div style="font-size:8px;font-weight:700;color:#4D6B57;margin-bottom:4px">MY ORDERS</div>
-              <div style="font-size:10px;font-weight:700">Today · ₹84</div>
-              <div style="font-size:8px;color:#1A4731">✓ Picked up</div>
-            </div>
-            <div style="background:white;border-radius:8px;padding:8px">
-              <div style="font-size:9px;color:#4D6B57">Saved ₹166 today 🎉</div>
-            </div>
+      </div>
+      <div class="dl-ph">
+        <div class="dl-ph-screen">
+          <div style="font-size:8px;font-weight:800;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">MY ORDERS</div>
+          <div style="background:white;border-radius:8px;padding:8px;margin-bottom:4px">
+            <div style="font-size:9px;font-weight:800">Hotel Srinivas</div>
+            <div style="display:flex;justify-content:space-between;margin-top:3px"><span style="font-size:8px;color:var(--muted)">Code: 4829</span><span style="font-size:9px;font-weight:800;color:var(--g)">₹84</span></div>
+          </div>
+          <div style="background:var(--g);border-radius:8px;padding:8px;text-align:center">
+            <div style="font-size:8px;color:rgba(255,255,255,.6)">Saved this month</div>
+            <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--am)">₹892</div>
           </div>
         </div>
       </div>
@@ -799,203 +929,83 @@ footer{background:var(--forest-d);padding:60px 24px 32px;color:rgba(255,255,255,
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-          <div style="width:32px;height:32px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--forest)">S</div>
-          <span class="wordmark" style="font-size:20px;color:white">Surpl</span>
+  <div class="ft-inner">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="logo-icon" style="width:34px;height:34px;border-radius:9px"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H15V15H9V21H4C3.45 21 3 20.55 3 20V9.5Z" fill="#1A4731"/><path d="M9.5 12.5C9.5 12.5 10.5 14.5 12 14.5C13.5 14.5 14.5 12.5 14.5 12.5" stroke="#1A4731" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="11" r=".7" fill="#1A4731"/><circle cx="14" cy="11" r=".7" fill="#1A4731"/></svg></div>
+          <span class="logo-text">surpl<span class="logo-dot">.</span></span>
         </div>
-        <p>Rescuing surplus food across India, one bag at a time. Currently live in Jagtial, Telangana.</p>
+        <p>Exclusive daily food deals from Jagtial's best restaurants. Order in seconds, pick up with your code.</p>
       </div>
-      <div class="footer-col">
-        <h4>Product</h4>
-        <ul>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#ordering">Ordering</a></li>
-          <li><a href="#payments">Payments</a></li>
-          <li><a href="#download">Download App</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Vendors</h4>
-        <ul>
-          <li><a href="#for-vendors">Join as Vendor</a></li>
-          <li><a href="/vendor_portal.html">Vendor Portal</a></li>
-          <li><a href="/payout-form.html">Payout Details</a></li>
-          <li><a href="mailto:surpl@surpl.in">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#">About Surpl</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-          <li><a href="/admin.html">Admin Login</a></li>
-        </ul>
-      </div>
+      <div class="ft-col"><h5>Product</h5><ul><li><a href="#how">How It Works</a></li><li><a href="#appf">App Features</a></li><li><a href="#order">Payments</a></li><li><a href="#dl">Download</a></li></ul></div>
+      <div class="ft-col"><h5>Partners</h5><ul><li><a href="#vendors">Join as Vendor</a></li><li><a href="/vendor_portal.html">Vendor Portal</a></li><li><a href="/payout-form.html">Payout Details</a></li><li><a href="mailto:surpl@surpl.in">Contact Us</a></li></ul></div>
+      <div class="ft-col"><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li><li><a href="/admin.html">Admin Login</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 Surpl. Made with ❤️ in Jagtial, Telangana.</span>
-      <span>🔒 Payments secured by Razorpay</span>
+    <div class="ft-bot">
+      <span>© 2026 Surpl. Made in Jagtial, Telangana 🇮🇳</span>
+      <span>🔒 Secured by Razorpay · PCI-DSS Compliant</span>
     </div>
   </div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ── Three.js hero canvas ──────────────────────────────────────────────────────
-(function() {
-  const canvas = document.getElementById('hero-canvas');
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-  camera.position.z = 5;
+// Custom cursor
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animC(){cx+=(mx-cx)*.15;cy+=(my-cy)*.15;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(animC)})();
 
-  function resize() {
-    const w = canvas.parentElement.clientWidth, h = canvas.parentElement.clientHeight;
-    renderer.setSize(w, h);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Floating particles
-  const geo = new THREE.BufferGeometry();
-  const COUNT = 120;
-  const positions = new Float32Array(COUNT * 3);
-  const scales = new Float32Array(COUNT);
-  for (let i = 0; i < COUNT; i++) {
-    positions[i*3]   = (Math.random() - 0.5) * 18;
-    positions[i*3+1] = (Math.random() - 0.5) * 12;
-    positions[i*3+2] = (Math.random() - 0.5) * 6;
-    scales[i] = Math.random();
-  }
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geo.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
-
-  const mat = new THREE.PointsMaterial({ color: 0xF5A623, size: 0.04, transparent: true, opacity: 0.6 });
-  const points = new THREE.Points(geo, mat);
-  scene.add(points);
-
-  // Geometric shape
-  const torusGeo = new THREE.TorusKnotGeometry(1.4, 0.3, 120, 16);
-  const torusMat = new THREE.MeshBasicMaterial({ color: 0x2A5D42, wireframe: true, transparent: true, opacity: 0.2 });
-  const torus = new THREE.Mesh(torusGeo, torusMat);
-  torus.position.set(3, 0, -2);
-  scene.add(torus);
-
-  // Sphere
-  const sphereGeo = new THREE.IcosahedronGeometry(0.8, 1);
-  const sphereMat = new THREE.MeshBasicMaterial({ color: 0xF5A623, wireframe: true, transparent: true, opacity: 0.15 });
-  const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-  sphere.position.set(-4, 2, -1);
-  scene.add(sphere);
-
-  let mouse = { x: 0, y: 0 };
-  document.addEventListener('mousemove', e => {
-    mouse.x = (e.clientX / window.innerWidth - 0.5) * 0.5;
-    mouse.y = -(e.clientY / window.innerHeight - 0.5) * 0.5;
-  });
-
-  const clock = new THREE.Clock();
-  function animate() {
-    requestAnimationFrame(animate);
-    const t = clock.getElapsedTime();
-    points.rotation.y = t * 0.03;
-    points.rotation.x = t * 0.015;
-    torus.rotation.x = t * 0.2;
-    torus.rotation.y = t * 0.15;
-    sphere.rotation.y = t * 0.25;
-    camera.position.x += (mouse.x - camera.position.x) * 0.02;
-    camera.position.y += (mouse.y - camera.position.y) * 0.02;
-    renderer.render(scene, camera);
-  }
-  animate();
+// Three.js hero
+(function(){
+  const canvas=document.getElementById('c3d');
+  if(!canvas)return;
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(55,1,0.1,100);
+  camera.position.z=6;
+  function resize(){const p=canvas.parentElement;renderer.setSize(p.clientWidth,p.clientHeight);camera.aspect=p.clientWidth/p.clientHeight;camera.updateProjectionMatrix()}
+  resize();window.addEventListener('resize',resize);
+  const pGeo=new THREE.BufferGeometry(),N=200,pos=new Float32Array(N*3);
+  for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*22;pos[i*3+1]=(Math.random()-.5)*14;pos[i*3+2]=(Math.random()-.5)*8}
+  pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xF5A623,size:.035,transparent:true,opacity:.55})));
+  const tk=new THREE.Mesh(new THREE.TorusKnotGeometry(1.6,.32,140,18),new THREE.MeshBasicMaterial({color:0x2A5D42,wireframe:true,transparent:true,opacity:.18}));
+  tk.position.set(4,0,-1.5);scene.add(tk);
+  const ico=new THREE.Mesh(new THREE.IcosahedronGeometry(1,1),new THREE.MeshBasicMaterial({color:0xF5A623,wireframe:true,transparent:true,opacity:.12}));
+  ico.position.set(-5,2,-1);scene.add(ico);
+  let mox=0,moy=0;
+  document.addEventListener('mousemove',e=>{mox=(e.clientX/innerWidth-.5)*.6;moy=-(e.clientY/innerHeight-.5)*.4});
+  const clk=new THREE.Clock();
+  (function animate(){requestAnimationFrame(animate);const t=clk.getElapsedTime();tk.rotation.x=t*.18;tk.rotation.y=t*.12;ico.rotation.y=t*.22;ico.rotation.x=t*.1;camera.position.x+=(mox-camera.position.x)*.025;camera.position.y+=(moy-camera.position.y)*.025;renderer.render(scene,camera)})();
 })();
 
-// ── Floating food emojis ─────────────────────────────────────────────────────
-(function() {
-  const container = document.getElementById('floatingFoods');
-  const emojis = ['🍛','🥘','🍜','🥗','🍱','🌮','🥙','🫓','🍲','🥞'];
-  for (let i = 0; i < 12; i++) {
-    const el = document.createElement('span');
-    el.className = 'food-emoji';
-    el.textContent = emojis[i % emojis.length];
-    el.style.left = Math.random() * 100 + '%';
-    el.style.animationDuration = (15 + Math.random() * 20) + 's';
-    el.style.animationDelay = (Math.random() * 15) + 's';
-    el.style.fontSize = (20 + Math.random() * 24) + 'px';
-    container.appendChild(el);
-  }
-})();
+// Nav sticky
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('stuck',scrollY>60));
 
-// ── Navbar scroll ────────────────────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-  document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 60);
-});
+// Reveal
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');e.target.querySelectorAll('.ctr').forEach(animCtr);io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-// ── Counter animation ────────────────────────────────────────────────────────
-function animateCounter(el) {
-  const target = parseInt(el.dataset.count);
-  const duration = 1800;
-  const step = target / (duration / 16);
-  let current = 0;
-  const timer = setInterval(() => {
-    current += step;
-    if (current >= target) { current = target; clearInterval(timer); }
-    el.textContent = Math.floor(current).toLocaleString('en-IN');
-  }, 16);
+// Counter
+function animCtr(el){
+  const target=+el.dataset.n,dur=2000;let start=null;
+  (function step(ts){if(!start)start=ts;const p=Math.min((ts-start)/dur,1),ease=1-Math.pow(1-p,4);el.textContent=Math.floor(ease*target).toLocaleString('en-IN');if(p<1)requestAnimationFrame(step)})(performance.now());
 }
+setTimeout(()=>document.querySelectorAll('.h-stat-v[data-count]').forEach(el=>{
+  const target=+el.dataset.count,dur=1800;let start=null;
+  (function step(ts){if(!start)start=ts;const p=Math.min((ts-start)/dur,1),ease=1-Math.pow(1-p,4);el.textContent=Math.floor(ease*target).toLocaleString('en-IN');if(p<1)requestAnimationFrame(step)})(performance.now());
+}),800);
 
-// ── Intersection observer ────────────────────────────────────────────────────
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('in-view');
-      const counters = e.target.querySelectorAll('.counter,[data-count]');
-      counters.forEach(c => animateCounter(c));
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.15 });
+// How-it-works step switcher
+let activeStep=0;
+window.setStep=function(i,el){document.querySelectorAll('.step').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.how-panel').forEach(p=>p.classList.remove('visible'));el.classList.add('on');const pan=document.getElementById('hp'+i);if(pan)pan.classList.add('visible');activeStep=i};
+setInterval(()=>{const steps=document.querySelectorAll('.step');activeStep=(activeStep+1)%steps.length;if(steps[activeStep])setStep(activeStep,steps[activeStep])},3500);
 
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-// Hero counters fire immediately
-setTimeout(() => {
-  document.querySelectorAll('.hero-stat-num[data-count]').forEach(animateCounter);
-}, 600);
-
-// ── Flow step interaction ────────────────────────────────────────────────────
-window.setFlowStep = function(index, el) {
-  document.querySelectorAll('.flow-step').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.flow-panel').forEach(p => p.classList.remove('visible'));
-  el.classList.add('active');
-  document.getElementById('flow-panel-' + index).classList.add('visible');
-};
-
-// Auto-cycle flow steps
-let flowStep = 0;
-setInterval(() => {
-  flowStep = (flowStep + 1) % 4;
-  const steps = document.querySelectorAll('.flow-step');
-  if (steps[flowStep]) setFlowStep(flowStep, steps[flowStep]);
-}, 3000);
-
-// ── Mobile nav ───────────────────────────────────────────────────────────────
-window.toggleMobileNav = function() {
-  const nav = document.getElementById('main-nav');
-  const links = nav.querySelector('.nav-links');
-  if (links.style.display === 'flex') {
-    links.style.display = '';
-  } else {
-    links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(13,42,27,.97);padding:20px 24px;gap:16px;backdrop-filter:blur(20px)';
-  }
-};
+// Animated pickup code cycle
+const codes=['4829','7341','2056','9183','6412'];let ci=0;
+setInterval(()=>{ci=(ci+1)%codes.length;const el=document.getElementById('codeDigits');if(el){el.style.opacity='0';el.style.transform='translateY(-10px)';setTimeout(()=>{el.textContent=codes[ci];el.style.transition='all .4s ease';el.style.opacity='1';el.style.transform='none'},320)}},4000);
 </script>
 </body>
 </html>
