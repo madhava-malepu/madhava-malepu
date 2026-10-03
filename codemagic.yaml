@@ -20,6 +20,7 @@ workflows:
         bundle_identifier: com.surpl.app
       vars:
         APP_STORE_APPLE_ID: "0000000000"   # replace with the app's Apple ID from App Store Connect
+        REQUIRE_REAL_FIREBASE: "1"         # never ship a build with the placeholder Firebase file
     scripts:
       - name: Inject credentials
         script: bash scripts/ios-setup.sh

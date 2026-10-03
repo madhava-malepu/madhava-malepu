@@ -13,7 +13,24 @@ if [[ -n "${GOOGLE_SERVICE_INFO_PLIST_B64:-}" ]]; then
   echo "$GOOGLE_SERVICE_INFO_PLIST_B64" | base64 --decode > "$PLIST"
 fi
 if [[ ! -f "$PLIST" ]]; then
-  echo "⚠ $PLIST missing — building with placeholders (compiles, but Firebase won't connect)."
+  if [[ "${REQUIRE_REAL_FIREBASE:-0}" == "1" ]]; then
+    echo "✗ $PLIST missing and REQUIRE_REAL_FIREBASE=1 — refusing to build a release that cannot reach Firebase."
+    exit 1
+  fi
+  echo "⚠ $PLIST missing — writing a placeholder so the compile check can run. This build cannot reach Firebase."
+  cat > "$PLIST" <<'PL'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>API_KEY</key><string>placeholder</string>
+  <key>GCM_SENDER_ID</key><string>000000000000</string>
+  <key>PLIST_VERSION</key><string>1</string>
+  <key>BUNDLE_ID</key><string>com.surpl.app</string>
+  <key>PROJECT_ID</key><string>placeholder</string>
+  <key>STORAGE_BUCKET</key><string>placeholder.appspot.com</string>
+  <key>GOOGLE_APP_ID</key><string>1:000000000000:ios:0000000000000000</string>
+</dict></plist>
+PL
   REV="com.googleusercontent.apps.placeholder"; ENC="app-placeholder"
 else
   read_key() { /usr/libexec/PlistBuddy -c "Print :$1" "$PLIST" 2>/dev/null || python3 -c "import plistlib,sys;print(plistlib.load(open('$PLIST','rb')).get('$1',''))"; }
