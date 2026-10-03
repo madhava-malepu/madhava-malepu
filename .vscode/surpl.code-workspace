@@ -1,0 +1,26 @@
+{
+  "folders": [
+    { "name": "📱 Mobile App  (Flutter)",         "path": ".."             },
+    { "name": "🖥️  Admin Dashboard",              "path": "../admin_panel" },
+    { "name": "🌐 Website  (surpl.in)",            "path": "../Website"     },
+    { "name": "⚡ Cloud Functions  (Backend)",     "path": "../functions"   }
+  ],
+  "settings": {
+    "workbench.colorCustomizations": {
+      "titleBar.activeBackground": "#1A4731",
+      "titleBar.activeForeground": "#FBF3E4",
+      "titleBar.inactiveBackground": "#13351f",
+      "titleBar.inactiveForeground": "#c8bfb2",
+      "activityBar.background": "#1A4731",
+      "activityBar.foreground": "#FBF3E4"
+    },
+    "files.exclude": {
+      "**/.dart_tool": true,
+      "**/build": true,
+      "**/.flutter-plugins": true,
+      "**/.flutter-plugins-dependencies": true
+    },
+    "editor.formatOnSave": true,
+    "dart.flutterSdkPath": null
+  }
+}

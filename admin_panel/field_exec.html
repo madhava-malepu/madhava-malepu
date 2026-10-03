@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Surpl Field Visits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F6F3EC;min-height:100vh;color:#17281B;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.container{max-width:480px;margin:0 auto;padding:20px}
+.card{background:white;border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 1px 2px rgba(23,40,27,.04),0 12px 28px -20px rgba(26,71,49,.2)}
+.wordmark{font-family:'Fraunces',serif;font-optical-sizing:auto}
+.input{width:100%;padding:12px 14px;border:1.5px solid #D4E8D4;border-radius:10px;font-size:16px;outline:none;margin-bottom:12px;font-family:inherit}
+.input:focus{border-color:#1A4731}
+.btn{width:100%;padding:14px;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn-primary{background:#1A4731;color:white}
+.btn-primary:active{background:#123420}
+.btn-outline{background:white;color:#1A4731;border:1.5px solid #1A4731}
+.btn-amber{background:#F5A623;color:#1A4731}
+.btn-sm{padding:9px 14px;font-size:13px;width:auto}
+.error{color:#DC2626;font-size:13px;margin-bottom:10px}
+.vendor-row{padding:14px 0;border-bottom:1px solid #F4F7F4}
+.vendor-row:last-child{border-bottom:none}
+.badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;display:inline-block}
+.badge-warn{background:#FEF2F2;color:#991B1B}
+.badge-ok{background:#E6F4ED;color:#1A4731}
+.badge-neutral{background:#F4F7F4;color:#4D6B57}
+h1{font-size:22px;margin-bottom:4px}
+.sub{font-size:13px;color:#4D6B57;margin-bottom:16px}
+#recaptcha-container{margin-bottom:12px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tab-btn{flex:1;padding:10px;border-radius:10px;border:1.5px solid #D4E8D4;background:white;color:#4D6B57;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.tab-btn.active{background:#1A4731;color:white;border-color:#1A4731}
+.action-row{display:flex;gap:8px;margin-top:8px}
+.action-btn{flex:1;padding:9px;border-radius:8px;border:1.5px solid #D4E8D4;background:#F6F3EC;color:#1A4731;font-size:12px;font-weight:700;text-align:center;text-decoration:none;display:block}
+.loading-wrap{padding:40px;text-align:center;color:#4D6B57}
+.spinner{width:28px;height:28px;border:3px solid #D4E8D4;border-top-color:#1A4731;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="container" style="padding-top:60px">
+  <div class="card">
+    <h1 class="wordmark">Surpl Field Visits</h1>
+    <div class="sub">Sign in with your registered phone number</div>
+    <div id="loginError" class="error"></div>
+    <div id="phoneStep">
+      <input class="input" type="tel" id="phoneInput" placeholder="10-digit phone number">
+      <div id="recaptcha-container"></div>
+      <button class="btn btn-primary" onclick="sendOtp()">Send Code</button>
+    </div>
+    <div id="otpStep" style="display:none">
+      <input class="input" type="text" id="otpInput" placeholder="6-digit code" inputmode="numeric">
+      <button class="btn btn-primary" onclick="verifyOtp()">Verify &amp; Sign In</button>
+      <button class="btn btn-outline" style="margin-top:10px" onclick="backToPhone()">Use a different number</button>
+    </div>
+  </div>
+</div>
+
+<div id="loadingScreen" class="container" style="display:none;padding-top:60px">
+  <div class="card">
+    <div class="loading-wrap"><div class="spinner"></div>Loading your vendor list…</div>
+  </div>
+</div>
+
+<div id="appShell" class="container" style="display:none">
+  <div class="card" style="display:flex;justify-content:space-between;align-items:center">
+    <div>
+      <h1 style="font-size:18px" class="wordmark">Field Visits</h1>
+      <div class="sub" style="margin-bottom:0" id="appSubtitle">Vendors needing a check-in show first</div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="doSignOut()">Sign Out</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabVendorsBtn" onclick="switchTab('vendors')">Existing Vendors</button>
+    <button class="tab-btn" id="tabOutreachBtn" onclick="switchTab('outreach')">New Restaurants</button>
+  </div>
+
+  <input class="input" type="text" id="listSearch" placeholder="Search by name or area…" oninput="onSearchInput()" style="margin-bottom:14px">
+
+  <div id="vendorListCard" class="card">
+    <div class="sub">Loading…</div>
+  </div>
+</div>
+
+<div id="checkinScreen" class="container" style="display:none">
+  <div class="card">
+    <button class="btn btn-outline btn-sm" style="margin-bottom:14px" onclick="backToList()">← Back</button>
+    <h1 id="checkinVendorName" style="font-size:18px"></h1>
+    <div class="sub" id="checkinVendorMeta"></div>
+    <div class="action-row" id="checkinActionRow" style="margin-bottom:14px"></div>
+    <div id="checkinLastVisit" class="sub"></div>
+    <div id="checkinError" class="error"></div>
+
+    <div class="sub" style="font-weight:700;margin-top:10px">What happened at this visit?</div>
+    <div id="checkinOutcomeButtons"></div>
+
+    <div class="sub" style="font-weight:700;margin-top:14px">Notes (optional)</div>
+    <textarea class="input" id="checkinNotes" rows="3" style="resize:vertical" placeholder="Anything worth remembering for next time"></textarea>
+    <button class="btn btn-outline btn-sm" id="checkinSaveNoteBtn" style="display:none;margin-top:4px" onclick="saveOutreachNoteOnly()">Save Note Only (no status change)</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, getDocs, doc, getDoc, setDoc, updateDoc,
+  query, where, orderBy, limit, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyA6EQChPz0nVd8VZtODQ7Qke855-8ttP04",
+  authDomain:"surpl-app.firebaseapp.com",
+  projectId:"surpl-app",
+  storageBucket:"surpl-app.firebasestorage.app",
+  messagingSenderId:"165451396509",
+  appId:"1:165451396509:web:1eca2b0c4729e126ebab74"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let _confirmationResult = null;
+let _currentUid = null;
+let _vendors = [];
+let _outreachEntries = [];
+let _activeTab = 'vendors';
+let _activeVendor = null;
+let _activeOutreach = null;
+
+function escHtml(s) {
+  return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function timeAgo(ms) {
+  if (!ms) return null;
+  const hours = (Date.now() - ms) / 3600000;
+  if (hours < 24) return 'today';
+  const days = Math.floor(hours / 24);
+  return days === 1 ? 'yesterday' : `${days} days ago`;
+}
+function mapsUrl(v) {
+  if (v.shopLat != null && v.shopLng != null) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${v.shopLat},${v.shopLng}`;
+  }
+  const q = encodeURIComponent(`${v.shopName||''} ${v.shopAddress||v.address||v.shopArea||''} ${v.city||''} Jagtial`);
+  return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}
+function telUrl(phone) {
+  const d = (phone||'').replace(/\D/g,'');
+  return d ? `tel:${d}` : null;
+}
+
+function todayStartMillis() {
+  // IST = UTC+5:30 = +19800000ms
+  const now = Date.now();
+  return Math.floor((now + 19800000) / 86400000) * 86400000 - 19800000;
+}
+
+// ─── Auth ───────────────────────────────────────────────────────────────────
+
+window.sendOtp = async function() {
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  const raw = document.getElementById('phoneInput').value.replace(/\D/g,'');
+  if (!/^[6-9]\d{9}$/.test(raw)) { errEl.textContent = 'Enter a valid 10-digit phone number.'; return; }
+  const phone = '+91' + raw;
+  try {
+    if (!window._recaptchaVerifier) {
+      window._recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+    }
+    _confirmationResult = await signInWithPhoneNumber(auth, phone, window._recaptchaVerifier);
+    document.getElementById('phoneStep').style.display = 'none';
+    document.getElementById('otpStep').style.display = 'block';
+  } catch(e) {
+    // RecaptchaVerifier is single-use — clear it so the next attempt gets a fresh one
+    try { window._recaptchaVerifier?.clear(); } catch (_) {}
+    window._recaptchaVerifier = null;
+    errEl.textContent = 'Could not send code: ' + (e.message||'try again');
+  }
+};
+
+window.verifyOtp = async function() {
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  const code = document.getElementById('otpInput').value.trim();
+  if (!code) { errEl.textContent = 'Enter the code you received.'; return; }
+  if (!_confirmationResult) {
+    errEl.textContent = 'Your code has expired or the page was reloaded — tap "Use a different number" and resend.';
+    return;
+  }
+  try {
+    await _confirmationResult.confirm(code);
+  } catch(e) {
+    const ec = e.code || '';
+    errEl.textContent = ec.includes('invalid-verification-code')
+      ? 'Incorrect code — please check the digits and try again.'
+      : ec.includes('code-expired') || ec.includes('session-expired')
+        ? 'That code expired — tap "Use a different number" and resend.'
+        : 'Could not verify: ' + (e.message || 'try again');
+  }
+};
+
+window.backToPhone = function() {
+  document.getElementById('phoneStep').style.display = 'block';
+  document.getElementById('otpStep').style.display = 'none';
+  document.getElementById('loginError').textContent = '';
+};
+
+window.doSignOut = async function() {
+  await signOut(auth);
+  location.reload();
+};
+
+// ─── Data loading (direct Firestore — no Cloud Functions required) ──────────
+
+async function loadVendorData(uid) {
+  // Step 1: verify this user has isFieldExec:true
+  const userSnap = await getDoc(doc(db, 'users', uid));
+  if (!userSnap.exists() || !userSnap.data().isFieldExec) {
+    throw new Error("field access: not a field exec");
+  }
+
+  // Step 2: load all approved vendors
+  const vendorSnap = await getDocs(query(
+    collection(db, 'users'),
+    where('isVendor', '==', true),
+    where('approvalStatus', '==', 'approved')
+  ));
+
+  const vendors = vendorSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+  // Step 3: check which vendors listed a bag today
+  const todayStart = todayStartMillis();
+  const bagsSnap = await getDocs(query(
+    collection(db, 'bags'),
+    where('createdAt', '>=', todayStart)
+  )).catch(() => ({ docs: [] })); // graceful if collection name differs
+
+  const listedTodaySet = new Set(bagsSnap.docs.map(d => d.data().merchantId).filter(Boolean));
+
+  // Step 4: load this exec's visit logs
+  const visitSnap = await getDocs(query(
+    collection(db, 'vendorVisitLogs'),
+    where('execId', '==', uid),
+    orderBy('visitedAt', 'desc'),
+    limit(500)
+  )).catch(() => ({ docs: [] }));
+
+  // Build per-vendor "last visit by me"
+  const lastVisitMap = {};
+  for (const d of visitSnap.docs) {
+    const v = d.data();
+    if (!lastVisitMap[v.vendorId]) {
+      const ms = v.visitedAt?.toMillis ? v.visitedAt.toMillis()
+        : v.visitedAt?.seconds ? v.visitedAt.seconds * 1000 : null;
+      lastVisitMap[v.vendorId] = { lastVisitMillis: ms, lastVisitOutcome: v.outcome };
+    }
+  }
+
+  // Merge
+  const enriched = vendors.map(v => ({
+    ...v,
+    listedToday: listedTodaySet.has(v.id),
+    ...(lastVisitMap[v.id] || { lastVisitMillis: null, lastVisitOutcome: null }),
+  }));
+
+  // Sort: vendors not listed today first, then by last visit (never visited first)
+  enriched.sort((a, b) => {
+    if (a.listedToday !== b.listedToday) return a.listedToday ? 1 : -1;
+    if (!a.lastVisitMillis && b.lastVisitMillis) return -1;
+    if (a.lastVisitMillis && !b.lastVisitMillis) return 1;
+    return (a.lastVisitMillis||0) - (b.lastVisitMillis||0);
+  });
+
+  return enriched;
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    document.getElementById('loginScreen').style.display = 'block';
+    document.getElementById('appShell').style.display = 'none';
+    document.getElementById('loadingScreen').style.display = 'none';
+    return;
+  }
+  _currentUid = user.uid;
+
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('loadingScreen').style.display = 'block';
+
+  // Record this login so the admin's "grant access" panel can find this user
+  try {
+    await setDoc(doc(db, 'users', _currentUid), {
+      phoneNumber: user.phoneNumber || '',
+      lastFieldExecLoginAt: serverTimestamp(),
+    }, { merge: true });
+  } catch (_) {}
+
+  try {
+    _vendors = await loadVendorData(_currentUid);
+
+    // Load outreach tracker
+    const outreachSnap = await getDocs(collection(db, 'vendorOutreachTracker')).catch(() => ({ docs: [] }));
+    _outreachEntries = outreachSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('appShell').style.display = 'block';
+    renderActiveList();
+  } catch(e) {
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('loginError').textContent =
+      e.message && e.message.includes('field access')
+        ? "This account isn't set up for field visits. Ask your admin to grant you access from the Surpl admin panel."
+        : 'Could not load data: ' + (e.message || 'unknown error');
+    document.getElementById('loginScreen').style.display = 'block';
+    await signOut(auth);
+  }
+});
+
+// ─── UI ─────────────────────────────────────────────────────────────────────
+
+window.switchTab = function(tab) {
+  _activeTab = tab;
+  document.getElementById('tabVendorsBtn').classList.toggle('active', tab==='vendors');
+  document.getElementById('tabOutreachBtn').classList.toggle('active', tab==='outreach');
+  document.getElementById('appSubtitle').textContent = tab==='vendors'
+    ? 'Vendors needing a check-in show first'
+    : 'Restaurants not yet on Surpl — contact and log the outcome';
+  document.getElementById('listSearch').value = '';
+  renderActiveList();
+};
+
+window.onSearchInput = function() { renderActiveList(); };
+
+function renderActiveList() {
+  if (_activeTab === 'vendors') renderVendorList();
+  else renderOutreachListExec();
+}
+
+function renderVendorList() {
+  const el = document.getElementById('vendorListCard');
+  const search = document.getElementById('listSearch').value.toLowerCase();
+  const filtered = _vendors.filter(v =>
+    !search ||
+    (v.shopName||'').toLowerCase().includes(search) ||
+    (v.shopArea||'').toLowerCase().includes(search) ||
+    (v.ownerName||'').toLowerCase().includes(search)
+  );
+  if (filtered.length === 0) {
+    el.innerHTML = '<div style="padding:16px;color:#4D6B57;font-size:13px">No vendors match.</div>';
+    return;
+  }
+  el.innerHTML = filtered.map((v) => {
+    const idx = _vendors.indexOf(v);
+    const lastVisit = timeAgo(v.lastVisitMillis);
+    return `
+    <div class="vendor-row" onclick="openVendorCheckin(${idx})" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div style="min-width:0">
+          <div style="font-weight:700">${escHtml(v.shopName||'Unnamed')}</div>
+          <div class="sub" style="margin-bottom:0">${escHtml(v.ownerName||'')}${v.shopArea?' · '+escHtml(v.shopArea):''}</div>
+          ${lastVisit
+            ? `<div class="sub" style="margin-bottom:0;color:#4D6B57">Last visited: ${lastVisit}</div>`
+            : `<div class="sub" style="margin-bottom:0;color:#B45309">Not yet visited by you</div>`}
+        </div>
+        <span class="badge ${v.listedToday?'badge-ok':'badge-warn'}" style="flex-shrink:0">${v.listedToday?'Listed today':'Not listed today'}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderOutreachListExec() {
+  const el = document.getElementById('vendorListCard');
+  const search = document.getElementById('listSearch').value.toLowerCase();
+  const filtered = _outreachEntries.filter(e =>
+    !search ||
+    (e.name||'').toLowerCase().includes(search) ||
+    (e.city||'').toLowerCase().includes(search)
+  );
+  if (filtered.length === 0) {
+    el.innerHTML = '<div style="padding:16px;color:#4D6B57;font-size:13px">No restaurants match.</div>';
+    return;
+  }
+  el.innerHTML = filtered.map((e) => {
+    const idx = _outreachEntries.indexOf(e);
+    const statusBadge = e.manualStatusOverride === 'registered'
+      ? '<span class="badge badge-ok">Registered</span>'
+      : e.manualStatusOverride === 'not_registered'
+        ? '<span class="badge badge-warn">Declined</span>'
+        : '<span class="badge badge-neutral">Not yet contacted</span>';
+    return `
+    <div class="vendor-row" onclick="openOutreachCheckin(${idx})" style="cursor:pointer">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div style="min-width:0">
+          <div style="font-weight:700">${escHtml(e.name||'Unnamed')}</div>
+          <div class="sub" style="margin-bottom:0">${escHtml(e.city||'')}${e.address?' · '+escHtml(e.address):''}</div>
+          ${e.notes?`<div class="sub" style="margin-bottom:0;font-style:italic">"${escHtml(e.notes)}"</div>`:''}
+        </div>
+        ${statusBadge}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.openVendorCheckin = function(index) {
+  _activeVendor = _vendors[index];
+  _activeOutreach = null;
+  document.getElementById('appShell').style.display = 'none';
+  document.getElementById('checkinScreen').style.display = 'block';
+  document.getElementById('checkinVendorName').textContent = _activeVendor.shopName || 'Unnamed Vendor';
+  document.getElementById('checkinVendorMeta').textContent =
+    [_activeVendor.ownerName, _activeVendor.shopArea, _activeVendor.shopAddress].filter(Boolean).join(' · ');
+  document.getElementById('checkinNotes').value = '';
+  document.getElementById('checkinError').textContent = '';
+  document.getElementById('checkinSaveNoteBtn').style.display = 'none';
+
+  const tel = telUrl(_activeVendor.phoneNumber);
+  document.getElementById('checkinActionRow').innerHTML = `
+    <a class="action-btn" href="${mapsUrl(_activeVendor)}" target="_blank" rel="noopener">📍 Directions</a>
+    ${tel ? `<a class="action-btn" href="${tel}">📞 Call</a>` : ''}`;
+
+  const lastVisit = timeAgo(_activeVendor.lastVisitMillis);
+  document.getElementById('checkinLastVisit').textContent = lastVisit
+    ? `You last visited ${lastVisit}${_activeVendor.lastVisitOutcome ? ' — outcome: '+_activeVendor.lastVisitOutcome.replace(/_/g,' ') : ''}`
+    : "You haven't logged a visit to this vendor yet";
+
+  document.getElementById('checkinOutcomeButtons').innerHTML = `
+    <button class="btn btn-primary" style="margin-bottom:8px" onclick="submitVisit('visited_and_listed')">✅ Visited — helped them list a bag</button>
+    <button class="btn btn-outline" style="margin-bottom:8px" onclick="submitVisit('visited_no_listing')">Visited — didn't list this time</button>
+    <button class="btn btn-outline" style="margin-bottom:8px" onclick="submitVisit('not_found')">Vendor not at shop</button>
+    <button class="btn btn-outline" style="margin-bottom:8px" onclick="submitVisit('refused')">Refused / not interested</button>`;
+};
+
+window.openOutreachCheckin = function(index) {
+  _activeOutreach = _outreachEntries[index];
+  _activeVendor = null;
+  document.getElementById('appShell').style.display = 'none';
+  document.getElementById('checkinScreen').style.display = 'block';
+  document.getElementById('checkinVendorName').textContent = _activeOutreach.name || 'Unnamed';
+  document.getElementById('checkinVendorMeta').textContent =
+    [_activeOutreach.city, _activeOutreach.address].filter(Boolean).join(' · ');
+  document.getElementById('checkinNotes').value = _activeOutreach.notes || '';
+  document.getElementById('checkinError').textContent = '';
+  document.getElementById('checkinSaveNoteBtn').style.display = 'block';
+
+  const tel = telUrl(_activeOutreach.phone);
+  document.getElementById('checkinActionRow').innerHTML = `
+    <a class="action-btn" href="${mapsUrl(_activeOutreach)}" target="_blank" rel="noopener">📍 Directions</a>
+    ${tel ? `<a class="action-btn" href="${tel}">📞 Call</a>` : ''}`;
+
+  const currentStatus = _activeOutreach.manualStatusOverride === 'registered' ? 'Already marked Registered'
+    : _activeOutreach.manualStatusOverride === 'not_registered' ? 'Already marked Declined'
+    : 'Not yet contacted';
+  document.getElementById('checkinLastVisit').textContent = `Current status: ${currentStatus}`;
+
+  document.getElementById('checkinOutcomeButtons').innerHTML = `
+    <button class="btn btn-primary" style="margin-bottom:8px" onclick="submitOutreachOutcome('registered')">✅ Registered them on Surpl</button>
+    <button class="btn btn-outline" style="margin-bottom:8px" onclick="submitOutreachOutcome('not_registered')">Declined / not interested</button>
+    <button class="btn btn-outline" style="margin-bottom:8px" onclick="submitOutreachOutcome(null)">Contacted — still deciding</button>`;
+};
+
+window.backToList = function() {
+  document.getElementById('checkinScreen').style.display = 'none';
+  document.getElementById('appShell').style.display = 'block';
+};
+
+window.submitVisit = async function(outcome) {
+  const errEl = document.getElementById('checkinError');
+  errEl.textContent = '';
+  const notes = document.getElementById('checkinNotes').value.trim();
+  const btns = document.getElementById('checkinOutcomeButtons').querySelectorAll('button');
+  btns.forEach(b => b.disabled = true);
+  try {
+    await addDoc(collection(db, 'vendorVisitLogs'), {
+      execId: _currentUid,
+      vendorId: _activeVendor.id,
+      vendorShopName: _activeVendor.shopName || '',
+      outcome,
+      notes,
+      visitedAt: serverTimestamp(),
+    });
+    // Update local data so back-navigation shows the new visit
+    _activeVendor.lastVisitMillis = Date.now();
+    _activeVendor.lastVisitOutcome = outcome;
+    backToList();
+  } catch(e) {
+    btns.forEach(b => b.disabled = false);
+    errEl.textContent = 'Could not save: ' + (e.message||'try again');
+  }
+};
+
+window.submitOutreachOutcome = async function(status) {
+  const errEl = document.getElementById('checkinError');
+  errEl.textContent = '';
+  const notes = document.getElementById('checkinNotes').value.trim();
+  const btns = document.getElementById('checkinOutcomeButtons').querySelectorAll('button');
+  btns.forEach(b => b.disabled = true);
+  try {
+    await updateDoc(doc(db, 'vendorOutreachTracker', _activeOutreach.id), {
+      notes,
+      manualStatusOverride: status,
+    });
+    _activeOutreach.notes = notes;
+    _activeOutreach.manualStatusOverride = status;
+    backToList();
+  } catch(e) {
+    btns.forEach(b => b.disabled = false);
+    errEl.textContent = 'Could not save: ' + (e.message||'try again');
+  }
+};
+
+window.saveOutreachNoteOnly = async function() {
+  const errEl = document.getElementById('checkinError');
+  errEl.textContent = '';
+  const notes = document.getElementById('checkinNotes').value.trim();
+  try {
+    await updateDoc(doc(db, 'vendorOutreachTracker', _activeOutreach.id), { notes });
+    _activeOutreach.notes = notes;
+    backToList();
+  } catch(e) {
+    errEl.textContent = 'Could not save: ' + (e.message||'try again');
+  }
+};
+</script>
+</body>
+</html>
