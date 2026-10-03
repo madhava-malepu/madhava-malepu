@@ -54,7 +54,10 @@ service cloud.firestore {
             || request.resource.data.vendorStatus != 'approved')
         && request.resource.data.get('walletBalance', 0) <= resource.data.get('walletBalance', 0)
       ) || (
-        isSignedIn()
+        // Only the wallet owner may credit their own wallet client-side (≤₹25,
+        // e.g. referral top-up). Referral credits to a *different* user go
+        // through Cloud Functions, not a client write, so isOwner is correct.
+        isOwner(uid)
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['walletBalance'])
         && request.resource.data.walletBalance > resource.data.get('walletBalance', 0)
         && (request.resource.data.walletBalance - resource.data.get('walletBalance', 0)) <= 25
