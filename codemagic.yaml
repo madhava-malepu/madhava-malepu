@@ -25,7 +25,9 @@ workflows:
       - name: Inject credentials
         script: bash scripts/ios-setup.sh
       - name: Packages
-        script: flutter pub get
+        script: |
+          flutter config --no-enable-swift-package-manager
+          flutter pub get
       - name: Signing profiles
         script: xcode-project use-profiles
       - name: Build IPA

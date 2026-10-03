@@ -64,5 +64,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  # CocoaPods only: firebase, maps, notifications and Sign in with Apple are
+  # linked through Pods; letting Swift Package Manager add Firebase as well
+  # links it twice (duplicate symbols).
+  config:
+    enable-swift-package-manager: false
   assets:
     - assets/images/
