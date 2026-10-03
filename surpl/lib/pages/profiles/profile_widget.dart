@@ -223,6 +223,56 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           ]))));
   }
 
+  Future<void> _confirmDeleteAccount(BuildContext context, String uid) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Delete your Surpl account?',
+          style: GoogleFonts.plusJakartaSans(fontWeight: FontWeight.w800)),
+        content: Text(
+          'This signs you out and permanently deletes your account: your name, '
+          'email, saved bags, wallet balance and referral details. Completed order '
+          'records may be kept for tax purposes. This cannot be undone.',
+          style: GoogleFonts.plusJakartaSans(fontSize: 14, color: _kTextSecondary)),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Delete account', style: TextStyle(color: Colors.red))),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    try {
+      // Record the request first so the team erases the Firestore profile and
+      // wallet even though clients cannot delete those documents themselves.
+      await FirebaseFirestore.instance.collection('accountDeletionRequests').doc(uid).set({
+        'uid': uid,
+        'phoneNumber': currentPhoneNumber,
+        'source': 'app',
+        'requestedAt': FieldValue.serverTimestamp(),
+      });
+      await authManager.deleteUser(context);
+      if (!mounted) return;
+      if (currentUserUid.isNotEmpty) {
+        // Firebase needs a fresh sign-in before deleting; deleteUser showed a message.
+        // The request above is already saved, so the team will still complete it.
+        await authManager.signOut();
+      }
+      CartService().clear();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Your account deletion request is in. You have been signed out.')));
+        context.goNamed(OnboardingLoginWidget.routeName);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Couldn't delete your account right now. Please try again or email hello@surpl.in.")));
+      }
+    }
+  }
+
   Future<void> _addTestCredit(BuildContext context, String uid) async {
     try {
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
@@ -783,6 +833,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           fontSize: 14, fontWeight: FontWeight.w700,
                           color: Colors.red)),
                       ])))),
+
+            const SizedBox(height: 12),
+
+            // Delete account (App Store guideline 5.1.1(v): deletion must be possible in the app)
+            Center(
+              child: TextButton(
+                onPressed: () => _confirmDeleteAccount(context, uid),
+                child: Text('Delete my account',
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 13, fontWeight: FontWeight.w600,
+                    color: _kTextSecondary,
+                    decoration: TextDecoration.underline)),
+              ),
+            ),
 
             const SizedBox(height: 24),
             Center(child: Text('surpl v1.0  Jagtial, Telangana',

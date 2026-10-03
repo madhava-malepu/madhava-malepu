@@ -109,6 +109,16 @@ service cloud.firestore {
         && request.resource.data.get('address', '') is string && request.resource.data.get('address', '').size() <= 300;
       allow update, delete: if false;
     }
+    match /accountDeletionRequests/{uid} {
+      allow read, write: if isAdmin();
+      // In-app "Delete my account" (App Store 5.1.1(v)): a user can file a request only for themselves.
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['uid', 'phoneNumber', 'source', 'requestedAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.requestedAt == request.time
+        && request.resource.data.source in ['app', 'web'];
+    }
     match /dealAlertSignups/{signupId} {
       allow read, write: if isAdmin();
       // Website WhatsApp alerts + town waitlist: a valid Indian mobile number,

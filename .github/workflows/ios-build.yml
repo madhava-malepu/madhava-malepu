@@ -1,0 +1,37 @@
+name: ios-build
+
+# Compiles the iOS app on a real Mac for every change to the app, so iOS
+# breakages show up here instead of at App Store submission time.
+on:
+  push:
+    paths: ['surpl/**', '.github/workflows/ios-build.yml']
+  pull_request:
+    paths: ['surpl/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: surpl
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.6
+          channel: stable
+          cache: true
+      - name: Inject credentials (from repository secrets; never committed)
+        env:
+          GOOGLE_SERVICE_INFO_PLIST_B64: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST_B64 }}
+          GMS_API_KEY_IOS: ${{ secrets.GMS_API_KEY_IOS }}
+        run: bash scripts/ios-setup.sh
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos --no-fatal-warnings
+      - name: Build iOS (release, unsigned)
+        run: flutter build ios --release --no-codesign

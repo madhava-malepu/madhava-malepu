@@ -65,6 +65,8 @@ await t('customer rates a completed order', true, () => updateDoc(doc(alice, 'or
 await t('website: WhatsApp deal alert signup', true, () => addDoc(collection(anon, 'dealAlertSignups'), { phone: '9876543210', createdAt: serverTimestamp() }));
 await t('website: town waitlist signup', true, () => addDoc(collection(anon, 'dealAlertSignups'), { phone: '+919876543211', city: 'Korutla', source: 'city-waitlist', createdAt: serverTimestamp() }));
 await t('website: vendor application', true, () => addDoc(collection(anon, 'vendorLeads'), { shopName: 'Test Tiffins', ownerName: 'Ravi', whatsapp: '98765 43210', shopType: 'Bakery', area: 'Bus Stand Road', address: '', status: 'pending', createdAt: serverTimestamp() }));
+await t('app: customer files their own account deletion request', true, () => setDoc(doc(alice, 'accountDeletionRequests/alice'), { uid: 'alice', phoneNumber: '+919800000000', source: 'app', requestedAt: serverTimestamp() }));
+await t('user files a deletion request for someone else', false, () => setDoc(doc(bob, 'accountDeletionRequests/alice'), { uid: 'alice', phoneNumber: '+919800000000', source: 'app', requestedAt: serverTimestamp() }));
 await t('anyone browses active bags', true, () => getDoc(doc(anon, 'bags/b1')));
 
 await env.cleanup();

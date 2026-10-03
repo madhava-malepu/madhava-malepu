@@ -1,0 +1,41 @@
+# Codemagic: signed iOS build → TestFlight / App Store, from a cloud Mac (no Mac needed).
+# Setup once in Codemagic: connect this repo, add an App Store Connect API key integration
+# named "surpl_asc", and an environment group "surpl_ios" with the two secrets below.
+workflows:
+  ios-release:
+    name: Surpl iOS release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    working_directory: surpl
+    integrations:
+      app_store_connect: surpl_asc
+    environment:
+      groups:
+        - surpl_ios            # GOOGLE_SERVICE_INFO_PLIST_B64, GMS_API_KEY_IOS
+      flutter: 3.47.6
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.surpl.app
+      vars:
+        APP_STORE_APPLE_ID: "0000000000"   # replace with the app's Apple ID from App Store Connect
+    scripts:
+      - name: Inject credentials
+        script: bash scripts/ios-setup.sh
+      - name: Packages
+        script: flutter pub get
+      - name: Signing profiles
+        script: xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" || echo 33)
+          flutter build ipa --release \
+            --build-number=$((LATEST + 1)) \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
