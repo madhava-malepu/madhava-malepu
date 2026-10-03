@@ -178,6 +178,110 @@ tr:hover td{background:#FAFFFE}
     min-height:400px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   PREMIUM VISUAL ENHANCEMENTS
+═══════════════════════════════════════════════════════ */
+
+/* Page transitions */
+.page{opacity:0;transition:opacity .15s ease}
+.page.active{opacity:1}
+
+/* Skeleton shimmer */
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,#F4F7F4 25%,#E8F0E8 50%,#F4F7F4 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:8px;height:16px;margin-bottom:8px}
+.skeleton-wide{width:100%}.skeleton-half{width:60%}.skeleton-short{width:30%}
+
+/* Login card shimmer */
+@keyframes logoShimmer{0%,100%{box-shadow:0 0 0 rgba(245,166,35,0)}50%{box-shadow:0 0 32px 8px rgba(245,166,35,.35)}}
+.logo-big{animation:logoShimmer 2.8s ease-in-out infinite}
+
+/* Sidebar active nav amber glow */
+.nav-item.active{position:relative}
+.nav-item.active::after{content:'';position:absolute;bottom:0;left:8px;right:8px;height:1px;background:linear-gradient(90deg,transparent,rgba(245,166,35,.6),transparent);border-radius:0}
+
+/* Modal backdrop blur */
+.modal-bg{backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+
+/* Alternating table rows */
+tbody tr:nth-child(even) td{background:#FAFFFE}
+tbody tr:nth-child(odd) td{background:#fff}
+tbody tr:hover td{background:#F0FBF0 !important}
+
+/* Button shine sweep on hover */
+@keyframes shineSweep{0%{left:-100%}100%{left:200%}}
+.btn-primary,.btn-amber{overflow:hidden;position:relative}
+.btn-primary::after,.btn-amber::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transform:skewX(-20deg);pointer-events:none}
+.btn-primary:hover::after,.btn-amber:hover::after{animation:shineSweep .5s ease-out forwards}
+
+/* Empty state styling */
+.empty-state{text-align:center;padding:48px 24px;color:#4D6B57}
+.empty-state-icon{width:64px;height:64px;background:linear-gradient(135deg,#E6F4ED,#D4E8D4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px}
+.empty-state h3{font-size:16px;font-weight:700;color:#0D1F12;margin-bottom:8px}
+.empty-state p{font-size:13px;line-height:1.5}
+
+/* Role badges */
+.role-superadmin{background:linear-gradient(135deg,#1A4731,#2D6A4F);color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-block}
+.role-operations{background:#1565C0;color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-block}
+.role-support{background:#7C3AED;color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-block}
+.role-finance{background:#D4890F;color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-block}
+.role-content{background:#C4622D;color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-block}
+.role-readonly{background:#6B7280;color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-block}
+
+/* Status badges */
+.badge-active{background:#E6F4ED;color:#1A4731}
+.badge-blocked{background:#FEE2E2;color:#DC2626}
+.badge-vendor{background:#E0F2FE;color:#0369A1}
+
+/* Phone notification mockup */
+.phone-mockup{width:220px;background:#1a1a2e;border-radius:24px;padding:12px 10px;margin:0 auto;box-shadow:0 8px 40px rgba(0,0,0,.25)}
+.phone-notif{background:rgba(255,255,255,.95);border-radius:12px;padding:12px;backdrop-filter:blur(10px)}
+.phone-notif-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.phone-notif-icon{width:20px;height:20px;background:#F5A623;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#1A4731;font-weight:900}
+.phone-notif-app{font-size:10px;font-weight:700;color:#666}
+.phone-notif-time{font-size:10px;color:#999;margin-left:auto}
+.phone-notif-title{font-size:12px;font-weight:700;color:#0D1F12;margin-bottom:2px}
+.phone-notif-body{font-size:11px;color:#4D6B57;line-height:1.4}
+
+/* Input label */
+.field-label{display:block;font-size:12px;font-weight:700;color:#4D6B57;margin-bottom:6px;margin-top:12px}
+
+/* Chip tag */
+.chip{display:inline-flex;align-items:center;gap:4px;background:#E6F4ED;color:#1A4731;border:1px solid #D4E8D4;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
+.chip:hover{background:#D4E8D4}
+.chip.inactive{background:#F4F7F4;color:#6B7280;border-color:#D4D4D4}
+
+/* Sparkline container */
+.sparkline{margin-top:8px}
+.sparkline svg{display:block}
+
+/* Section header */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;margin-top:24px}
+.section-title{font-size:15px;font-weight:700;color:#0D1F12}
+
+/* Perm matrix */
+.perm-matrix{width:100%;border-collapse:collapse;font-size:12px}
+.perm-matrix th{background:#F4F7F4;padding:10px 12px;text-align:center;font-weight:700;color:#4D6B57;font-size:11px;border:1px solid #E4EFE4}
+.perm-matrix td{padding:8px 12px;text-align:center;border:1px solid #E4EFE4}
+.perm-full{color:#1A4731;font-size:16px}
+.perm-view{color:#D4890F;font-size:16px}
+.perm-none{color:#DC2626;font-size:16px}
+
+/* Notification history timeline */
+.notif-timeline-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #F4F7F4;position:relative}
+.notif-timeline-dot{width:10px;height:10px;background:#1A4731;border-radius:50%;margin-top:4px;flex-shrink:0}
+.notif-timeline-line{position:absolute;left:4px;top:24px;bottom:0;width:2px;background:#E6F4ED}
+
+/* Banner card */
+.banner-card{background:#F4F7F4;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #D4E8D4;display:flex;align-items:center;gap:12px}
+.banner-card.inactive{opacity:.6}
+.banner-card-actions{margin-left:auto;display:flex;gap:6px}
+
+/* Report date picker */
+.date-range-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px}
+.date-range-row label{font-size:12px;font-weight:700;color:#4D6B57;display:block;margin-bottom:4px}
+.date-range-row input[type=date]{padding:8px 12px;border:1.5px solid #D4E8D4;border-radius:10px;font-size:13px;outline:none}
+.date-range-row input[type=date]:focus{border-color:#1A4731}
 </style>
 </head>
 <body>
@@ -293,6 +397,21 @@ tr:hover td{background:#FAFFFE}
       </div>
       <div class="nav-item" onclick="showPage('reconciliation')" id="nav-reconciliation">
         <span class="nav-icon">🔍</span><span>Reconciliation</span>
+      </div>
+      <div class="nav-item" onclick="showPage('content')" id="nav-content">
+        <span class="nav-icon">🎨</span><span>Content</span>
+      </div>
+      <div class="nav-item" onclick="showPage('notifications')" id="nav-notifications">
+        <span class="nav-icon">🔔</span><span>Notifications</span>
+      </div>
+      <div class="nav-item" onclick="showPage('reports')" id="nav-reports">
+        <span class="nav-icon">📋</span><span>Reports</span>
+      </div>
+      <div class="nav-item" onclick="showPage('roles')" id="nav-roles">
+        <span class="nav-icon">👥</span><span>Team & Roles</span>
+      </div>
+      <div class="nav-item" onclick="showPage('transactions')" id="nav-transactions">
+        <span class="nav-icon">💳</span><span>Transactions</span>
       </div>
     </div>
     <div class="sidebar-section">
@@ -783,7 +902,7 @@ tr:hover td{background:#FAFFFE}
         <div class="table-wrap">
           <table>
             <thead><tr>
-              <th>Phone</th><th>Name</th><th>UID</th><th>Wallet</th><th>Orders</th><th>Referrals</th><th>Joined</th><th>Type</th><th>Actions</th>
+              <th>Phone</th><th>Name</th><th>UID</th><th>Wallet</th><th>Orders</th><th>Referrals</th><th>Joined</th><th>Status</th><th>Actions</th>
             </tr></thead>
             <tbody id="customersTable"><tr><td colspan="9"><div class="loading"><div class="spinner"></div></div></td></tr></tbody>
           </table>
@@ -1087,6 +1206,305 @@ tr:hover td{background:#FAFFFE}
       <div class="card">
         <div class="card-header"><span class="card-title">All Expenses</span></div>
         <div class="card-body" id="expensesTable"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════
+         FEATURE 2: CONTENT MANAGEMENT PAGE
+    ══════════════════════════════════════════════════════ -->
+    <div class="page" id="page-content">
+      <div class="topbar">
+        <div><div class="page-title">🎨 Content</div><div class="page-sub">Manage app banners, categories and settings stored in Firestore</div></div>
+        <button class="btn btn-primary btn-sm" onclick="loadContentPage()">↻ Refresh</button>
+      </div>
+
+      <!-- Section A: Banners -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header">
+          <span class="card-title">🖼️ App Banners</span>
+          <button class="btn btn-primary btn-sm" onclick="openAddBannerModal()">+ Add Banner</button>
+        </div>
+        <div class="card-body" id="contentBannersBody"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+
+      <!-- Section B: Categories -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header">
+          <span class="card-title">🏷️ Categories</span>
+          <button class="btn btn-primary btn-sm" onclick="openAddCategoryModal()">+ Add Category</button>
+        </div>
+        <div class="card-body" id="contentCategoriesBody"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+
+      <!-- Section C: App Settings -->
+      <div class="card">
+        <div class="card-header"><span class="card-title">⚙️ App Settings</span></div>
+        <div class="card-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" id="appSettingsForm">
+            <div class="loading" style="grid-column:1/-1"><div class="spinner"></div></div>
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn btn-primary" onclick="saveAppSettings()">💾 Save Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         FEATURE 3: TRANSACTIONS PAGE
+    ══════════════════════════════════════════════════════ -->
+    <div class="page" id="page-transactions">
+      <div class="topbar">
+        <div><div class="page-title">💳 Transactions</div><div class="page-sub">Failed payments and commission tracker</div></div>
+        <button class="btn btn-primary btn-sm" onclick="loadTransactionsPage()">↻ Refresh</button>
+      </div>
+
+      <!-- Failed transactions stats -->
+      <div class="stats-grid" style="margin-bottom:16px">
+        <div class="stat-card" style="--accent:#DC2626">
+          <div class="stat-label">Failed Payments (30d)</div>
+          <div class="stat-value" id="txFailedCount">—</div>
+        </div>
+        <div class="stat-card" style="--accent:#DC2626">
+          <div class="stat-label">Failed Amount (30d)</div>
+          <div class="stat-value" id="txFailedAmount">—</div>
+        </div>
+        <div class="stat-card" style="--accent:#1A4731">
+          <div class="stat-label">Commission This Week</div>
+          <div class="stat-value" id="txCommissionWeek">—</div>
+        </div>
+        <div class="stat-card" style="--accent:#1A4731">
+          <div class="stat-label">Commission This Month</div>
+          <div class="stat-value" id="txCommissionMonth">—</div>
+        </div>
+      </div>
+
+      <!-- Commission breakdown per vendor -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header"><span class="card-title">📊 Commission by Vendor (all time)</span></div>
+        <div class="card-body" id="txCommissionTable"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+
+      <!-- Failed payments table -->
+      <div class="card">
+        <div class="card-header"><span class="card-title">⚠️ Failed Payments</span></div>
+        <div class="card-body" id="txFailedTable"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         FEATURE 4: NOTIFICATIONS PAGE
+    ══════════════════════════════════════════════════════ -->
+    <div class="page" id="page-notifications">
+      <div class="topbar">
+        <div><div class="page-title">🔔 Notifications</div><div class="page-sub">Send push notifications to users and view history</div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start">
+        <!-- Left: Send form -->
+        <div>
+          <!-- Quick Templates -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-header"><span class="card-title">⚡ Quick Templates</span></div>
+            <div class="card-body" style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="chip" onclick="applyNotifTemplate('new_vendor')">🏪 New vendor joined</button>
+              <button class="chip" onclick="applyNotifTemplate('weekend_offer')">🎉 Weekend offer</button>
+              <button class="chip" onclick="applyNotifTemplate('order_reminder')">⏰ Order reminder</button>
+              <button class="chip" onclick="applyNotifTemplate('app_update')">📲 App update</button>
+            </div>
+          </div>
+
+          <!-- Send form -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-header"><span class="card-title">📤 Send Notification</span></div>
+            <div class="card-body">
+              <label class="field-label">Title *</label>
+              <input class="input" id="notifTitle" placeholder="e.g. New Surprise Bags available!" oninput="updateNotifPreview()">
+
+              <label class="field-label">Body *</label>
+              <textarea id="notifBody" class="input" placeholder="e.g. Check out fresh Surprise Bags from vendors near you." style="height:80px;resize:none" oninput="updateNotifPreview()"></textarea>
+
+              <label class="field-label">Deep Link / Action (optional)</label>
+              <input class="input" id="notifAction" placeholder="e.g. surpl://bags or https://surpl.in">
+
+              <label class="field-label">Audience</label>
+              <select class="input" id="notifAudience">
+                <option value="everyone">Everyone</option>
+                <option value="customers">Customers only</option>
+                <option value="vendors">Vendors only</option>
+                <option value="jagtial">City: Jagtial</option>
+                <option value="specific">Specific UID</option>
+              </select>
+
+              <div id="notifSpecificUidRow" style="display:none">
+                <label class="field-label">Specific UID</label>
+                <input class="input" id="notifSpecificUid" placeholder="Firebase UID">
+              </div>
+
+              <label class="field-label">Schedule</label>
+              <div style="display:flex;gap:12px;align-items:center">
+                <label style="display:flex;gap:6px;align-items:center;font-size:13px;cursor:pointer">
+                  <input type="radio" name="notifSchedule" value="now" checked onchange="toggleNotifSchedule()"> Send now
+                </label>
+                <label style="display:flex;gap:6px;align-items:center;font-size:13px;cursor:pointer">
+                  <input type="radio" name="notifSchedule" value="later" onchange="toggleNotifSchedule()"> Schedule
+                </label>
+              </div>
+              <div id="notifScheduleRow" style="display:none;margin-top:8px">
+                <input class="input" type="datetime-local" id="notifScheduleAt">
+              </div>
+
+              <div style="margin-top:16px">
+                <button class="btn btn-primary" onclick="sendNotification()">🚀 Send Notification</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- History -->
+          <div class="card">
+            <div class="card-header"><span class="card-title">📜 Notification History</span></div>
+            <div class="card-body" id="notifHistoryBody"><div class="loading"><div class="spinner"></div></div></div>
+          </div>
+        </div>
+
+        <!-- Right: Preview -->
+        <div>
+          <div class="card" style="position:sticky;top:24px">
+            <div class="card-header"><span class="card-title">👁️ Preview</span></div>
+            <div class="card-body" style="display:flex;justify-content:center;padding:24px">
+              <div class="phone-mockup">
+                <div class="phone-notif">
+                  <div class="phone-notif-header">
+                    <div class="phone-notif-icon">S</div>
+                    <span class="phone-notif-app">Surpl</span>
+                    <span class="phone-notif-time">now</span>
+                  </div>
+                  <div class="phone-notif-title" id="notifPreviewTitle" style="color:#666;font-style:italic">Your title here</div>
+                  <div class="phone-notif-body" id="notifPreviewBody" style="color:#999;font-style:italic">Your message here</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         FEATURE 5: REPORTS PAGE
+    ══════════════════════════════════════════════════════ -->
+    <div class="page" id="page-reports">
+      <div class="topbar">
+        <div><div class="page-title">📋 Reports</div><div class="page-sub">Generate and export platform analytics</div></div>
+        <button class="btn btn-amber" onclick="exportAllData()">📦 Export All Data (ZIP)</button>
+      </div>
+
+      <!-- Date range -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-body">
+          <div class="date-range-row">
+            <div><label>From</label><input type="date" id="reportFrom" onchange="renderReports()"></div>
+            <div><label>To</label><input type="date" id="reportTo" onchange="renderReports()"></div>
+            <button class="btn btn-primary btn-sm" onclick="renderReports()">Generate</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Report tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="btn btn-primary btn-sm" onclick="switchReportTab('revenue')">💰 Revenue</button>
+        <button class="btn btn-outline btn-sm" onclick="switchReportTab('vendor')">🏪 Vendor Perf</button>
+        <button class="btn btn-outline btn-sm" onclick="switchReportTab('customer')">👤 Customers</button>
+        <button class="btn btn-outline btn-sm" onclick="switchReportTab('refund')">↩️ Refunds</button>
+      </div>
+
+      <div id="report-revenue" class="report-tab">
+        <div class="stats-grid" id="reportRevenueStats"></div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Daily Revenue Breakdown</span>
+            <button class="btn btn-outline btn-sm" onclick="exportReport('revenue')">⬇️ CSV</button>
+          </div>
+          <div class="card-body table-wrap" id="reportRevenueTable"></div>
+        </div>
+      </div>
+      <div id="report-vendor" class="report-tab" style="display:none">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Vendor Performance</span>
+            <button class="btn btn-outline btn-sm" onclick="exportReport('vendor')">⬇️ CSV</button>
+          </div>
+          <div class="card-body table-wrap" id="reportVendorTable"></div>
+        </div>
+      </div>
+      <div id="report-customer" class="report-tab" style="display:none">
+        <div class="stats-grid" id="reportCustomerStats"></div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Top Customers by Spend</span>
+            <button class="btn btn-outline btn-sm" onclick="exportReport('customer')">⬇️ CSV</button>
+          </div>
+          <div class="card-body table-wrap" id="reportCustomerTable"></div>
+        </div>
+      </div>
+      <div id="report-refund" class="report-tab" style="display:none">
+        <div class="stats-grid" id="reportRefundStats"></div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Refunds Breakdown</span>
+            <button class="btn btn-outline btn-sm" onclick="exportReport('refund')">⬇️ CSV</button>
+          </div>
+          <div class="card-body table-wrap" id="reportRefundTable"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         FEATURE 6: ROLES & PERMISSIONS PAGE
+    ══════════════════════════════════════════════════════ -->
+    <div class="page" id="page-roles">
+      <div class="topbar">
+        <div><div class="page-title">👥 Team & Roles</div><div class="page-sub">Manage admin team members and access permissions</div></div>
+        <button class="btn btn-primary btn-sm" onclick="openAddTeamMemberModal()">+ Add Member</button>
+      </div>
+
+      <!-- Team members -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header"><span class="card-title">Team Members</span></div>
+        <div class="card-body" id="rolesTeamBody"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+
+      <!-- Role permissions matrix -->
+      <div class="card">
+        <div class="card-header"><span class="card-title">🔐 Role Permissions Matrix</span></div>
+        <div class="card-body table-wrap">
+          <table class="perm-matrix">
+            <thead><tr>
+              <th style="text-align:left">Page / Feature</th>
+              <th>Superadmin</th><th>Operations</th><th>Support</th><th>Finance</th><th>Content</th><th>Read-only</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>Dashboard</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Daily Ops</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Vendors</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-view">👁️</td><td class="perm-view">👁️</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Orders</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-view">👁️</td><td class="perm-view">👁️</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Payouts / Expenses</td><td class="perm-full">✅</td><td class="perm-view">👁️</td><td class="perm-none">—</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Customers</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-full">✅</td><td class="perm-view">👁️</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Refunds / Cases</td><td class="perm-full">✅</td><td class="perm-view">👁️</td><td class="perm-full">✅</td><td class="perm-view">👁️</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Support Inboxes</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Content</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-full">✅</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Notifications</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-full">✅</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Reports</td><td class="perm-full">✅</td><td class="perm-view">👁️</td><td class="perm-view">👁️</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Transactions</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-view">👁️</td></tr>
+              <tr><td>Team & Roles</td><td class="perm-full">✅</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-none">—</td><td class="perm-none">—</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px;font-size:12px;color:#4D6B57;display:flex;gap:16px">
+            <span><span class="perm-full">✅</span> Full access</span>
+            <span><span class="perm-view">👁️</span> View only</span>
+            <span><span class="perm-none">—</span> No access</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -5450,23 +5868,27 @@ function renderCustomersPage() {
   const customers = _customersPageDocs;
   document.getElementById('customersTable').innerHTML = customers.length===0
     ? '<tr><td colspan="9"><div class="empty">No customers found</div></td></tr>'
-    : customers.map(u=>`<tr>
+    : customers.map(u=>{
+        const statusClass = u.isBlocked ? 'badge-blocked' : u.isVendor ? 'badge-vendor' : 'badge-active';
+        const statusLabel = u.isBlocked ? 'BLOCKED' : u.isVendor ? 'Vendor' : 'Active';
+        return `<tr>
         <td>${esc(u.phoneNumber)||'—'}</td>
         <td>${esc(u.name)||'—'}</td>
         <td>
           <span style="font-family:monospace;font-size:11px;color:#4D6B57">${u.id.substring(0,10)}…</span>
           <button class="btn btn-outline btn-sm" style="padding:2px 6px;margin-left:4px" title="Copy full UID" onclick="copyUid('${u.id}')">📋</button>
         </td>
-        <td>Rs.${Math.round(u.walletBalance||0)}</td>
+        <td>₹${Math.round(u.walletBalance||0)}</td>
         <td>${_orders.filter(o=>o.customerId===u.id).length}</td>
         <td>${u.referralCount ? `<span style="font-weight:700;color:#1A4731">${u.referralCount}</span>` : '—'}</td>
         <td style="font-size:12px">${u.createdAt?new Date(u.createdAt.seconds?u.createdAt.seconds*1000:u.createdAt).toLocaleDateString('en-IN',{timeZone:"Asia/Kolkata"}):'—'}</td>
-        <td><span class="badge ${u.isVendor?'badge-approved':'badge-confirmed'}">${u.isVendor?'Vendor':'Customer'}</span></td>
+        <td><span class="badge ${statusClass}">${statusLabel}</span></td>
         <td>
           <button class="btn btn-outline btn-sm" onclick="openCustomerModal('${u.id}')">View</button>
           <button class="btn btn-primary btn-sm" onclick="prefillRefund('${u.id}','')">Credit</button>
+          ${!u.isVendor ? `<button class="btn btn-sm ${u.isBlocked?'btn-primary':'btn-red'}" onclick="toggleBlockUser('${u.id}',${!!u.isBlocked})">${u.isBlocked?'Unblock':'Block'}</button>` : ''}
         </td>
-      </tr>`).join('');
+      </tr>`;}).join('');
 }
 window.copyUid = function(uid) {
   navigator.clipboard.writeText(uid).then(()=>showToast('Customer UID copied'));
@@ -5493,19 +5915,26 @@ window.openCustomerModal = function(uid) {
           <button class="btn btn-outline btn-sm" onclick="copyUid('${uid}')">📋 Copy</button>
         </div>
       </div>
-      <div><div class="info-label">Wallet Balance</div><div style="font-weight:700;color:#1A4731">Rs.${Math.round(u.walletBalance||0)}</div></div>
-      <div><div class="info-label">Total Spent</div><div style="font-weight:700">Rs.${Math.round(spent)}</div></div>
+      <div><div class="info-label">Wallet Balance</div><div style="font-weight:700;color:#1A4731">₹${Math.round(u.walletBalance||0)}</div></div>
+      <div><div class="info-label">Total Spent</div><div style="font-weight:700">₹${Math.round(spent)}</div></div>
       <div><div class="info-label">Total Orders</div><div>${userOrders.length}</div></div>
       <div><div class="info-label">Refund Claims</div><div style="color:${userRefunds.length>=2?'#DC2626':'inherit'};font-weight:${userRefunds.length>=2?700:400}">${userRefunds.length} ${userRefunds.length>=2?'⚠️ Serial Claimer':''}</div></div>
       <div><div class="info-label">Referral Code</div><div style="font-size:12px;font-family:monospace">${u.referralCode||uid.substring(0,8).toUpperCase()}</div></div>
       <div><div class="info-label">Referred By</div><div style="font-size:12px">${esc(u.referredBy)||'Direct'}</div></div>
+      <div style="grid-column:1/-1">
+        <div class="info-label">Account Status</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+          <span class="badge ${u.isBlocked?'badge-blocked':u.isVendor?'badge-vendor':'badge-active'}">${u.isBlocked?'🚫 BLOCKED':u.isVendor?'Vendor':'✅ Active'}</span>
+          ${!u.isVendor ? `<button class="btn btn-sm ${u.isBlocked?'btn-primary':'btn-red'}" onclick="toggleBlockUser('${uid}',${!!u.isBlocked});closeModal('customerModal')">${u.isBlocked?'✅ Unblock User':'🚫 Block User'}</button>` : ''}
+        </div>
+      </div>
     </div>
     <div style="background:#F4F7F4;border-radius:10px;padding:12px">
       <div style="font-size:12px;font-weight:700;color:#4D6B57;margin-bottom:8px">RECENT ORDERS</div>
       ${userOrders.slice(0,3).map(o=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid #E6F4ED">
         <span>#${o.id.substring(0,8).toUpperCase()}</span>
         <span class="badge badge-${o.status}">${o.status}</span>
-        <span>Rs.${Math.round(o.amountPaid||0)}</span>
+        <span>₹${Math.round(o.amountPaid||0)}</span>
       </div>`).join('') || '<div style="color:#4D6B57;font-size:12px">No orders</div>'}
     </div>`;
   document.getElementById('customerModal').classList.add('show');
@@ -6614,7 +7043,797 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE 1: USER MANAGEMENT — Block/Unblock
+// ══════════════════════════════════════════════════════════════════════
+window.toggleBlockUser = async function(uid, currentlyBlocked) {
+  const action = currentlyBlocked ? 'unblock' : 'block';
+  if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+  try {
+    await updateDoc(doc(db, 'users', uid), { isBlocked: !currentlyBlocked });
+    // Update in-memory cache
+    const u = _customersPageDocs.find(u=>u.id===uid);
+    if (u) u.isBlocked = !currentlyBlocked;
+    const u2 = _users.find(u=>u.id===uid);
+    if (u2) u2.isBlocked = !currentlyBlocked;
+    renderCustomersPage();
+    showToast(`User ${action}ed successfully`);
+  } catch(e) {
+    showToast('Failed to ' + action + ' user: ' + e.message, true);
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE 2: CONTENT MANAGEMENT
+// ══════════════════════════════════════════════════════════════════════
+let _contentBanners = [], _contentCategories = {}, _contentAppSettings = {};
+
+window.loadContentPage = async function() {
+  document.getElementById('contentBannersBody').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  document.getElementById('contentCategoriesBody').innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  document.getElementById('appSettingsForm').innerHTML = '<div class="loading" style="grid-column:1/-1"><div class="spinner"></div></div>';
+  try {
+    // Load banners
+    const bannersSnap = await getDoc(doc(db,'appConfig','banners'));
+    _contentBanners = bannersSnap.exists() ? (bannersSnap.data().items||[]) : [];
+    renderBanners();
+
+    // Load categories
+    const catsSnap = await getDoc(doc(db,'appConfig','categories'));
+    _contentCategories = catsSnap.exists() ? (catsSnap.data().items||[]) : [];
+    renderCategories();
+
+    // Load app settings
+    const settingsSnap = await getDoc(doc(db,'appConfig','appSettings'));
+    _contentAppSettings = settingsSnap.exists() ? settingsSnap.data() : {};
+    renderAppSettings();
+  } catch(e) {
+    showToast('Error loading content: '+e.message, true);
+  }
+};
+
+function renderBanners() {
+  const el = document.getElementById('contentBannersBody');
+  if (!_contentBanners.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🖼️</div><h3>No banners yet</h3><p>Add a banner to display promotions in the app.</p></div>';
+    return;
+  }
+  el.innerHTML = _contentBanners.map((b,i)=>`
+    <div class="banner-card ${b.active===false?'inactive':''}">
+      ${b.imageUrl?`<img src="${esc(b.imageUrl)}" style="width:80px;height:48px;object-fit:cover;border-radius:8px;flex-shrink:0">`:'<div style="width:80px;height:48px;background:#D4E8D4;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px">🖼️</div>'}
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:13px">${esc(b.title||'Untitled')}</div>
+        <div style="font-size:11px;color:#4D6B57">${esc(b.subtitle||'')} ${b.ctaText?'· CTA: '+esc(b.ctaText):''}</div>
+        <span class="badge ${b.active!==false?'badge-active':'badge-blocked'}" style="margin-top:4px">${b.active!==false?'Active':'Inactive'}</span>
+      </div>
+      <div class="banner-card-actions">
+        <button class="btn btn-outline btn-sm" onclick="moveBanner(${i},-1)" ${i===0?'disabled':''}>↑</button>
+        <button class="btn btn-outline btn-sm" onclick="moveBanner(${i},1)" ${i===_contentBanners.length-1?'disabled':''}>↓</button>
+        <button class="btn btn-outline btn-sm" onclick="editBanner(${i})">Edit</button>
+        <button class="btn btn-sm" style="background:#FEF3C7;color:#92400E" onclick="toggleBannerActive(${i})">${b.active!==false?'Deactivate':'Activate'}</button>
+        <button class="btn btn-red btn-sm" onclick="deleteBanner(${i})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+
+window.toggleBannerActive = function(i) {
+  _contentBanners[i].active = !(_contentBanners[i].active !== false);
+  renderBanners();
+  saveBanners();
+};
+window.moveBanner = function(i, dir) {
+  const j = i+dir;
+  if(j<0||j>=_contentBanners.length) return;
+  [_contentBanners[i],_contentBanners[j]] = [_contentBanners[j],_contentBanners[i]];
+  renderBanners();
+  saveBanners();
+};
+window.deleteBanner = async function(i) {
+  if(!confirm('Delete this banner?')) return;
+  _contentBanners.splice(i,1);
+  renderBanners();
+  await saveBanners();
+};
+window.editBanner = function(i) {
+  const b = _contentBanners[i];
+  document.getElementById('bannerModalTitle').value = b.title||'';
+  document.getElementById('bannerModalSubtitle').value = b.subtitle||'';
+  document.getElementById('bannerModalImageUrl').value = b.imageUrl||'';
+  document.getElementById('bannerModalCta').value = b.ctaText||'';
+  document.getElementById('bannerModalAction').value = b.ctaAction||'';
+  document.getElementById('bannerModal').dataset.editIndex = i;
+  document.getElementById('bannerModal').classList.add('show');
+};
+window.openAddBannerModal = function() {
+  ['bannerModalTitle','bannerModalSubtitle','bannerModalImageUrl','bannerModalCta','bannerModalAction'].forEach(id=>document.getElementById(id).value='');
+  delete document.getElementById('bannerModal').dataset.editIndex;
+  document.getElementById('bannerModal').classList.add('show');
+};
+window.saveBannerModal = async function() {
+  const title = document.getElementById('bannerModalTitle').value.trim();
+  if(!title){showToast('Title required',true);return;}
+  const b = {
+    id: Date.now().toString(),
+    title,
+    subtitle: document.getElementById('bannerModalSubtitle').value.trim(),
+    imageUrl: document.getElementById('bannerModalImageUrl').value.trim(),
+    ctaText: document.getElementById('bannerModalCta').value.trim(),
+    ctaAction: document.getElementById('bannerModalAction').value.trim(),
+    active: true,
+    order: _contentBanners.length
+  };
+  const editIdx = document.getElementById('bannerModal').dataset.editIndex;
+  if(editIdx!==undefined) { _contentBanners[+editIdx] = {..._contentBanners[+editIdx], ...b, id:_contentBanners[+editIdx].id}; }
+  else { _contentBanners.push(b); }
+  closeModal('bannerModal');
+  renderBanners();
+  await saveBanners();
+};
+async function saveBanners() {
+  try {
+    await updateDoc(doc(db,'appConfig','banners'), {items:_contentBanners});
+    showToast('Banners saved');
+  } catch(e) {
+    // doc might not exist yet
+    try { await addDoc(collection(db,'appConfig'), {items:_contentBanners}); } catch(e2){}
+    showToast('Banners saved');
+  }
+}
+
+function renderCategories() {
+  const el = document.getElementById('contentCategoriesBody');
+  if (!_contentCategories.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🏷️</div><h3>No categories yet</h3></div>';
+    return;
+  }
+  el.innerHTML = '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+    _contentCategories.map((c,i)=>`
+      <div style="background:${c.active!==false?'#E6F4ED':'#F4F7F4'};border:1px solid ${c.active!==false?'#D4E8D4':'#D4D4D4'};border-radius:20px;padding:6px 12px;display:flex;align-items:center;gap:6px;font-size:13px">
+        <span>${c.emoji||'•'}</span>
+        <span style="font-weight:600">${esc(c.name)}</span>
+        <button style="background:none;border:none;cursor:pointer;font-size:11px;color:#4D6B57" onclick="toggleCategory(${i})">${c.active!==false?'✓':'○'}</button>
+        <button style="background:none;border:none;cursor:pointer;font-size:11px;color:#DC2626" onclick="deleteCategory(${i})">✕</button>
+      </div>`).join('') +
+    '</div>';
+}
+
+window.toggleCategory = function(i) {
+  _contentCategories[i].active = !(_contentCategories[i].active !== false);
+  renderCategories();
+  saveCategories();
+};
+window.deleteCategory = async function(i) {
+  if(!confirm('Delete this category?')) return;
+  _contentCategories.splice(i,1);
+  renderCategories();
+  await saveCategories();
+};
+window.openAddCategoryModal = function() {
+  document.getElementById('categoryModalName').value='';
+  document.getElementById('categoryModalEmoji').value='';
+  document.getElementById('categoryModal').classList.add('show');
+};
+window.saveCategoryModal = async function() {
+  const name = document.getElementById('categoryModalName').value.trim();
+  if(!name){showToast('Name required',true);return;}
+  _contentCategories.push({id:Date.now().toString(), name, emoji:document.getElementById('categoryModalEmoji').value.trim()||'•', active:true});
+  closeModal('categoryModal');
+  renderCategories();
+  await saveCategories();
+};
+async function saveCategories() {
+  try { await updateDoc(doc(db,'appConfig','categories'), {items:_contentCategories}); showToast('Categories saved'); } catch(e) {}
+}
+
+function renderAppSettings() {
+  const s = _contentAppSettings;
+  document.getElementById('appSettingsForm').innerHTML = `
+    <div>
+      <label class="field-label">Maintenance Mode</label>
+      <select class="input" id="as-maintenanceMode">
+        <option value="false" ${!s.maintenanceMode?'selected':''}>Off (app works normally)</option>
+        <option value="true" ${s.maintenanceMode?'selected':''}>On (show maintenance screen)</option>
+      </select>
+    </div>
+    <div>
+      <label class="field-label">Minimum App Version</label>
+      <input class="input" id="as-minimumAppVersion" value="${esc(s.minimumAppVersion||'')}" placeholder="e.g. 1.2.0">
+    </div>
+    <div style="grid-column:1/-1">
+      <label class="field-label">Announcement Banner (empty = hidden)</label>
+      <input class="input" id="as-announcementBanner" value="${esc(s.announcementBanner||'')}" placeholder="e.g. 🎉 New cities coming soon!">
+    </div>
+    <div>
+      <label class="field-label">Default Commission Rate (%)</label>
+      <input class="input" type="number" id="as-commissionRate" value="${s.commissionRate!=null?s.commissionRate:10}" min="0" max="100" step="0.5">
+    </div>
+    <div>
+      <label class="field-label">Wallet Feature</label>
+      <select class="input" id="as-walletEnabled">
+        <option value="true" ${s.walletEnabled!==false?'selected':''}>Enabled</option>
+        <option value="false" ${s.walletEnabled===false?'selected':''}>Disabled</option>
+      </select>
+    </div>`;
+}
+
+window.saveAppSettings = async function() {
+  const data = {
+    maintenanceMode: document.getElementById('as-maintenanceMode').value === 'true',
+    minimumAppVersion: document.getElementById('as-minimumAppVersion').value.trim(),
+    announcementBanner: document.getElementById('as-announcementBanner').value.trim(),
+    commissionRate: parseFloat(document.getElementById('as-commissionRate').value)||10,
+    walletEnabled: document.getElementById('as-walletEnabled').value === 'true'
+  };
+  try {
+    await updateDoc(doc(db,'appConfig','appSettings'), data);
+    _contentAppSettings = data;
+    showToast('App settings saved ✓');
+  } catch(e) { showToast('Error: '+e.message, true); }
+};
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE 3: TRANSACTIONS PAGE
+// ══════════════════════════════════════════════════════════════════════
+window.loadTransactionsPage = async function() {
+  // Commission stats from in-memory orders
+  const now = Date.now()/1000;
+  const weekAgo = now - 7*86400;
+  const monthAgo = now - 30*86400;
+  function commission(o) {
+    const paid = isPaidOrder ? isPaidOrder(o) : (o.paymentStatus==='paid');
+    if(!paid) return 0;
+    const rate = o.commissionRate!=null ? o.commissionRate : 0.10;
+    return (o.amountPaid||0) * rate;
+  }
+  const weekComm = _orders.filter(o=>o.timestamp>=weekAgo).reduce((s,o)=>s+commission(o),0);
+  const monthComm = _orders.filter(o=>o.timestamp>=monthAgo).reduce((s,o)=>s+commission(o),0);
+  document.getElementById('txCommissionWeek').textContent = '₹'+Math.round(weekComm).toLocaleString('en-IN');
+  document.getElementById('txCommissionMonth').textContent = '₹'+Math.round(monthComm).toLocaleString('en-IN');
+
+  // Commission by vendor
+  const vendorComm = {};
+  _vendors.forEach(v=>vendorComm[v.id]={name:v.shopName||v.id,total:0,orders:0,rate:v.commissionRate!=null?v.commissionRate*100:10});
+  _orders.forEach(o=>{
+    if(vendorComm[o.vendorId]) {
+      vendorComm[o.vendorId].total += commission(o);
+      vendorComm[o.vendorId].orders++;
+    }
+  });
+  const vendorRows = Object.values(vendorComm).sort((a,b)=>b.total-a.total);
+  document.getElementById('txCommissionTable').innerHTML = vendorRows.length===0
+    ? '<div class="empty">No data</div>'
+    : `<table><thead><tr><th>Vendor</th><th>Commission Rate</th><th>Orders</th><th>Commission Earned</th></tr></thead><tbody>${
+        vendorRows.map(v=>`<tr><td>${esc(v.name)}</td><td>${v.rate}%${v.rate===0?'<span class="badge badge-pending" style="margin-left:6px">Promo</span>':''}</td><td>${v.orders}</td><td style="font-weight:700;color:#1A4731">₹${Math.round(v.total).toLocaleString('en-IN')}</td></tr>`).join('')
+      }</tbody></table>`;
+
+  // Failed payments from Firestore
+  try {
+    const failedSnap = await getDocs(query(collection(db,'failedPayments'), orderBy('timestamp','desc'), limit(100)));
+    if(failedSnap.empty) {
+      document.getElementById('txFailedCount').textContent = '0';
+      document.getElementById('txFailedAmount').textContent = '₹0';
+      document.getElementById('txFailedTable').innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>No failed payment records</h3><p>Failed payments will appear here automatically once wired up via Razorpay webhooks.</p></div>';
+      return;
+    }
+    const failed = failedSnap.docs.map(d=>({id:d.id,...d.data()}));
+    const failedAmt = failed.filter(f=>f.timestamp>=(now-30*86400)).reduce((s,f)=>s+(f.amount||0),0);
+    document.getElementById('txFailedCount').textContent = failed.filter(f=>f.timestamp>=(now-30*86400)).length;
+    document.getElementById('txFailedAmount').textContent = '₹'+Math.round(failedAmt).toLocaleString('en-IN');
+    document.getElementById('txFailedTable').innerHTML = `<table><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Reason</th><th>Code</th><th>Time</th><th>Status</th></tr></thead><tbody>${
+      failed.map(f=>`<tr>
+        <td style="font-family:monospace;font-size:11px">${(f.orderId||'—').substring(0,12)}</td>
+        <td style="font-size:11px">${esc(f.customerId||'—').substring(0,12)}</td>
+        <td>₹${Math.round(f.amount||0)}</td>
+        <td style="font-size:12px;color:#DC2626">${esc(f.reason||'—')}</td>
+        <td style="font-size:11px;font-family:monospace">${esc(f.razorpayErrorCode||'—')}</td>
+        <td style="font-size:11px">${f.timestamp?new Date(f.timestamp*1000).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—'}</td>
+        <td><span class="badge ${f.status==='retry'?'badge-pending':'badge-cancelled'}">${esc(f.status||'—')}</span></td>
+      </tr>`).join('')
+    }</tbody></table>`;
+  } catch(e) {
+    document.getElementById('txFailedCount').textContent = '—';
+    document.getElementById('txFailedAmount').textContent = '—';
+    document.getElementById('txFailedTable').innerHTML = '<div class="empty-state"><div class="empty-state-icon">✅</div><h3>No failed payment records found</h3><p>They\'ll appear here automatically once wired up.</p></div>';
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE 4: NOTIFICATIONS
+// ══════════════════════════════════════════════════════════════════════
+const NOTIF_TEMPLATES = {
+  new_vendor: {title:'New vendor now live on Surpl! 🏪', body:'A new restaurant just joined — check out their Surprise Bags before they sell out.'},
+  weekend_offer: {title:'Weekend Surprise Bags are here! 🎉', body:'Grab a Surprise Bag this weekend from your favourite spot. Limited quantities!'},
+  order_reminder: {title:'Don\'t miss tonight\'s Surprise Bags ⏰', body:'Pickup windows close soon — order now before they\'re gone.'},
+  app_update: {title:'Surpl has been updated 📲', body:'We\'ve made improvements to make your experience even better. Update now for the latest features.'}
+};
+
+window.applyNotifTemplate = function(key) {
+  const t = NOTIF_TEMPLATES[key]; if(!t) return;
+  document.getElementById('notifTitle').value = t.title;
+  document.getElementById('notifBody').value = t.body;
+  updateNotifPreview();
+};
+
+window.updateNotifPreview = function() {
+  const title = document.getElementById('notifTitle')?.value||'';
+  const body = document.getElementById('notifBody')?.value||'';
+  const titleEl = document.getElementById('notifPreviewTitle');
+  const bodyEl = document.getElementById('notifPreviewBody');
+  if(titleEl) { titleEl.textContent = title||'Your title here'; titleEl.style.fontStyle=title?'normal':'italic'; titleEl.style.color=title?'#0D1F12':'#666'; }
+  if(bodyEl) { bodyEl.textContent = body||'Your message here'; bodyEl.style.fontStyle=body?'normal':'italic'; bodyEl.style.color=body?'#4D6B57':'#999'; }
+};
+
+window.toggleNotifSchedule = function() {
+  const later = document.querySelector('input[name="notifSchedule"][value="later"]')?.checked;
+  document.getElementById('notifScheduleRow').style.display = later ? 'block' : 'none';
+  const audienceSel = document.getElementById('notifAudience');
+  document.getElementById('notifSpecificUidRow').style.display = audienceSel?.value==='specific' ? 'block' : 'none';
+};
+
+document.getElementById('notifAudience')?.addEventListener('change', function() {
+  document.getElementById('notifSpecificUidRow').style.display = this.value==='specific' ? 'block' : 'none';
+});
+
+window.sendNotification = async function() {
+  const title = document.getElementById('notifTitle').value.trim();
+  const body = document.getElementById('notifBody').value.trim();
+  if(!title||!body){showToast('Title and body are required',true);return;}
+  const audience = document.getElementById('notifAudience').value;
+  const action = document.getElementById('notifAction').value.trim();
+  const scheduleLater = document.querySelector('input[name="notifSchedule"][value="later"]')?.checked;
+  const scheduleAt = scheduleLater ? document.getElementById('notifScheduleAt').value : null;
+
+  if(scheduleLater && !scheduleAt){showToast('Please pick a schedule time',true);return;}
+
+  try {
+    if(scheduleLater) {
+      await addDoc(collection(db,'scheduledNotifications'),{
+        title, body, audience, action, scheduledFor: new Date(scheduleAt).getTime()/1000,
+        createdBy: auth.currentUser?.uid, createdAt: Date.now()/1000, status:'pending'
+      });
+      showToast('Notification scheduled ✓');
+    } else {
+      const fn = httpsCallable(functions, 'sendUpdateBroadcast');
+      await fn({title, body, audience, action: action||null, specificUid: audience==='specific'?document.getElementById('notifSpecificUid').value.trim():null});
+      // Log it
+      try {
+        await addDoc(collection(db,'notificationLog'),{
+          title, body, audience, action, sentAt: Date.now()/1000,
+          sentBy: auth.currentUser?.email||auth.currentUser?.uid, status:'sent'
+        });
+      } catch(e2){}
+      showToast('Notification sent! ✓');
+    }
+    // Refresh history
+    loadNotifHistory();
+  } catch(e) { showToast('Error: '+e.message, true); }
+};
+
+window.loadNotifHistory = async function() {
+  const el = document.getElementById('notifHistoryBody'); if(!el) return;
+  el.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  try {
+    const snap = await getDocs(query(collection(db,'notificationLog'), orderBy('sentAt','desc'), limit(30)));
+    if(snap.empty) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔔</div><h3>No notifications sent yet</h3><p>Your sent notifications will appear here as a timeline.</p></div>';
+      return;
+    }
+    const items = snap.docs.map(d=>({id:d.id,...d.data()}));
+    el.innerHTML = items.map((n,i)=>`
+      <div class="notif-timeline-item" style="position:relative">
+        ${i<items.length-1?'<div class="notif-timeline-line"></div>':''}
+        <div class="notif-timeline-dot"></div>
+        <div style="flex:1">
+          <div style="font-size:11px;color:#4D6B57;margin-bottom:3px">${n.sentAt?new Date(n.sentAt*1000).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):''}</div>
+          <div style="font-size:13px;font-weight:700">${esc(n.title)}</div>
+          <div style="font-size:12px;color:#4D6B57;margin:2px 0">${esc(n.body)}</div>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <span class="badge badge-confirmed" style="font-size:10px">👥 ${esc(n.audience||'everyone')}</span>
+            ${n.sentCount?`<span class="badge badge-approved" style="font-size:10px">📬 ${n.sentCount} reached</span>`:''}
+          </div>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔔</div><h3>No notification history yet</h3></div>';
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE 5: REPORTS
+// ══════════════════════════════════════════════════════════════════════
+let _currentReportTab = 'revenue';
+
+// Set default date range on load
+(function() {
+  const toDate = new Date(); const fromDate = new Date(); fromDate.setDate(fromDate.getDate()-30);
+  const fmt = d => d.toISOString().split('T')[0];
+  setTimeout(()=>{
+    const rf = document.getElementById('reportFrom'); if(rf) rf.value=fmt(fromDate);
+    const rt = document.getElementById('reportTo'); if(rt) rt.value=fmt(toDate);
+  }, 100);
+})();
+
+window.switchReportTab = function(tab) {
+  document.querySelectorAll('.report-tab').forEach(el=>el.style.display='none');
+  document.getElementById('report-'+tab).style.display='block';
+  _currentReportTab = tab;
+  renderReports();
+};
+
+window.renderReports = function() {
+  const fromStr = document.getElementById('reportFrom')?.value;
+  const toStr = document.getElementById('reportTo')?.value;
+  if(!fromStr||!toStr) return;
+  const fromTs = new Date(fromStr).getTime()/1000;
+  const toTs = new Date(toStr).getTime()/1000 + 86399;
+  const filtered = _orders.filter(o=>o.timestamp>=fromTs && o.timestamp<=toTs);
+
+  if(_currentReportTab==='revenue') renderRevenueReport(filtered, fromTs, toTs);
+  else if(_currentReportTab==='vendor') renderVendorReport(filtered);
+  else if(_currentReportTab==='customer') renderCustomerReport(filtered);
+  else if(_currentReportTab==='refund') renderRefundReport(filtered);
+};
+
+function paidAmt(o) { return (isPaidOrder&&isPaidOrder(o)) ? (o.amountPaid||0) : 0; }
+function commAmt(o) { return paidAmt(o) * (o.commissionRate!=null?o.commissionRate:0.10); }
+
+function renderRevenueReport(orders, fromTs, toTs) {
+  const totalRev = orders.reduce((s,o)=>s+paidAmt(o),0);
+  const totalComm = orders.reduce((s,o)=>s+commAmt(o),0);
+  const paidOrders = orders.filter(o=>isPaidOrder&&isPaidOrder(o));
+  const avgOrder = paidOrders.length ? totalRev/paidOrders.length : 0;
+
+  document.getElementById('reportRevenueStats').innerHTML = [
+    {label:'Total Revenue',val:'₹'+Math.round(totalRev).toLocaleString('en-IN'),accent:'#1A4731'},
+    {label:'Total Orders',val:paidOrders.length,accent:'#1565C0'},
+    {label:'Avg Order Value',val:'₹'+Math.round(avgOrder),accent:'#D4890F'},
+    {label:'Commission Earned',val:'₹'+Math.round(totalComm).toLocaleString('en-IN'),accent:'#C4622D'}
+  ].map(c=>`<div class="stat-card" style="--accent:${c.accent}"><div class="stat-label">${c.label}</div><div class="stat-value">${c.val}</div></div>`).join('');
+
+  // Day-by-day breakdown
+  const days = {};
+  orders.forEach(o=>{
+    if(!isPaidOrder||!isPaidOrder(o)) return;
+    const d = new Date(o.timestamp*1000).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
+    if(!days[d]) days[d]={date:d,orders:0,revenue:0,commission:0};
+    days[d].orders++; days[d].revenue+=o.amountPaid||0; days[d].commission+=commAmt(o);
+  });
+  const dayRows = Object.values(days).sort((a,b)=>a.date<b.date?-1:1);
+  document.getElementById('reportRevenueTable').innerHTML = dayRows.length===0
+    ? '<div class="empty">No orders in this range</div>'
+    : `<table><thead><tr><th>Date</th><th>Orders</th><th>Revenue</th><th>Commission</th></tr></thead><tbody>${
+        dayRows.map(d=>`<tr><td>${d.date}</td><td>${d.orders}</td><td>₹${Math.round(d.revenue).toLocaleString('en-IN')}</td><td>₹${Math.round(d.commission).toLocaleString('en-IN')}</td></tr>`).join('')
+      }</tbody></table>`;
+}
+
+function renderVendorReport(orders) {
+  const vm = {};
+  _vendors.forEach(v=>vm[v.id]={name:v.shopName||v.id,orders:0,revenue:0,commission:0,rating:v.rating||0});
+  orders.forEach(o=>{
+    if(!isPaidOrder||!isPaidOrder(o)) return;
+    if(!vm[o.vendorId]) vm[o.vendorId]={name:o.vendorId,orders:0,revenue:0,commission:0,rating:0};
+    vm[o.vendorId].orders++; vm[o.vendorId].revenue+=o.amountPaid||0; vm[o.vendorId].commission+=commAmt(o);
+  });
+  const rows = Object.values(vm).filter(v=>v.orders>0).sort((a,b)=>b.revenue-a.revenue);
+  document.getElementById('reportVendorTable').innerHTML = rows.length===0
+    ? '<div class="empty">No vendor data in this range</div>'
+    : `<table><thead><tr><th>Vendor</th><th>Orders</th><th>Revenue</th><th>Commission</th><th>Avg Rating</th></tr></thead><tbody>${
+        rows.map(v=>`<tr><td>${esc(v.name)}</td><td>${v.orders}</td><td>₹${Math.round(v.revenue).toLocaleString('en-IN')}</td><td>₹${Math.round(v.commission).toLocaleString('en-IN')}</td><td>${v.rating?v.rating.toFixed(1):'—'}</td></tr>`).join('')
+      }</tbody></table>`;
+}
+
+function renderCustomerReport(orders) {
+  const paidOrders = orders.filter(o=>isPaidOrder&&isPaidOrder(o));
+  const customerSet = new Set(paidOrders.map(o=>o.customerId));
+  const repeatMap = {};
+  paidOrders.forEach(o=>{
+    if(!repeatMap[o.customerId]) repeatMap[o.customerId]={uid:o.customerId,orders:0,spent:0};
+    repeatMap[o.customerId].orders++; repeatMap[o.customerId].spent+=(o.amountPaid||0);
+  });
+  const repeaters = Object.values(repeatMap).filter(c=>c.orders>1).length;
+  const repeatRate = customerSet.size ? Math.round(repeaters/customerSet.size*100) : 0;
+
+  document.getElementById('reportCustomerStats').innerHTML = [
+    {label:'Unique Customers',val:customerSet.size,accent:'#1A4731'},
+    {label:'Repeat Rate',val:repeatRate+'%',accent:'#1565C0'},
+    {label:'Total Orders',val:paidOrders.length,accent:'#D4890F'}
+  ].map(c=>`<div class="stat-card" style="--accent:${c.accent}"><div class="stat-label">${c.label}</div><div class="stat-value">${c.val}</div></div>`).join('');
+
+  const top10 = Object.values(repeatMap).sort((a,b)=>b.spent-a.spent).slice(0,10);
+  document.getElementById('reportCustomerTable').innerHTML = top10.length===0
+    ? '<div class="empty">No customer data</div>'
+    : `<table><thead><tr><th>UID</th><th>Name</th><th>Orders</th><th>Total Spent</th></tr></thead><tbody>${
+        top10.map(c=>{
+          const u=_users.find(u=>u.id===c.uid)||{};
+          return `<tr><td style="font-family:monospace;font-size:11px">${c.uid.substring(0,12)}</td><td>${esc(u.name||u.phoneNumber||'—')}</td><td>${c.orders}</td><td style="font-weight:700;color:#1A4731">₹${Math.round(c.spent).toLocaleString('en-IN')}</td></tr>`;
+        }).join('')
+      }</tbody></table>`;
+}
+
+function renderRefundReport(orders) {
+  const totalOrders = orders.filter(o=>isPaidOrder&&isPaidOrder(o)).length;
+  const totalRev = orders.reduce((s,o)=>s+paidAmt(o),0);
+  const periodRefunds = _refunds.filter(r=>{
+    const fromStr = document.getElementById('reportFrom')?.value;
+    const toStr = document.getElementById('reportTo')?.value;
+    if(!fromStr||!toStr) return true;
+    const ts = r.submittedAt||0;
+    return ts >= new Date(fromStr).getTime()/1000 && ts <= new Date(toStr).getTime()/1000 + 86399;
+  });
+  const approvedRefunds = periodRefunds.filter(r=>r.status?.startsWith('approved'));
+  const totalRefundAmt = approvedRefunds.reduce((s,r)=>s+(r.amountPaid||0),0);
+  const refundRate = totalOrders ? Math.round(approvedRefunds.length/totalOrders*100) : 0;
+  const avgRefund = approvedRefunds.length ? Math.round(totalRefundAmt/approvedRefunds.length) : 0;
+
+  document.getElementById('reportRefundStats').innerHTML = [
+    {label:'Total Refunds',val:approvedRefunds.length,accent:'#DC2626'},
+    {label:'Refund Rate',val:refundRate+'%',accent:'#D4890F'},
+    {label:'Avg Refund Amt',val:'₹'+avgRefund,accent:'#7C3AED'},
+    {label:'Total Refunded',val:'₹'+Math.round(totalRefundAmt).toLocaleString('en-IN'),accent:'#DC2626'}
+  ].map(c=>`<div class="stat-card" style="--accent:${c.accent}"><div class="stat-label">${c.label}</div><div class="stat-value">${c.val}</div></div>`).join('');
+
+  // By reason
+  const reasons = {};
+  periodRefunds.forEach(r=>{const k=r.issueType||r.issueLabel||'Other';if(!reasons[k])reasons[k]=0;reasons[k]++;});
+  const reasonRows = Object.entries(reasons).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('reportRefundTable').innerHTML = reasonRows.length===0
+    ? '<div class="empty">No refunds in this range</div>'
+    : `<table><thead><tr><th>Reason</th><th>Count</th><th>%</th></tr></thead><tbody>${
+        reasonRows.map(([r,c])=>`<tr><td>${esc(r)}</td><td>${c}</td><td>${periodRefunds.length?Math.round(c/periodRefunds.length*100):0}%</td></tr>`).join('')
+      }</tbody></table>`;
+}
+
+window.exportReport = function(type) {
+  const fromStr = document.getElementById('reportFrom')?.value||'';
+  const toStr = document.getElementById('reportTo')?.value||'';
+  const fromTs = fromStr ? new Date(fromStr).getTime()/1000 : 0;
+  const toTs = toStr ? new Date(toStr).getTime()/1000 + 86399 : Infinity;
+  const filtered = _orders.filter(o=>o.timestamp>=fromTs && o.timestamp<=toTs);
+  let csv = '', filename = '';
+  if(type==='revenue') {
+    csv = 'Date,Orders,Revenue,Commission\n';
+    const days={};
+    filtered.forEach(o=>{if(!isPaidOrder||!isPaidOrder(o))return;const d=new Date(o.timestamp*1000).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});if(!days[d])days[d]={orders:0,revenue:0,commission:0};days[d].orders++;days[d].revenue+=o.amountPaid||0;days[d].commission+=commAmt(o);});
+    Object.entries(days).sort().forEach(([d,v])=>csv+=`${d},${v.orders},${v.revenue.toFixed(2)},${v.commission.toFixed(2)}\n`);
+    filename='revenue-report.csv';
+  } else if(type==='vendor') {
+    csv='Vendor,Orders,Revenue,Commission\n';
+    const vm={};_vendors.forEach(v=>vm[v.id]={name:v.shopName||v.id,orders:0,revenue:0,commission:0});
+    filtered.forEach(o=>{if(!isPaidOrder||!isPaidOrder(o))return;if(!vm[o.vendorId])vm[o.vendorId]={name:o.vendorId,orders:0,revenue:0,commission:0};vm[o.vendorId].orders++;vm[o.vendorId].revenue+=o.amountPaid||0;vm[o.vendorId].commission+=commAmt(o);});
+    Object.values(vm).filter(v=>v.orders>0).sort((a,b)=>b.revenue-a.revenue).forEach(v=>csv+=`"${v.name}",${v.orders},${v.revenue.toFixed(2)},${v.commission.toFixed(2)}\n`);
+    filename='vendor-report.csv';
+  } else if(type==='customer') {
+    csv='UID,Name,Phone,Orders,TotalSpent\n';
+    const cm={};filtered.forEach(o=>{if(!isPaidOrder||!isPaidOrder(o))return;if(!cm[o.customerId])cm[o.customerId]={orders:0,spent:0};cm[o.customerId].orders++;cm[o.customerId].spent+=(o.amountPaid||0);});
+    Object.entries(cm).sort((a,b)=>b[1].spent-a[1].spent).forEach(([uid,c])=>{const u=_users.find(u=>u.id===uid)||{};csv+=`"${uid}","${u.name||''}","${u.phoneNumber||''}",${c.orders},${c.spent.toFixed(2)}\n`;});
+    filename='customer-report.csv';
+  } else if(type==='refund') {
+    csv='ID,OrderID,CustomerID,Amount,Reason,Status,Date\n';
+    _refunds.forEach(r=>csv+=`"${r.id}","${r.orderId||''}","${r.customerId||''}",${r.amountPaid||0},"${r.issueType||''}","${r.status||''}","${r.submittedAt?new Date(r.submittedAt*1000).toISOString():''}"\n`);
+    filename='refund-report.csv';
+  }
+  const blob = new Blob([csv],{type:'text/csv'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click();
+};
+
+window.exportAllData = function() {
+  const files = {
+    'orders.csv':'Order ID,Vendor ID,Customer ID,Amount,Status,Timestamp\n'+_orders.map(o=>`"${o.id}","${o.vendorId||''}","${o.customerId||''}",${o.amountPaid||0},"${o.status||''}","${o.timestamp?new Date(o.timestamp*1000).toISOString():''}"`).join('\n'),
+    'vendors.csv':'ID,Shop Name,Owner,Status,City\n'+_vendors.map(v=>`"${v.id}","${v.shopName||''}","${v.ownerName||''}","${v.status||''}","${v.city||''}"`).join('\n'),
+    'customers.csv':'ID,Name,Phone,Wallet\n'+_users.map(u=>`"${u.id}","${u.name||''}","${u.phoneNumber||''}",${u.walletBalance||0}`).join('\n'),
+    'refunds.csv':'ID,Order,Customer,Amount,Status\n'+_refunds.map(r=>`"${r.id}","${r.orderId||''}","${r.customerId||''}",${r.amountPaid||0},"${r.status||''}"`).join('\n'),
+  };
+  // Download each CSV separately (no JSZip available)
+  Object.entries(files).forEach(([name,content],i)=>{
+    setTimeout(()=>{
+      const blob = new Blob([content],{type:'text/csv'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
+    }, i*300);
+  });
+  showToast('Exporting '+Object.keys(files).length+' CSV files…');
+};
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE 6: ROLES & PERMISSIONS
+// ══════════════════════════════════════════════════════════════════════
+let _adminRole = 'superadmin';
+let _adminTeam = [];
+
+window.loadAdminRole = async function() {
+  const user = auth.currentUser;
+  if(!user) return;
+  if(ADMIN_UIDS.includes(user.uid)) { window._adminRole = 'superadmin'; return; }
+  try {
+    const snap = await getDoc(doc(db,'adminUsers',user.uid));
+    if(snap.exists() && snap.data().isActive!==false) {
+      window._adminRole = snap.data().role || 'readonly';
+    } else {
+      // Not in adminUsers and not in ADMIN_UIDS → deny
+      window._adminRole = 'readonly';
+    }
+  } catch(e) { window._adminRole = 'readonly'; }
+  applyRoleRestrictions();
+};
+
+function applyRoleRestrictions() {
+  const role = window._adminRole || 'superadmin';
+  if(role === 'superadmin') return; // Full access
+  const rolePageMap = {
+    operations: ['dashboard','dailyOps','vendors','outreachTracker','leads','orders','bags','customers'],
+    support: ['dashboard','customers','cases','refunds','support','customerSupport'],
+    finance: ['dashboard','payouts','expenses','reconciliation','reports','transactions'],
+    content: ['dashboard','content','notifications'],
+    readonly: ['dashboard','dailyOps','analytics','vendors','orders','bags','customers','payouts','expenses','refunds','cases','fraud','reports']
+  };
+  const allowed = rolePageMap[role] || ['dashboard'];
+  document.querySelectorAll('.nav-item[id^="nav-"]').forEach(el=>{
+    const page = el.id.replace('nav-','');
+    if(!allowed.includes(page)) el.style.display='none';
+  });
+}
+
+window.loadRolesPage = async function() {
+  const el = document.getElementById('rolesTeamBody'); if(!el) return;
+  el.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  try {
+    const snap = await getDocs(collection(db,'adminUsers'));
+    _adminTeam = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderTeamTable();
+  } catch(e) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👥</div><h3>No team members yet</h3><p>Add team members to give them controlled access to this admin panel.</p><button class="btn btn-primary" onclick="openAddTeamMemberModal()" style="margin-top:12px">+ Add First Member</button></div>';
+  }
+};
+
+function renderTeamTable() {
+  const el = document.getElementById('rolesTeamBody');
+  if(!_adminTeam.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">👥</div><h3>No team members yet</h3><p>Add team members to give them controlled access.</p><button class="btn btn-primary" onclick="openAddTeamMemberModal()" style="margin-top:12px">+ Add First Member</button></div>';
+    return;
+  }
+  el.innerHTML = `<table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Added</th><th>Status</th><th>Actions</th></tr></thead><tbody>${
+    _adminTeam.map(m=>`<tr>
+      <td style="font-weight:600">${esc(m.name||'—')}</td>
+      <td style="font-size:12px">${esc(m.email||'—')}</td>
+      <td><span class="role-${m.role||'readonly'}">${m.role||'readonly'}</span></td>
+      <td style="font-size:12px">${m.addedAt?new Date(m.addedAt*1000).toLocaleDateString('en-IN',{timeZone:'Asia/Kolkata'}):'—'}</td>
+      <td><span class="badge ${m.isActive!==false?'badge-active':'badge-blocked'}">${m.isActive!==false?'Active':'Inactive'}</span></td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="editTeamMember('${m.id}')">Edit Role</button>
+        <button class="btn btn-red btn-sm" onclick="removeTeamMember('${m.id}')">Remove</button>
+      </td>
+    </tr>`).join('')
+  }</tbody></table>`;
+}
+
+window.openAddTeamMemberModal = function() {
+  ['tmName','tmEmail'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('tmRole').value='support';
+  delete document.getElementById('addTeamMemberModal').dataset.editId;
+  document.getElementById('addTeamMemberModal').classList.add('show');
+};
+
+window.editTeamMember = function(id) {
+  const m = _adminTeam.find(m=>m.id===id); if(!m) return;
+  document.getElementById('tmName').value = m.name||'';
+  document.getElementById('tmEmail').value = m.email||'';
+  document.getElementById('tmRole').value = m.role||'support';
+  document.getElementById('addTeamMemberModal').dataset.editId = id;
+  document.getElementById('addTeamMemberModal').classList.add('show');
+};
+
+window.saveTeamMember = async function() {
+  const name = document.getElementById('tmName').value.trim();
+  const email = document.getElementById('tmEmail').value.trim();
+  const role = document.getElementById('tmRole').value;
+  if(!email){showToast('Email required',true);return;}
+  const editId = document.getElementById('addTeamMemberModal').dataset.editId;
+  try {
+    if(editId) {
+      await updateDoc(doc(db,'adminUsers',editId), {name,email,role,updatedAt:Date.now()/1000});
+      showToast('Role updated');
+    } else {
+      await addDoc(collection(db,'adminUsers'), {name,email,role,isActive:true,addedAt:Date.now()/1000,addedBy:auth.currentUser?.uid});
+      showToast('Team member added');
+    }
+    closeModal('addTeamMemberModal');
+    loadRolesPage();
+  } catch(e) { showToast('Error: '+e.message, true); }
+};
+
+window.removeTeamMember = async function(id) {
+  if(!confirm('Remove this team member?')) return;
+  try {
+    await updateDoc(doc(db,'adminUsers',id), {isActive:false});
+    showToast('Member removed');
+    loadRolesPage();
+  } catch(e) { showToast('Error: '+e.message, true); }
+};
+
+// ══════════════════════════════════════════════════════════════════════
+// PAGE LOAD HOOKS — wire up new pages to showPage
+// ══════════════════════════════════════════════════════════════════════
+const _origShowPage = window.showPage;
+window.showPage = function(page) {
+  _origShowPage(page);
+  if(page==='content') loadContentPage();
+  else if(page==='transactions') loadTransactionsPage();
+  else if(page==='notifications') loadNotifHistory();
+  else if(page==='reports') { switchReportTab('revenue'); renderReports(); }
+  else if(page==='roles') loadRolesPage();
+};
+
+// Load admin role after showApp
+const _origShowApp = window.showApp || function(){};
+// Call loadAdminRole whenever auth state is confirmed app-side
+// (hooked via showPage override on first nav, minimal intrusion)
+setTimeout(()=>{ if(auth?.currentUser) loadAdminRole(); }, 2000);
+
 </script>
+
+<!-- ═══════════════════════════════════════════════════════
+     NEW MODALS for Features 2, 4, 6
+═══════════════════════════════════════════════════════ -->
+
+<!-- Banner Edit Modal -->
+<div class="modal-bg" id="bannerModal">
+  <div class="modal" style="width:460px">
+    <h3>Banner</h3>
+    <label class="field-label">Title *</label>
+    <input class="input" id="bannerModalTitle" placeholder="Banner title">
+    <label class="field-label">Subtitle</label>
+    <input class="input" id="bannerModalSubtitle" placeholder="Short subtitle">
+    <label class="field-label">Image URL</label>
+    <input class="input" id="bannerModalImageUrl" placeholder="https://...">
+    <label class="field-label">CTA Button Text</label>
+    <input class="input" id="bannerModalCta" placeholder="e.g. Order Now">
+    <label class="field-label">CTA Action / Deep Link</label>
+    <input class="input" id="bannerModalAction" placeholder="e.g. surpl://bags">
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('bannerModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveBannerModal()">Save Banner</button>
+    </div>
+  </div>
+</div>
+
+<!-- Category Add Modal -->
+<div class="modal-bg" id="categoryModal">
+  <div class="modal" style="width:360px">
+    <h3>Add Category</h3>
+    <label class="field-label">Category Name *</label>
+    <input class="input" id="categoryModalName" placeholder="e.g. Biryani">
+    <label class="field-label">Emoji</label>
+    <input class="input" id="categoryModalEmoji" placeholder="🍛" maxlength="4" style="width:80px">
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('categoryModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCategoryModal()">Add Category</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Team Member Modal -->
+<div class="modal-bg" id="addTeamMemberModal">
+  <div class="modal" style="width:420px">
+    <h3>Team Member</h3>
+    <p style="font-size:13px;color:#4D6B57;margin-bottom:14px">The person must already have a Firebase account (they log in with their own email+password). Add their UID to grant access — or use email to identify them in the table.</p>
+    <label class="field-label">Full Name</label>
+    <input class="input" id="tmName" placeholder="e.g. Priya Sharma">
+    <label class="field-label">Email</label>
+    <input class="input" id="tmEmail" placeholder="priya@example.com" type="email">
+    <label class="field-label">Role</label>
+    <select class="input" id="tmRole">
+      <option value="operations">Operations — vendors, orders, customers</option>
+      <option value="support" selected>Support — tickets, refunds, cases</option>
+      <option value="finance">Finance — payouts, expenses, reports</option>
+      <option value="content">Content — banners, categories, notifications</option>
+      <option value="readonly">Read-only — view everything, no actions</option>
+    </select>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('addTeamMemberModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTeamMember()">Save</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
 

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Surpl — Payout Details</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:#F6F3EC;min-height:100vh;color:#17281B;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,40px)}
+.wordmark{font-family:'Fraunces',serif;font-optical-sizing:auto}
+.container{max-width:480px;margin:0 auto;padding:24px 20px}
+.card{background:white;border-radius:18px;padding:22px;margin-bottom:14px;box-shadow:0 1px 2px rgba(23,40,27,.04),0 12px 28px -20px rgba(26,71,49,.2)}
+.input{width:100%;padding:12px 14px;border:1.5px solid #D4E8D4;border-radius:10px;font-size:15px;outline:none;font-family:inherit}
+.input:focus{border-color:#1A4731}
+.label{font-size:12px;font-weight:700;color:#4D6B57;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
+.field{margin-bottom:16px}
+.btn{padding:14px 20px;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:100%}
+.btn-primary{background:#1A4731;color:white}
+.btn-primary:active{background:#123420}
+.btn-outline{background:white;color:#1A4731;border:1.5px solid #1A4731}
+.sub{font-size:13px;color:#4D6B57}
+.error{color:#DC2626;font-size:13px}
+.success-icon{font-size:48px;margin-bottom:12px}
+h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#4D6B57;font-size:12px}
+.divider::before,.divider::after{content:'';flex:1;border-top:1px solid #D4E8D4}
+#recaptcha-container{margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Login -->
+  <div id="loginScreen">
+    <div style="padding-top:40px"></div>
+    <div class="card">
+      <h2 class="wordmark">Payout Details</h2>
+      <p class="sub" style="margin-bottom:20px">Sign in to submit or update your bank / UPI details for payouts.</p>
+      <div id="loginError" class="error" style="margin-bottom:10px"></div>
+      <div id="phoneStep">
+        <div class="field">
+          <label class="label" for="phoneInput">Registered Phone Number</label>
+          <input class="input" type="tel" id="phoneInput" placeholder="10-digit number" inputmode="numeric">
+        </div>
+        <div id="recaptcha-container"></div>
+        <button class="btn btn-primary" onclick="sendOtp()">Send OTP</button>
+      </div>
+      <div id="otpStep" style="display:none">
+        <div class="field">
+          <label class="label" for="otpInput">Enter 6-digit OTP</label>
+          <input class="input" type="text" id="otpInput" placeholder="6-digit code" inputmode="numeric" maxlength="6">
+        </div>
+        <button class="btn btn-primary" onclick="verifyOtp()">Verify &amp; Continue</button>
+        <button class="btn btn-outline" style="margin-top:10px" onclick="backToPhone()">Different number</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div id="loadingScreen" style="display:none;padding-top:80px;text-align:center">
+    <div style="width:32px;height:32px;border:3px solid #D4E8D4;border-top-color:#1A4731;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px"></div>
+    <div class="sub">Loading…</div>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+  </div>
+
+  <!-- Form -->
+  <div id="formScreen" style="display:none">
+    <div class="card" style="background:linear-gradient(135deg,#1A4731,#123420);color:white">
+      <div class="wordmark" style="font-size:19px;margin-bottom:2px" id="vendorName">Your Shop</div>
+      <div class="sub" style="color:rgba(255,255,255,.7)" id="vendorPhone"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size:18px;margin-bottom:4px">UPI Details</h2>
+      <p class="sub" style="margin-bottom:16px">Fastest way to receive payouts</p>
+      <div class="field">
+        <label class="label" for="upiId">UPI ID</label>
+        <input class="input" type="text" id="upiId" placeholder="yourname@upi or phone@upi">
+      </div>
+      <div class="field">
+        <label class="label" for="upiName">Account Holder Name</label>
+        <input class="input" type="text" id="upiName" placeholder="As per UPI registration">
+      </div>
+    </div>
+
+    <div class="divider">OR Bank Account</div>
+
+    <div class="card">
+      <h2 style="font-size:18px;margin-bottom:4px">Bank Transfer</h2>
+      <p class="sub" style="margin-bottom:16px">Used when UPI isn't available</p>
+      <div class="field">
+        <label class="label" for="accountName">Account Holder Name</label>
+        <input class="input" type="text" id="accountName" placeholder="Name exactly as on bank account">
+      </div>
+      <div class="field">
+        <label class="label" for="accountNumber">Account Number</label>
+        <input class="input" type="text" id="accountNumber" placeholder="Bank account number" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label class="label" for="ifsc">IFSC Code</label>
+        <input class="input" type="text" id="ifsc" placeholder="e.g. SBIN0012345" style="text-transform:uppercase">
+      </div>
+      <div class="field">
+        <label class="label" for="bankName">Bank Name</label>
+        <input class="input" type="text" id="bankName" placeholder="e.g. State Bank of India">
+      </div>
+    </div>
+
+    <div id="formError" class="error" style="margin-bottom:10px"></div>
+    <button class="btn btn-primary" onclick="savePayoutDetails()">Save Payout Details</button>
+    <button class="btn btn-outline" style="margin-top:10px" onclick="doSignOut()">Sign Out</button>
+  </div>
+
+  <!-- Success -->
+  <div id="successScreen" style="display:none;padding-top:80px;text-align:center">
+    <div class="success-icon">✅</div>
+    <h2 style="margin-bottom:8px">Details Saved!</h2>
+    <p class="sub" style="margin-bottom:24px">Your payout details have been updated. Surpl will use these for your next payment.</p>
+    <button class="btn btn-primary" style="max-width:240px;margin:0 auto" onclick="showForm()">Edit Again</button>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, updateDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey:"AIzaSyA6EQChPz0nVd8VZtODQ7Qke855-8ttP04",
+  authDomain:"surpl-app.firebaseapp.com",
+  projectId:"surpl-app",
+  storageBucket:"surpl-app.firebasestorage.app",
+  messagingSenderId:"165451396509",
+  appId:"1:165451396509:web:1eca2b0c4729e126ebab74"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let _uid = null;
+
+function show(id) {
+  ['loginScreen','loadingScreen','formScreen','successScreen'].forEach(s => {
+    document.getElementById(s).style.display = s===id ? '' : 'none';
+  });
+}
+
+window.sendOtp = async function() {
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  const raw = document.getElementById('phoneInput').value.replace(/\D/g,'');
+  if (!/^[6-9]\d{9}$/.test(raw)) { errEl.textContent = 'Enter a valid 10-digit phone number.'; return; }
+  try {
+    if (!window._rcv) {
+      window._rcv = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+    }
+    window._conf = await signInWithPhoneNumber(auth, '+91'+raw, window._rcv);
+    document.getElementById('phoneStep').style.display = 'none';
+    document.getElementById('otpStep').style.display = 'block';
+  } catch(e) {
+    try { window._rcv?.clear(); } catch(_){}
+    window._rcv = null;
+    errEl.textContent = 'Could not send code: ' + (e.message||'try again');
+  }
+};
+
+window.verifyOtp = async function() {
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = '';
+  const code = document.getElementById('otpInput').value.trim();
+  if (!code) { errEl.textContent = 'Enter the code.'; return; }
+  if (!window._conf) { errEl.textContent = 'Please send the code again.'; return; }
+  try {
+    await window._conf.confirm(code);
+  } catch(e) {
+    const ec = e.code||'';
+    errEl.textContent = ec.includes('invalid-verification-code') ? 'Incorrect code.'
+      : ec.includes('expired') ? 'Code expired — resend.'
+      : 'Error: ' + (e.message||'try again');
+  }
+};
+
+window.backToPhone = function() {
+  document.getElementById('phoneStep').style.display = 'block';
+  document.getElementById('otpStep').style.display = 'none';
+  document.getElementById('loginError').textContent = '';
+};
+
+window.doSignOut = async function() {
+  await signOut(auth);
+  location.reload();
+};
+
+window.showForm = function() { show('formScreen'); };
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { show('loginScreen'); return; }
+  _uid = user.uid;
+  show('loadingScreen');
+  try {
+    const snap = await getDoc(doc(db,'users',user.uid));
+    if (!snap.exists() || !snap.data().isVendor) {
+      await signOut(auth);
+      document.getElementById('loginError').textContent = 'This account is not registered as a vendor.';
+      show('loginScreen');
+      return;
+    }
+    const v = snap.data();
+    document.getElementById('vendorName').textContent = v.shopName || v.name || 'Your Shop';
+    document.getElementById('vendorPhone').textContent = v.phoneNumber || user.phoneNumber || '';
+    // Pre-fill existing details
+    document.getElementById('upiId').value = v.upiId || v.upi || '';
+    document.getElementById('upiName').value = v.upiAccountName || v.accountHolderName || '';
+    document.getElementById('accountName').value = v.accountHolderName || '';
+    document.getElementById('accountNumber').value = v.accountNumber || '';
+    document.getElementById('ifsc').value = v.ifsc || '';
+    document.getElementById('bankName').value = v.bankName || '';
+    show('formScreen');
+  } catch(e) {
+    await signOut(auth);
+    document.getElementById('loginError').textContent = 'Could not load: ' + (e.message||'try again');
+    show('loginScreen');
+  }
+});
+
+window.savePayoutDetails = async function() {
+  const errEl = document.getElementById('formError');
+  errEl.textContent = '';
+  const upiId = document.getElementById('upiId').value.trim();
+  const upiName = document.getElementById('upiName').value.trim();
+  const accountName = document.getElementById('accountName').value.trim();
+  const accountNumber = document.getElementById('accountNumber').value.trim();
+  const ifsc = document.getElementById('ifsc').value.trim().toUpperCase();
+  const bankName = document.getElementById('bankName').value.trim();
+
+  if (!upiId && !accountNumber) {
+    errEl.textContent = 'Please fill in at least a UPI ID or bank account number.';
+    return;
+  }
+  if (accountNumber && !ifsc) {
+    errEl.textContent = 'IFSC code is required when providing a bank account.';
+    return;
+  }
+
+  const update = {};
+  if (upiId) { update.upiId = upiId; update.upi = upiId; }
+  if (upiName) update.upiAccountName = upiName;
+  if (accountName) update.accountHolderName = accountName;
+  if (accountNumber) update.accountNumber = accountNumber;
+  if (ifsc) update.ifsc = ifsc;
+  if (bankName) update.bankName = bankName;
+  update.payoutDetailsUpdatedAt = Date.now();
+
+  try {
+    await updateDoc(doc(db,'users',_uid), update);
+    show('successScreen');
+  } catch(e) {
+    errEl.textContent = 'Could not save: ' + (e.message||'try again');
+  }
+};
+</script>
+</body>
+</html>
